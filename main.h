@@ -38,4 +38,13 @@ typedef struct {
 #define HEART_RATE_SDA    0
 #define SPEAKER_PIN       0
 
+// ******* Constants ******* //
+
+// ******* Component Objects ******* //
+
+TFT_eSPI tft = TFT_eSPI();
+SPIClass spiSD(HSPI);
+
+// ******* Functions ******* //
+
 #endif
