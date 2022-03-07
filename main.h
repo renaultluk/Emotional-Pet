@@ -4,19 +4,38 @@
 // ******* Includes ******* //
 
 #include <TFT_eSPI.h>
+#include <SPI.h>
 #include <MPU6050.h>
 #include <FS.h>
 #include <SD.h>
-
-#include "face.h"
-#include "voice-message.h"
+#include <JPEGDecoder.h>
 
 // ******* Finite State Machine ******* //
 
 typedef struct {
   STATE_INIT,
   STATE_FACE,
+  STATE_MENU,
   STATE_VOICE_MESSAGE,
-} mainState_t;
+} screenState_t;
+
+// ******* Pins ******* //
+
+#define SCL_PIN           0
+
+#define DISPLAY_MISO      0
+#define DISPLAY_MOSI      0
+#define DISPLAY_CS        0
+
+#define SD_MISO           0
+#define SD_MOSI           0
+#define SD_CS             0
+
+#define LED_R_PIN         0
+#define LED_G_PIN         0
+#define LED_B_PIN         0
+
+#define HEART_RATE_SDA    0
+#define SPEAKER_PIN       0
 
 #endif
