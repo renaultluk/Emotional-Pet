@@ -9,6 +9,7 @@
 #include <FS.h>
 #include <SD.h>
 #include <JPEGDecoder.h>
+#include <MAX30105.h>
 
 // ******* Finite State Machine ******* //
 
@@ -38,13 +39,32 @@ typedef struct {
 #define HEART_RATE_SDA    0
 #define SPEAKER_PIN       0
 
+#define TOUCH_PIN1        0
+#define TOUCH_PIN2        0
+
 // ******* Constants ******* //
+
+#define TOUCH_THRESHOLD   40
+
+// ******* Global Variables ******* //
+
+bool touched1 = false;
+bool touched2 = false;
 
 // ******* Component Objects ******* //
 
 TFT_eSPI tft = TFT_eSPI();
 SPIClass spiSD(HSPI);
+MPU6050 mpu;
 
 // ******* Functions ******* //
+
+// ******* Sensors ******* //
+
+void checkMPUSettings();
+void getMPUData();
+
+void touch1Callback();
+void touch2Callback();
 
 #endif
