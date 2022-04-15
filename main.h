@@ -51,11 +51,14 @@ typedef struct {
 bool touched1 = false;
 bool touched2 = false;
 
+int touchQueue[2];
+
 // ******* Component Objects ******* //
 
 TFT_eSPI tft = TFT_eSPI();
 SPIClass spiSD(HSPI);
 MPU6050 mpu;
+MAX30105 heartRateSensor;
 
 // ******* Functions ******* //
 
@@ -66,5 +69,9 @@ void getMPUData();
 
 void touch1Callback();
 void touch2Callback();
+
+void heartRateInit();
+void getHeartRate();
+
 
 #endif

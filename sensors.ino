@@ -51,21 +51,40 @@ void checkMPUSettings()
 }
 
 void getMPUData() {
-  Vector rawGyro = mpu.readRawGyro();
-  Vector normGyro = mpu.readNormalizeGyro();
+  int16_t ax, ay, az;
+  int16_t gx, gy, gz;
+  
+  // Vector rawGyro = mpu.readRawGyro();
+  // Vector normGyro = mpu.readNormalizeGyro();
 
-  Serial.print(" Xraw = ");
-  Serial.print(rawGyro.XAxis);
-  Serial.print(" Yraw = ");
-  Serial.print(rawGyro.YAxis);
-  Serial.print(" Zraw = ");
-  Serial.println(rawGyro.ZAxis);
-  Serial.print(" Xnorm = ");
-  Serial.print(normGyro.XAxis);
-  Serial.print(" Ynorm = ");
-  Serial.print(normGyro.YAxis);
-  Serial.print(" Znorm = ");
-  Serial.println(normGyro.ZAxis);
+  // Serial.print(" Xraw = ");
+  // Serial.print(rawGyro.XAxis);
+  // Serial.print(" Yraw = ");
+  // Serial.print(rawGyro.YAxis);
+  // Serial.print(" Zraw = ");
+  // Serial.println(rawGyro.ZAxis);
+  // Serial.print(" Xnorm = ");
+  // Serial.print(normGyro.XAxis);
+  // Serial.print(" Ynorm = ");
+  // Serial.print(normGyro.YAxis);
+  // Serial.print(" Znorm = ");
+  // Serial.println(normGyro.ZAxis);
+  mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+
+  Serial.print("accel: (")
+  Serial.print(ax);
+  Serial.print(", ")
+  Serial.print(ay);
+  Serial.print(", ");
+  Serial.print(az);
+  Serial.print(") \t gyro: (");
+  Serial.print(gx);
+  Serial.print(", ")
+  Serial.print(gy);
+  Serial.print(", ");
+  Serial.print(gz);
+  Serial.println(")");
+
 }
 
 void IRAM_ATTR touch1Callback() {
@@ -74,5 +93,33 @@ void IRAM_ATTR touch1Callback() {
 
 void IRAM_ATTR touch2Callback() {
   touched2 = true;
+}
+
+void checkPetting() {
+  if (!touch1 && !touch2) {
+    touchQueue[0] = 0;
+    touchQueue[1] = 0;
+  }
+
+  if (touch2) {
+    if (touchQueue[1] == 1) {
+      // petted
+    }
+  }
+}
+
+void heartRateInit() {
+  if (!heartRateSensor.begin()) {
+    Serial.println("Heart Rate Sensor failed to init");
+    while (1);
+  }
+  heartRateSensor.setup();
+}
+
+void getHeartRate() {
+  Serial.print("R: ");
+  Serial.print(heartRateSensor.getRed());
+  Serial.print(" IR: ");
+  Serial.println(heartRateSensor.getIR());
 }
 
