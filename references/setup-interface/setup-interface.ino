@@ -1,12 +1,11 @@
-// #include "ESP8266WiFi.h"
 #include <WiFi.h>
 #include "AsyncTCP.h"
 #include "ESPAsyncWebServer.h"
 
 AsyncWebServer server(80);
 
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "wifi";
+const char* password = "12345678";
 
 const char* PARAM_USERNAME = "username";
 
