@@ -2,6 +2,8 @@
 #define _SDCARD_H
 
 // some utility
+// determine have userSetting.txt or not
+bool haveSetting(fs::FS &fs);
 
 String readFileline(fs::FS &fs, const char * path, int line);
 void appendFile(fs::FS &fs, const char * path, const char * message);

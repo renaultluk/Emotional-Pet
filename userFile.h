@@ -17,18 +17,23 @@ enum Gender {Female, Male};
 
 class user{
 
+  String userName;
   bool gender;
   int age;
 
 public:
 
   user();
-  user(bool g, int a);
+  user(String Name, bool g, int a);
+  ~user();
+  
   void setGender(bool g);
   void setAge(int a);
+  void setUserName(String Name);
 
   bool getGender();
   int getAge();
+  String getUserName();
 
 };
 

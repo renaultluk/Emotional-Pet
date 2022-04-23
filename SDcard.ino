@@ -1,5 +1,16 @@
 #include "SDcard.h"
 
+bool haveSetting(fs::FS &fs){
+    
+    File file = fs.open("userSetting");
+    if(!file){
+        Serial.println("No user Setting");
+        return false;
+    }
+    return true;
+  
+  };
+
 void cardType(uint8_t cardType){
 
     if(cardType == CARD_NONE){
@@ -111,7 +122,7 @@ String readFileline(fs::FS &fs, const char * path, int line){
     return info;
 }
 void writeFile(fs::FS &fs, const char * path, const char * message){
-//    Serial.printf("Writing file: %s\n", path);
+    Serial.printf("Writing file: %s\n", path);
 
     File file = fs.open(path, FILE_WRITE);
     if(!file){
@@ -154,7 +165,7 @@ void renameFile(fs::FS &fs, const char * path1, const char * path2){
 void deleteFile(fs::FS &fs, const char * path){
     Serial.printf("Deleting file: %s\n", path);
     if(fs.remove(path)){
-        Serial.println("File deleted");
+//        Serial.println("File deleted");
     } else {
         Serial.println("Delete failed");
     }
