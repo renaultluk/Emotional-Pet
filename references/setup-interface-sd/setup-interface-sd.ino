@@ -185,6 +185,7 @@ void host_server(){
           writeFile(gatewayPath, gateway);
         }
         request->send(200, "text/plain", "Done. ESP will restart, connect to your router and go to IP address: " + ip);
+        editWiFi = false;
         delay(3000);
         ESP.restart();
       }
