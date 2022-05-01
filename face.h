@@ -20,6 +20,14 @@ typedef enum {
   MENU,
 } faceState_t;
 
+typedef struct keyframe {
+  int x,
+  int y,
+  int w,
+  int h,
+  int timestamp
+} keyframe;
+
 float linear(int t, int i);
 
 float easeIn(int t, int i);
@@ -39,30 +47,27 @@ class UIElement {
     int target_w;
     int target_h;
     bool visible;
+    keyframe keyframes[5];
+    int head;
+    int tail;
+    int target;
 
   public:
-    UIElement(int init_x, int init_y, int init_w, int init_h)
-    {
-      x = init_x;
-      y = init_y;
-      w = init_w;
-      h = init_h;
-      target_x = init_x;
-      target_y = init_y;
-      target_w = init_w;
-      target_h = init_h;
-      visible = true;
-    };
+    UIElement(int init_x, int init_y, int init_w, int init_h);
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int delta_x, int delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
-    void transform(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
+    void update(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
     void setTarget(int new_x, int new_y, int new_w, int new_h);
+    void addKeyframe(int new_x, int new_y, int new_w, int new_h, int timestamp);
     void setVisible(bool isVisible)
     {
       visible = isVisible;
     }
     virtual void draw();
+
+    static int anim_iterator;
+    static int anim_time;
 };
 
 class UIElGroup : public UIElement {
@@ -131,9 +136,7 @@ class Face {
     Rounded leftEye;
     Rounded rightEye;
     Block faceBottom;
-
-    int anim_iterator;
-    int anim_time;
+    
     faceState_t faceState;
 
   public:
@@ -141,5 +144,8 @@ class Face {
     void changeFaceState(faceState_t newFaceState);
     void draw();
 }
+
+int UIElement::anim_iterator = 0;
+int UIElement::anim_time = 0;
 
 #endif
