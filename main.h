@@ -13,7 +13,7 @@
 
 // ******* Finite State Machine ******* //
 
-typedef struct {
+typedef enum {
   STATE_INIT,
   STATE_FACE,
   STATE_MENU,
