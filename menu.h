@@ -75,6 +75,7 @@ class UIElGroup : public UIElement {
   public:
     UIElGroup() : UIElement(0, 0, 0, 0) { };
     ~UIElGroup();
+    int getSize() const;
     void add(UIElement* element);
     void remove(UIElement* target);
     void updateAttr();
@@ -118,6 +119,7 @@ class ScreenCol : public UIElGroup {
   public:
     ScreenCol();
     void navigateTo(int i);
+    int getColIndex() const;
     void draw() override;
 }
 
@@ -128,5 +130,6 @@ class ScreenRow : public UIElGroup {
     ScreenRow();
     void navigateTo(int i);
     void navigateTo(int row, int col);
+    void navigateTo(char dir);
     void draw() override;
 }

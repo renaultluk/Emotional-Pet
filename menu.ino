@@ -114,6 +114,11 @@ UIElGroup::~UIElGroup()
   delete[] elements;
 }
 
+int UIElGroup::getSize() const
+{
+  return size;
+}
+
 void UIElGroup::add(UIElement* element)
 {
   UIElGroup** newList = new UIElGroup* [size + 1];
@@ -216,6 +221,11 @@ void ScreenCol::navigateTo(int i)
   colIndex = i;
 }
 
+int getColIndex() const
+{
+  return colIndex;
+}
+
 void ScreenCol::draw()
 {
   elements[colIndex].draw();
@@ -235,7 +245,46 @@ void ScreenRow::navigateTo(int i)
 void ScreenRow::navigateTo(int row, int col)
 {
   rowIndex = row;
-  elements[row].navigateTo(col);
+  elements[row]->navigateTo(col);
+}
+
+void ScreenRow::navigateTo(char dir)
+{
+  switch (char)
+  {
+    case 'u':
+      UIElement* curr = elements[rowIndex];
+      int newIndex = curr->getColIndex() - 1;
+      if (newIndex > 0) {
+        if (newIndex < curr->getSize());
+        else newIndex = curr->getSize();
+      } else {
+        newIndex = 0;
+      }
+      curr->navigateTo(newIndex);
+      break;
+    case 'l':
+      int newIndex = (rowIndex - 1) % size;
+      navigateTo(newIndex);
+      break;
+    case 'd':
+      UIElement* curr = elements[rowIndex];
+      int newIndex = curr->getColIndex() + 1;
+      if (newIndex > 0) {
+        if (newIndex < curr->getSize());
+        else newIndex = curr->getSize();
+      } else {
+        newIndex = 0;
+      }
+      elements[rowIndex].navigateTo(newIndex);
+      break;
+    case 'r':
+      int newIndex = (rowIndex + 1) % size;
+      navigateTo(newIndex);
+      break;
+    default:
+      break;
+  }
 }
 
 void ScreenRow::draw()
