@@ -34,6 +34,8 @@ float easeOut(int t, int i);
 
 float easeInOut(int t, int i);
 
+void jpegRender(int xpos, int ypos);
+
 class UIElement {
   protected:
     string name;
@@ -113,6 +115,32 @@ class Circle : public UIElement {
     }
     void draw();
 };
+
+class Image : public UIElement {
+  private:
+    string src;
+
+  public:
+    Image(int init_x, int init_y, int init_w, int init_h, string init_src) : UIElement(init_x, init_y, init_w, init_h)
+    {
+      src = init_src;
+    }
+    void draw();
+}
+
+class Text : public UIElement {
+  private:
+    string content;
+    bool primary;
+
+  public:
+    Text(int init_x, int init_y, int init_w, int init_h, string init_content, bool isPrimary) : UIElement(init_x, init_y, init_w, init_h)
+    {
+      content = init_content;
+      primary = is_primary;
+    }
+    void draw();
+}
 
 class ScreenCol : public UIElGroup {
   private:
