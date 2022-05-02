@@ -52,37 +52,13 @@ void UIElement::move(int16_t delta_x, int16_t delta_y)
   y += delta_y;
 }
 
-void UIElement::scale(int t, int i, float (*velocityFunc)(int, int), int align, int justify)
+void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
 {
   float coef = velocityFunc(t, i);
   int delta_w = coef * (keyframes[target].w - w);
   int delta_h = coef * (keyframes[target].h - h);
-  delta_w = (abs(delta_w) > abs(keyframes[target].w - w)) ? keyframes[target].w - w : delta_w;  // prevent overshooting
-  delta_h = (abs(delta_h) > abs(keyframes[target].h - h)) ? keyframes[target].h - h : delta_h;
-  w += delta_w;
-  h += delta_h;
-  switch (align)
-  {
-    case 0:   // center alignment
-      y -= delta_h / 2;
-      break;
-    case 1:   // bottom alignment
-      y -= delta_h;
-      break;
-    default:  // top alignment
-      break;
-  }
-  switch (justify)
-  {
-    case 0:   // center justification
-      x -= delta_w / 2;
-      break;
-    case 1:   // right justification
-      x -= delta_w;
-      break;
-    default:  // left justification
-      break; 
-  }
+  w = (abs(delta_w) > abs(keyframes[target].w - w)) ? keyframes[target].w : keyframes[head].w + delta_w;  // prevent overshooting
+  h = (abs(delta_h) > abs(keyframes[target].h - h)) ? keyframes[target].h : keyframes[head].h + delta_h;
 }
 
 void UIElement::update(int t, int i, float (*velocityFunc)(int, int))
@@ -94,15 +70,15 @@ void UIElement::update(int t, int i, float (*velocityFunc)(int, int))
     head++;
     if (head != tail) target = (head + 1) % 5;
   } else {
-    if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, i, velocityFunc, keyframes[target].align, keyframes[target].justify);
+    if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, i, velocityFunc);
     if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, i, velocityFunc);
   }
 }
 
-void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible, int new_align, int new_justify)
+void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible)
 {
   tail = (tail + 1) % 5;
-  keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, new_timestamp * FRAME_RATE, new_align, new_justify};
+  keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, new_timestamp * FRAME_RATE};
 }
 
 keyframe getCurrentKeyframe() const
