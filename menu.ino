@@ -259,7 +259,7 @@ void Image::draw()
 
     if (decoded) {
       // render the image onto the screen at given coordinates
-      jpegRender(xpos, ypos);
+      jpegRender(x, y);
     }
     else {
       Serial.println("Jpeg file format not supported!");

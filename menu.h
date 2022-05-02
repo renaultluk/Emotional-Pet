@@ -109,7 +109,7 @@ class Circle : public UIElement {
     bool filled;
 
   public:
-    Circle(int init_x, int init_y, int init_w, int init_h, bool isFilled) : UIElement(init_x, init_y, init_w, init_h)
+    Circle(int init_x, int init_y, int init_r, bool isFilled) : UIElement(init_x, init_y, init_r, init_r)
     {
       filled = isFilled;
     }
@@ -121,7 +121,7 @@ class Image : public UIElement {
     string src;
 
   public:
-    Image(int init_x, int init_y, int init_w, int init_h, string init_src) : UIElement(init_x, init_y, init_w, init_h)
+    Image(int init_x, int init_y, string init_src) : UIElement(init_x, init_y)
     {
       src = init_src;
     }
@@ -134,7 +134,7 @@ class Text : public UIElement {
     bool primary;
 
   public:
-    Text(int init_x, int init_y, int init_w, int init_h, string init_content, bool isPrimary) : UIElement(init_x, init_y, init_w, init_h)
+    Text(int init_x, int init_y, string init_content, bool isPrimary) : UIElement(init_x, init_y)
     {
       content = init_content;
       primary = is_primary;

@@ -24,21 +24,53 @@ Face::Face()
   rightEye = Rounded(158, 69, 37, 104, false);
   faceBottom = Block(18, 178, 204, 63);
 
+  // Menu Structure
   menu = new ScreenRow("menu", 3);
 
   menu.add(new ScreenCol("listen", 4));
   menu.add(new ScreenCol("record", 2));
   menu.add(new ScreenCol("settings", 1));
 
-  menu["listen"]->add(new UIElGroup("main", 5));
-  menu["listen"]->add(new UIElGroup("choose", 6));
-  menu["listen"]->add(new UIElGroup("audio", 3));
-  menu["listen"]->add(new UIElGroup("friends", 8));
+  UIElGroup* curr = menu["listen"];
+  curr->add(new UIElGroup("main", 2));
+  curr->add(new UIElGroup("choose", 6));
+  curr->add(new UIElGroup("audio", 7));
+  curr->add(new UIElGroup("friends", 8));
 
-  menu["record"]->add(new UIElGroup("main", 3));
-  menu["record"]->add(new UIElGroup("record", 3));
+  curr = menu["record"];
+  curr->add(new UIElGroup("main", 3));
+  curr->add(new UIElGroup("record", 3));
 
-  menu["settings"]->add(new UIElGroup("main", 11));
+  menu["settings"]->add(new UIElGroup("main", 2));
+
+  // Page Content
+  curr = (*menu["listen"])["main"];
+  curr->add(new Image(75, 75, "icons/headphones.jpg"));
+  curr->add(new Text(97, 155, "Listen"));
+
+  curr = (*menu["listen"])["choose"];
+  curr->add(new Rounded(55, 63, 62, 115, true));
+  curr->add(new Rounded(123, 63, 62, 115, true));
+  curr->add(new Image(71, 83, "icons/friends.jpg"));
+  curr->add(new Image(135, 92, "icons/explore.jpg"));
+  curr->add(new Text(69, 149, "Friends"));
+  curr->add(new Text(139, 149, "Explore"));
+
+  // TODO: menu[listen][audio], menu[listen][friends]
+
+  curr = (*menu["record"])["main"];
+  curr->add(new Circle(88, 75, 61, false));
+  curr->add(new Circle(95, 82, 48, true));
+  curr->add(new Text(139, 149, "Record"));
+
+  curr = (*menu["record"])["record"];
+  curr->add(new Circle(80, 64, 80, false));
+  curr->add(new Circle(90, 73, 62, false));
+  curr->add(new Text(139, 149, "Record"));
+
+  curr = (*menu["settings"])["main"];
+  curr->add(new Image(93, 80, "icons/settings.jpg"));
+  curr->add(89, 155, "Settings");
 }
 
 void Face::changeFaceState(faceState_t newFaceState)
