@@ -9,7 +9,7 @@ class Eyelid : public UIElement {
     bool dir_right; // true if vertical edge is on right side, false if on left
   
   public:
-    Eyelid(int init_x, int init_y, int init_w, int init_h, bool right) : UIElement(init_x, init_y, init_w, init_h)
+    Eyelid(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, bool right) : UIElement(init_x, init_y, init_w, init_h)
     {
       dir_right = right;
       visible = false;

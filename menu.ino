@@ -22,7 +22,7 @@ float easeInOut(int t, int i)
   return res;
 }
 
-UIElement::UIElement(int init_x, int init_y, int init_w, int init_h, string init_name)
+UIElement::UIElement(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, string init_name)
 {
   name = init_name;
   x = init_x;
@@ -46,7 +46,7 @@ void UIElement::move(int t, int i, float (*velocityFunc)(int, int))
   y = (abs(delta_y) > abs(keyframes[target].y - y)) ? keyframes[target].y : keyframes[head].y + delta_y;
 }
 
-void UIElement::move(int delta_x, int delta_y)
+void UIElement::move(int16_t delta_x, int16_t delta_y)
 {
   x += delta_x;
   y += delta_y;
@@ -99,7 +99,7 @@ void UIElement::update(int t, int i, float (*velocityFunc)(int, int), int align,
   }
 }
 
-void UIElement::addKeyframe(int new_x, int new_y, int new_w, int new_h, float new_timestamp, bool new_visible)
+void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible)
 {
   tail = (tail + 1) % 5;
   keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, new_timestamp * FRAME_RATE};
@@ -267,7 +267,7 @@ void Image::draw()
   }
 }
 
-void jpegRender(int xpos, int ypos) {
+void jpegRender(int16_t xpos, int16_t ypos) {
 
   //jpegInfo(); // Print information from the JPEG file (could comment this line out)
 

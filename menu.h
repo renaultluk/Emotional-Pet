@@ -18,10 +18,10 @@ typedef enum {
 } faceState_t;
 
 typedef struct keyframe {
-  int x,
-  int y,
-  int w,
-  int h,
+  int16_t x,
+  int16_t y,
+  int16_t w,
+  int16_t h,
   bool visible,
   int timestamp
 } keyframe;
@@ -34,15 +34,15 @@ float easeOut(int t, int i);
 
 float easeInOut(int t, int i);
 
-void jpegRender(int xpos, int ypos);
+void jpegRender(int16_t xpos, int16_t ypos);
 
 class UIElement {
   protected:
     string name;
-    int x;
-    int y;
-    int w;
-    int h;
+    int16_t x;
+    int16_t y;
+    int16_t w;
+    int16_t h;
     bool visible;
     keyframe keyframes[5];
     int head;
@@ -50,12 +50,12 @@ class UIElement {
     int target;
 
   public:
-    UIElement(int init_x = 0, int init_y = 0, int init_w = 0, int init_h = 0, string init_name = "");
+    UIElement(int16_t init_x = 0, int16_t init_y = 0, int16_t init_w = 0, int16_t init_h = 0, string init_name = "");
     void move(int t, int i, float (*velocityFunc)(int, int));
-    void move(int delta_x, int delta_y);
+    void move(int16_t delta_x, int16_t delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
     void update(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
-    void addKeyframe(int new_x, int new_y, int new_w, int new_h, int timestamp, bool new_visible = true);
+    void addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, int timestamp, bool new_visible = true);
     keyframe getCurrentKeyFrame() const;
     void setVisible(bool isVisible)
     {
@@ -89,7 +89,7 @@ class UIElGroup : public UIElement {
 
 class Block : public UIElement {
   public:
-    Block(int init_x, int init_y, int init_w, int init_h) : UIElement(init_x, init_y, init_w, init_h) { };
+    Block(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h) : UIElement(init_x, init_y, init_w, init_h) { };
     void draw();
 };
 
@@ -97,7 +97,7 @@ class Rounded : public UIElement {
   private:
     bool primary;
   public:
-    Rounded(int init_x, int init_y, int init_w, int init_h, bool isPrimary) : UIElement(init_x, init_y, init_w, init_h)
+    Rounded(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, bool isPrimary) : UIElement(init_x, init_y, init_w, init_h)
     {
       primary = isPrimary;
     };
@@ -109,7 +109,7 @@ class Circle : public UIElement {
     bool filled;
 
   public:
-    Circle(int init_x, int init_y, int init_r, bool isFilled) : UIElement(init_x, init_y, init_r, init_r)
+    Circle(int16_t init_x, int16_t init_y, int16_t init_r, bool isFilled) : UIElement(init_x, init_y, init_r, init_r)
     {
       filled = isFilled;
     }
@@ -121,7 +121,7 @@ class Image : public UIElement {
     string src;
 
   public:
-    Image(int init_x, int init_y, string init_src) : UIElement(init_x, init_y)
+    Image(int16_t init_x, int16_t init_y, string init_src) : UIElement(init_x, init_y)
     {
       src = init_src;
     }
@@ -134,7 +134,7 @@ class Text : public UIElement {
     bool primary;
 
   public:
-    Text(int init_x, int init_y, string init_content, bool isPrimary) : UIElement(init_x, init_y)
+    Text(int16_t init_x, int16_t init_y, string init_content, bool isPrimary) : UIElement(init_x, init_y)
     {
       content = init_content;
       primary = is_primary;
