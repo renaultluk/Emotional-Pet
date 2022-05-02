@@ -29,10 +29,6 @@ UIElement::UIElement(string init_name, int init_x, int init_y, int init_w, int i
   y = init_y;
   w = init_w;
   h = init_h;
-  target_x = init_x;
-  target_y = init_y;
-  target_w = init_w;
-  target_h = init_h;
   visible = true;
 
   keyframes[0] = {init_x, init_y, init_w, init_h, 0};
@@ -48,10 +44,6 @@ UIElement::UIElement(int init_x, int init_y, int init_w, int init_h)
   y = init_y;
   w = init_w;
   h = init_h;
-  target_x = init_x;
-  target_y = init_y;
-  target_w = init_w;
-  target_h = init_h;
   visible = true;
 
   keyframes[0] = {init_x, init_y, init_w, init_h, 0};
@@ -110,19 +102,27 @@ void UIElement::scale(int t, int i, float (*velocityFunc)(int, int), int align, 
 
 void UIElement::update(int t, int i, float (*velocityFunc)(int, int), int align, int justify)
 {
-  if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, i, velocityFunc, align, justify);
-  else if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, i, velocityFunc);
+  if (i == 0 && keyframes[target].visible == true) visible = true;
   if (i == t)
   {
+    if (keyframes[target].visible == false) visible = false;
     head++;
     if (head != tail) target = (head + 1) % 5;
+  } else {
+    if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, i, velocityFunc, align, justify);
+    if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, i, velocityFunc);
   }
 }
 
-void UIElement::addKeyframe(int new_x, int new_y, int new_w, int new_h, int new_timestamp)
+void UIElement::addKeyframe(int new_x, int new_y, int new_w, int new_h, float new_timestamp, bool new_visible)
 {
   tail = (tail + 1) % 5;
-  keyframes[tail] = {new_x, new_y, new_w, new_h, new_timestamp};
+  keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, new_timestamp * FRAME_RATE};
+}
+
+keyframe getCurrentKeyframe() const
+{
+  return keyframes[head];
 }
 
 UIElGroup::UIElGroup(string init_name, int init_size) : UIElement(init_name, 0, 0, 0, 0)
@@ -207,6 +207,16 @@ UIElement* UIElGroup::operator[](int i)
 {
   return elements[i];
 }
+
+UIElement* UIElGroup::operator[](string query)
+{
+  for (int i = 0; i < size; i++)
+  {
+    if (elements[i]->name == query) return elements[i];
+  }
+  return nullptr;
+}
+
 
 void UIElGroup::move()
 {

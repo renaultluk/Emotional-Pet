@@ -31,6 +31,8 @@ class Face {
     
     faceState_t faceState;
 
+    float (*velocityFunc)(int, int);
+
   public:
     Face();
     void changeFaceState(faceState_t newFaceState);
