@@ -35,6 +35,7 @@ float easeInOut(int t, int i);
 
 class UIElement {
   protected:
+    string name;
     int x;
     int y;
     int w;
@@ -50,7 +51,7 @@ class UIElement {
     int target;
 
   public:
-    UIElement(int init_x, int init_y, int init_w, int init_h);
+    UIElement(string init_name, int init_x, int init_y, int init_w, int init_h);
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int delta_x, int delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
