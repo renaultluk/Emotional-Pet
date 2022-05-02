@@ -240,28 +240,30 @@ void Circle::draw()
 
 void Image::draw()
 {
-  // Open the named file (the Jpeg decoder library will close it)
-  File jpegFile = SD.open( filename, FILE_READ);  // or, file handle reference for SD library
- 
-  if ( !jpegFile ) {
-    Serial.print("ERROR: File \""); Serial.print(filename); Serial.println ("\" not found!");
-    return;
-  }
+  if (visible) {
+    // Open the named file (the Jpeg decoder library will close it)
+    File jpegFile = SD.open( filename, FILE_READ);  // or, file handle reference for SD library
+  
+    if ( !jpegFile ) {
+      Serial.print("ERROR: File \""); Serial.print(filename); Serial.println ("\" not found!");
+      return;
+    }
 
-  Serial.println("===========================");
-  Serial.print("Drawing file: "); Serial.println(filename);
-  Serial.println("===========================");
+    Serial.println("===========================");
+    Serial.print("Drawing file: "); Serial.println(filename);
+    Serial.println("===========================");
 
-  // Use one of the following methods to initialise the decoder:
-  bool decoded = JpegDec.decodeSdFile(jpegFile);  // Pass the SD file handle to the decoder,
-  //bool decoded = JpegDec.decodeSdFile(filename);  // or pass the filename (String or character array)
+    // Use one of the following methods to initialise the decoder:
+    bool decoded = JpegDec.decodeSdFile(jpegFile);  // Pass the SD file handle to the decoder,
+    //bool decoded = JpegDec.decodeSdFile(filename);  // or pass the filename (String or character array)
 
-  if (decoded) {
-    // render the image onto the screen at given coordinates
-    jpegRender(xpos, ypos);
-  }
-  else {
-    Serial.println("Jpeg file format not supported!");
+    if (decoded) {
+      // render the image onto the screen at given coordinates
+      jpegRender(xpos, ypos);
+    }
+    else {
+      Serial.println("Jpeg file format not supported!");
+    }
   }
 }
 
