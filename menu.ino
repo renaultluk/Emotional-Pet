@@ -152,17 +152,17 @@ void UIElGroup::remove(UIElement* element)
 
 void UIElGroup::updateAttr()
 {
-  int min_x = elements[i].x;
-  int min_y = elements[i].y;
-  int max_x = elements[i].x;
-  int max_y = elements[i].y;
+  int min_x = elements[0]->x;
+  int min_y = elements[0]->y;
+  int max_x = elements[0]->x;
+  int max_y = elements[0]->y;
 
   for (int i = 1; i < size; i++)
   {
-    if (elements[i].x + elements[i].w > max_x) max_x = elements[i].x + elements[i].w;
-    if (elements[i].x < min_x) min_x = elements[i].x;
-    if (elements[i].y + elements[i].h > max_y) max_y = elements[i].y + elements[i].h;
-    if (elements[i].y < min_y) min_y = elements[i].y;
+    if (elements[i]->x + elements[i]->w > max_x) max_x = elements[i]->x + elements[i]->w;
+    if (elements[i]->x < min_x) min_x = elements[i]->x;
+    if (elements[i]->y + elements[i]->h > max_y) max_y = elements[i]->y + elements[i]->h;
+    if (elements[i]->y < min_y) min_y = elements[i]->y;
   }
 
   x = min_x;
@@ -171,7 +171,7 @@ void UIElGroup::updateAttr()
   h = max_y - min_y;
 }
 
-void UIElGroup::operator[](int i)
+UIElement* UIElGroup::operator[](int i)
 {
   return elements[i];
 }
@@ -186,7 +186,7 @@ void UIElGroup::move()
 
   for (int i = 0; i < size; i++)
   {
-    elements[i].move(delta_x, delta_y);
+    elements[i]->move(delta_x, delta_y);
   }
 }
 
@@ -228,7 +228,7 @@ int getColIndex() const
 
 void ScreenCol::draw()
 {
-  elements[colIndex].draw();
+  elements[colIndex]->draw();
 }
 
 ScreenRow::ScreenRow() : UIElGroup()
@@ -276,7 +276,7 @@ void ScreenRow::navigateTo(char dir)
       } else {
         newIndex = 0;
       }
-      elements[rowIndex].navigateTo(newIndex);
+      elements[rowIndex]->navigateTo(newIndex);
       break;
     case 'r':
       int newIndex = (rowIndex + 1) % size;
@@ -289,5 +289,5 @@ void ScreenRow::navigateTo(char dir)
 
 void ScreenRow::draw()
 {
-  if (visible) elements[rowIndex].draw();
+  if (visible) elements[rowIndex]->draw();
 }
