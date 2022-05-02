@@ -25,6 +25,20 @@ Face::Face()
   faceBottom = Block(18, 178, 204, 63);
 
   menu = new ScreenCol[3];
+
+  menu.add(new ScreenCol("listen", 4));
+  menu.add(new ScreenCol("record", 2));
+  menu.add(new ScreenCol("settings", 1));
+
+  menu["listen"]->add(new UIElGroup("main", 5));
+  menu["listen"]->add(new UIElGroup("choose", 6));
+  menu["listen"]->add(new UIElGroup("audio", 3));
+  menu["listen"]->add(new UIElGroup("friends", 8));
+
+  menu["record"]->add(new UIElGroup("main", 3));
+  menu["record"]->add(new UIElGroup("record", 3));
+
+  menu["settings"]->add(new UIElGroup("main", 11));
 }
 
 void Face::changeFaceState(faceState_t newFaceState)

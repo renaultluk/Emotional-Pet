@@ -41,6 +41,25 @@ UIElement::UIElement(string init_name, int init_x, int init_y, int init_w, int i
   target = 0;
 }
 
+UIElement::UIElement(int init_x, int init_y, int init_w, int init_h)
+{
+  name = "";
+  x = init_x;
+  y = init_y;
+  w = init_w;
+  h = init_h;
+  target_x = init_x;
+  target_y = init_y;
+  target_w = init_w;
+  target_h = init_h;
+  visible = true;
+
+  keyframes[0] = {init_x, init_y, init_w, init_h, 0};
+  head = 0;
+  tail = 0;
+  target = 0;
+}
+
 void UIElement::move(int t, int i, float (*velocityFunc)(int, int))
 {
   float coef = velocityFunc(t, i);
@@ -106,6 +125,13 @@ void UIElement::addKeyframe(int new_x, int new_y, int new_w, int new_h, int new_
   keyframes[tail] = {new_x, new_y, new_w, new_h, new_timestamp};
 }
 
+UIElGroup::UIElGroup(string init_name, int init_size) : UIElement(init_name, 0, 0, 0, 0)
+{
+  size = init_size;
+  amount = 0;
+  elements = new UIElement* [size];
+}
+
 UIElGroup::~UIElGroup()
 {
   delete[] elements;
@@ -118,14 +144,23 @@ int UIElGroup::getSize() const
 
 void UIElGroup::add(UIElement* element)
 {
-  UIElGroup** newList = new UIElGroup* [size + 1];
+  
+  if (amount + 1 < size)
+  {
+    elements[amount] = element;
+    amount++;
+    updateAttr();
+    return;
+  }
+  UIElGroup** newList = new UIElGroup* [size * 2];
   for (int i = 0; i < size; i++)
   {
     newList[i] = elements[i];
   }
   newList[size] = element;
   elements = newList;
-  size++;
+  size *= 2;
+  amount++;
   updateAttr();
 }
 
@@ -154,7 +189,7 @@ void UIElGroup::updateAttr()
   int max_x = elements[0]->x;
   int max_y = elements[0]->y;
 
-  for (int i = 1; i < size; i++)
+  for (int i = 1; i < amount; i++)
   {
     if (elements[i]->x + elements[i]->w > max_x) max_x = elements[i]->x + elements[i]->w;
     if (elements[i]->x < min_x) min_x = elements[i]->x;
@@ -213,6 +248,11 @@ ScreenCol::ScreenCol() : UIElGroup()
   colIndex = 0;
 }
 
+ScreenCol::ScreenCol(string init_name, int init_size) : UIElGroup(init_name, init_size)
+{
+  colIndex = 0;
+}
+
 void ScreenCol::navigateTo(int i)
 {
   colIndex = i;
@@ -234,6 +274,12 @@ ScreenRow::ScreenRow() : UIElGroup()
   visible = false;
 }
 
+ScreenRow::ScreenRow(string init_name, int init_size) : UIElGroup(init_name, init_size)
+{
+  rowIndex = 0;
+  visible = false;
+}
+
 void ScreenRow::navigateTo(int i)
 {
   rowIndex = i;
@@ -243,6 +289,30 @@ void ScreenRow::navigateTo(int row, int col)
 {
   rowIndex = row;
   elements[row]->navigateTo(col);
+}
+
+void ScreenRow::navigateTo(string row_name)
+{
+  for (int i = 0; i < size; i++)
+  {
+    if (elements[i]->name == row_name)
+    {
+      navigateTo(i);
+    }
+  }
+}
+
+void ScreenRow::navigateTo(string row_name, string col_name)
+{
+  navigateTo(row_name);
+  ScreenCol curr = elements[rowIndex];
+  for (int i = 0; i < curr->getSize(); i++)
+  {
+    if ((*curr)[i]->name == col_name)
+    {
+      curr->navigateTo(i);
+    }
+  }
 }
 
 void ScreenRow::navigateTo(char dir)

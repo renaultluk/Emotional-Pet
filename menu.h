@@ -52,6 +52,7 @@ class UIElement {
 
   public:
     UIElement(string init_name, int init_x, int init_y, int init_w, int init_h);
+    UIElement(int init_x, int init_y, int init_w, int init_h);
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int delta_x, int delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
@@ -72,9 +73,11 @@ class UIElGroup : public UIElement {
   protected:
     UIElement** elements;
     int size;
+    int amount;
 
   public:
-    UIElGroup() : UIElement(0, 0, 0, 0) { };
+    UIElGroup() : UIElement(0, 0, 0, 0) { amount = 0; };
+    UIElGroup(string init_name, int init_size);
     ~UIElGroup();
     int getSize() const;
     void add(UIElement* element);
@@ -119,6 +122,7 @@ class ScreenCol : public UIElGroup {
     int colIndex;
   public:
     ScreenCol();
+    ScreenCol(string init_name, int init_size);
     void navigateTo(int i);
     int getColIndex() const;
     void draw() override;
@@ -129,8 +133,11 @@ class ScreenRow : public UIElGroup {
     int rowIndex;
   public:
     ScreenRow();
+    ScreenRow(string init_name, int init_size);
     void navigateTo(int i);
     void navigateTo(int row, int col);
+    int navigateTo(string row_name);
+    void navigateTo(string row_name, string col_name);
     void navigateTo(char dir);
     void draw() override;
 }
