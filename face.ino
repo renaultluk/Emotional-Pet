@@ -25,7 +25,7 @@ Face::Face()
   faceBottom = Block(18, 178, 204, 63);
 
   // Menu Structure
-  menu = new ScreenRow("menu", 3);
+  menu = ScreenRow("menu", 3);
 
   menu.add(new ScreenCol("listen", 4));
   menu.add(new ScreenCol("record", 2));
