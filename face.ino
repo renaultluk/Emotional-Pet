@@ -34,7 +34,7 @@ Face::Face()
   UIElGroup* curr = menu["listen"];
   curr->add(new UIElGroup("main", 2));
   curr->add(new UIElGroup("choose", 6));
-  curr->add(new UIElGroup("audio", 7));
+  curr->add(new UIElGroup("audio", 8));
   curr->add(new UIElGroup("friends", 8));
 
   curr = menu["record"];
@@ -53,24 +53,34 @@ Face::Face()
   curr->add(new Rounded(123, 63, 62, 115, true));
   curr->add(new Image(71, 83, "icons/friends.jpg"));
   curr->add(new Image(135, 92, "icons/explore.jpg"));
-  curr->add(new Text(69, 149, "Friends"));
-  curr->add(new Text(139, 149, "Explore"));
+  curr->add(new Text(69, 149, "Friends", false));
+  curr->add(new Text(139, 149, "Explore", false));
 
   // TODO: menu[listen][audio], menu[listen][friends]
+
+  curr = (*menu["listen"])["audio"];
+  curr->add(new Rounded(55, 66, 132, 112, true));
+  curr->add(new Block(62, 113, 0, 2, "progressBar"));
+  curr->add(new Text(62, 118, "00:00", false, "audioProgress"));
+  curr->add(new Text(161, 118, "00:00", false, "audioLength"));
+  curr->add(new Rounded(62, 129, 46, 12, false));
+  curr->add(new Rounded(133, 129, 46, 12, false));
+  curr->add(new Text(75, 130, "Reply", true));
+  curr->add(new Text(138, 130, "Add Friend", true));
 
   curr = (*menu["record"])["main"];
   curr->add(new Circle(88, 75, 61, false));
   curr->add(new Circle(95, 82, 48, true));
-  curr->add(new Text(139, 149, "Record"));
+  curr->add(new Text(139, 149, "Record", true));
 
   curr = (*menu["record"])["record"];
   curr->add(new Circle(80, 64, 80, false));
-  curr->add(new Circle(90, 73, 62, false));
-  curr->add(new Text(139, 149, "Record"));
+  curr->add(new Circle(90, 73, 62, false, "innerCircle"));
+  curr->add(new Text(139, 149, "00:00", true, "timer"));
 
   curr = (*menu["settings"])["main"];
   curr->add(new Image(93, 80, "icons/settings.jpg"));
-  curr->add(89, 155, "Settings");
+  curr->add(new Text(89, 155, "Settings", true));
 }
 
 void Face::changeFaceState(faceState_t newFaceState)

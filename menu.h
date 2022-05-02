@@ -90,7 +90,7 @@ class UIElGroup : public UIElement {
 
 class Block : public UIElement {
   public:
-    Block(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h) : UIElement(init_x, init_y, init_w, init_h) { };
+    Block(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, string name = "") : UIElement(init_x, init_y, init_w, init_h, name) { };
     void draw();
 };
 
@@ -98,7 +98,7 @@ class Rounded : public UIElement {
   private:
     bool primary;
   public:
-    Rounded(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, bool isPrimary) : UIElement(init_x, init_y, init_w, init_h)
+    Rounded(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, bool isPrimary, string name = "") : UIElement(init_x, init_y, init_w, init_h)
     {
       primary = isPrimary;
     };
@@ -110,7 +110,7 @@ class Circle : public UIElement {
     bool filled;
 
   public:
-    Circle(int16_t init_x, int16_t init_y, int16_t init_r, bool isFilled) : UIElement(init_x, init_y, init_r, init_r)
+    Circle(int16_t init_x, int16_t init_y, int16_t init_r, bool isFilled, string name = "") : UIElement(init_x, init_y, init_r, init_r)
     {
       filled = isFilled;
     }
@@ -135,7 +135,7 @@ class Text : public UIElement {
     bool primary;
 
   public:
-    Text(int16_t init_x, int16_t init_y, string init_content, bool isPrimary) : UIElement(init_x, init_y)
+    Text(int16_t init_x, int16_t init_y, string init_content, bool isPrimary, string name = "") : UIElement(init_x, init_y, name)
     {
       content = init_content;
       primary = is_primary;
