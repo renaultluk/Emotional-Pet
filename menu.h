@@ -48,8 +48,7 @@ class UIElement {
     int target;
 
   public:
-    UIElement(string init_name, int init_x, int init_y, int init_w, int init_h);
-    UIElement(int init_x, int init_y, int init_w, int init_h);
+    UIElement(int init_x = 0, int init_y = 0, int init_w = 0, int init_h = 0, string init_name = "");
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int delta_x, int delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
@@ -73,7 +72,7 @@ class UIElGroup : public UIElement {
     int amount;
 
   public:
-    UIElGroup() : UIElement(0, 0, 0, 0) { amount = 0; };
+    UIElGroup() : UIElement() { amount = 0; };
     UIElGroup(string init_name, int init_size);
     ~UIElGroup();
     int getSize() const;

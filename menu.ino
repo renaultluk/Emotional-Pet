@@ -22,24 +22,9 @@ float easeInOut(int t, int i)
   return res;
 }
 
-UIElement::UIElement(string init_name, int init_x, int init_y, int init_w, int init_h)
+UIElement::UIElement(int init_x, int init_y, int init_w, int init_h, string init_name)
 {
   name = init_name;
-  x = init_x;
-  y = init_y;
-  w = init_w;
-  h = init_h;
-  visible = true;
-
-  keyframes[0] = {init_x, init_y, init_w, init_h, 0};
-  head = 0;
-  tail = 0;
-  target = 0;
-}
-
-UIElement::UIElement(int init_x, int init_y, int init_w, int init_h)
-{
-  name = "";
   x = init_x;
   y = init_y;
   w = init_w;
@@ -125,7 +110,7 @@ keyframe getCurrentKeyframe() const
   return keyframes[head];
 }
 
-UIElGroup::UIElGroup(string init_name, int init_size) : UIElement(init_name, 0, 0, 0, 0)
+UIElGroup::UIElGroup(string init_name, int init_size) : UIElement(init_name)
 {
   size = init_size;
   amount = 0;
