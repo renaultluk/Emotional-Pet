@@ -85,7 +85,7 @@ void UIElement::scale(int t, int i, float (*velocityFunc)(int, int), int align, 
   }
 }
 
-void UIElement::update(int t, int i, float (*velocityFunc)(int, int), int align, int justify)
+void UIElement::update(int t, int i, float (*velocityFunc)(int, int))
 {
   if (i == 0 && keyframes[target].visible == true) visible = true;
   if (i == t)
@@ -94,15 +94,15 @@ void UIElement::update(int t, int i, float (*velocityFunc)(int, int), int align,
     head++;
     if (head != tail) target = (head + 1) % 5;
   } else {
-    if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, i, velocityFunc, align, justify);
+    if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, i, velocityFunc, keyframes[target].align, keyframes[target].justify);
     if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, i, velocityFunc);
   }
 }
 
-void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible)
+void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible, int new_align, int new_justify)
 {
   tail = (tail + 1) % 5;
-  keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, new_timestamp * FRAME_RATE};
+  keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, new_timestamp * FRAME_RATE, new_align, new_justify};
 }
 
 keyframe getCurrentKeyframe() const
@@ -203,17 +203,19 @@ UIElement* UIElGroup::operator[](string query)
 }
 
 
-void UIElGroup::move()
+void UIElGroup::update(int t, int i, float (*velocityFunc)(int, int))
 {
-  float coef = velocityFunc(t, i);
-  int delta_x = coef * (keyframes[target].x - keyframes[head].x);
-  int delta_y = coef * (keyframes[target].y - keyframes[head].y);
-  delta_x = (abs(delta_x) > abs(keyframes[target].x - x)) ? keyframes[target].x - x : delta_x;  // prevent overshooting
-  delta_y = (abs(delta_y) > abs(keyframes[target].y - y)) ? keyframes[target].y - y : delta_y;
+  if ((i != t) && (head != target)) {
+    float coef = velocityFunc(t, i);
+    int delta_x = coef * (keyframes[target].x - keyframes[head].x);
+    int delta_y = coef * (keyframes[target].y - keyframes[head].y);
+    delta_x = (abs(delta_x) > abs(keyframes[target].x - x)) ? keyframes[target].x - x : delta_x;  // prevent overshooting
+    delta_y = (abs(delta_y) > abs(keyframes[target].y - y)) ? keyframes[target].y - y : delta_y;
 
-  for (int i = 0; i < size; i++)
-  {
-    elements[i]->move(delta_x, delta_y);
+    for (int i = 0; i < size; i++)
+    {
+      elements[i]->move(delta_x, delta_y);
+    }
   }
 }
 

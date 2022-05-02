@@ -24,6 +24,8 @@ typedef struct keyframe {
   int16_t h,
   bool visible,
   int timestamp
+  int align = -1,
+  int justify = -1,
 } keyframe;
 
 float linear(int t, int i);
@@ -54,8 +56,8 @@ class UIElement {
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int16_t delta_x, int16_t delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
-    void update(int t, int i, float (*velocityFunc)(int, int), int align = -1, int justify = -1);
-    void addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, int timestamp, bool new_visible = true);
+    void update(int t, int i, float (*velocityFunc)(int, int));
+    void addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, int timestamp, bool new_visible = true, int new_align = -1, int new_justify = -1);
     keyframe getCurrentKeyFrame() const;
     void setVisible(bool isVisible)
     {
@@ -83,7 +85,7 @@ class UIElGroup : public UIElement {
     void updateAttr();
     UIElement* operator[](int i);
     UIElement* operator[](string query);
-    void move(int t, int i, float (*velocityFunc)(int, int)) override;
+    void update(int t, int i, float (*velocityFunc)(int, int)) override;
     void draw();
 };
 
