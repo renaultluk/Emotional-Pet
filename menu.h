@@ -48,13 +48,14 @@ class UIElement {
     int head;
     int tail;
     int target;
+    int iterator;
 
   public:
     UIElement(int16_t init_x = 0, int16_t init_y = 0, int16_t init_w = 0, int16_t init_h = 0, string init_name = "");
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int16_t delta_x, int16_t delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int));
-    void update(int t, int i, float (*velocityFunc)(int, int));
+    void update(float (*velocityFunc)(int, int));
     void addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, int timestamp, bool new_visible = true, int new_align = -1, int new_justify = -1);
     keyframe getCurrentKeyFrame() const;
     void setVisible(bool isVisible)
@@ -74,7 +75,7 @@ class UIElGroup : public UIElement {
     int amount;
 
   public:
-    UIElGroup() : UIElement() { amount = 0; };
+    UIElGroup() : UIElement() { amount = 0; iterator = 0; };
     UIElGroup(string init_name, int init_size);
     ~UIElGroup();
     int getSize() const;
@@ -83,7 +84,7 @@ class UIElGroup : public UIElement {
     void updateAttr();
     UIElement* operator[](int i);
     UIElement* operator[](string query);
-    void update(int t, int i, float (*velocityFunc)(int, int)) override;
+    void update(float (*velocityFunc)(int, int)) override;
     void draw();
 };
 

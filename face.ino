@@ -120,6 +120,17 @@ void Face::changeFaceState(faceState_t newFaceState)
   }
 }
 
+void Face::update()
+{
+  forehead.update(velocityFunc);
+  leftEyelid.update(velocityFunc);
+  rightEyelid.update(velocityFunc);
+  leftEye.update(velocityFunc);
+  rightEye.update(velocityFunc);
+  faceBottom.update(velocityFunc);
+  menu.update(velocityFunc);
+}
+
 void Face::draw()
 {
   tft.fillScreen(PRIMARY_COLOR);

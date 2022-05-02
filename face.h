@@ -36,6 +36,7 @@ class Face {
   public:
     Face();
     void changeFaceState(faceState_t newFaceState);
+    void update() override;
     void draw();
 };
 

@@ -61,17 +61,21 @@ void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
   h = (abs(delta_h) > abs(keyframes[target].h - h)) ? keyframes[target].h : keyframes[head].h + delta_h;
 }
 
-void UIElement::update(int t, int i, float (*velocityFunc)(int, int))
+void UIElement::update(float (*velocityFunc)(int, int))
 {
-  if (i == 0 && keyframes[target].visible == true) visible = true;
-  if (i == t)
+  if (head == tail) return;
+  if (iterator == 0 && keyframes[target].visible == true) visible = true;
+  int t = keyframes[target].timestamp;
+  if (iterator == t)
   {
     if (keyframes[target].visible == false) visible = false;
     head++;
-    if (head != tail) target = (head + 1) % 5;
+    target = (head + 1) % 5;
+    iterator = 0;
   } else {
     if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, i, velocityFunc);
     if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, i, velocityFunc);
+    iterator++;
   }
 }
 
@@ -179,10 +183,11 @@ UIElement* UIElGroup::operator[](string query)
 }
 
 
-void UIElGroup::update(int t, int i, float (*velocityFunc)(int, int))
+void UIElGroup::update(float (*velocityFunc)(int, int))
 {
-  if ((i != t) && (head != target)) {
-    float coef = velocityFunc(t, i);
+  int t = keyframes[target].timestamp;
+  if ((iterator != t) && (head != target)) {
+    float coef = velocityFunc(t, iterator);
     int delta_x = coef * (keyframes[target].x - keyframes[head].x);
     int delta_y = coef * (keyframes[target].y - keyframes[head].y);
     delta_x = (abs(delta_x) > abs(keyframes[target].x - x)) ? keyframes[target].x - x : delta_x;  // prevent overshooting
@@ -192,6 +197,7 @@ void UIElGroup::update(int t, int i, float (*velocityFunc)(int, int))
     {
       elements[i]->move(delta_x, delta_y);
     }
+    iterator++;
   }
 }
 
