@@ -73,8 +73,8 @@ void UIElement::update(float (*velocityFunc)(int, int))
     target = (head + 1) % 5;
     iterator = 0;
   } else {
-    if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, i, velocityFunc);
-    if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, i, velocityFunc);
+    if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, iterator, velocityFunc);
+    if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, iterator, velocityFunc);
     iterator++;
   }
 }
@@ -82,15 +82,15 @@ void UIElement::update(float (*velocityFunc)(int, int))
 void UIElement::addKeyframe(int new_x, int new_y, int new_w, int new_h, float new_timestamp, bool new_visible)
 {
   tail = (tail + 1) % 5;
-  keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, new_timestamp * FRAME_RATE};
+  keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, (int)(new_timestamp * FRAME_RATE)};
 }
 
-keyframe UIElement::getCurrentKeyframe() const
+keyframe UIElement::getCurrentKeyFrame() const
 {
   return keyframes[head];
 }
 
-UIElGroup::UIElGroup(string init_name, int init_size) : UIElement(init_name)
+UIElGroup::UIElGroup(string init_name, int init_size) : UIElement(0, 0, 0, 0, init_name)
 {
   size = init_size;
   amount = 0;
@@ -117,7 +117,7 @@ void UIElGroup::add(UIElement* element)
     updateAttr();
     return;
   }
-  UIElGroup** newList = new UIElGroup* [size * 2];
+  UIElement** newList = new UIElement* [size * 2];
   for (int i = 0; i < size; i++)
   {
     newList[i] = elements[i];
@@ -131,7 +131,7 @@ void UIElGroup::add(UIElement* element)
 
 void UIElGroup::remove(UIElement* element)
 {
-  UIElGroup** newList = new UIElGroup* [size - 1];
+  UIElement** newList = new UIElement* [size - 1];
   int j = 0;
   for (int i = 0; i < size; i++)
   {
@@ -226,15 +226,15 @@ void Image::draw()
 {
   if (visible) {
     // Open the named file (the Jpeg decoder library will close it)
-    File jpegFile = SD.open( filename, FILE_READ);  // or, file handle reference for SD library
+    File jpegFile = SD.open( src, FILE_READ);  // or, file handle reference for SD library
   
     if ( !jpegFile ) {
-      Serial.print("ERROR: File \""); Serial.print(filename); Serial.println ("\" not found!");
+      Serial.print("ERROR: File \""); Serial.print(src); Serial.println ("\" not found!");
       return;
     }
 
     Serial.println("===========================");
-    Serial.print("Drawing file: "); Serial.println(filename);
+    Serial.print("Drawing file: "); Serial.println(src);
     Serial.println("===========================");
 
     // Use one of the following methods to initialise the decoder:
@@ -327,7 +327,7 @@ void jpegRender(int xpos, int ypos) {
 
   tft.setSwapBytes(swapBytes);
 
-  showTime(millis() - drawTime); // These lines are for sketch testing only
+  // showTime(millis() - drawTime); // These lines are for sketch testing only
 }
 
 void Text::draw()
@@ -352,7 +352,7 @@ void ScreenCol::navigateTo(int i)
   colIndex = i;
 }
 
-int getColIndex() const
+int ScreenCol::getColIndex() const
 {
   return colIndex;
 }
@@ -382,7 +382,7 @@ void ScreenRow::navigateTo(int i)
 void ScreenRow::navigateTo(int row, int col)
 {
   rowIndex = row;
-  elements[row]->navigateTo(col);
+  static_cast<ScreenCol*>(elements[row])->navigateTo(col);
 }
 
 void ScreenRow::navigateTo(string row_name)
@@ -399,7 +399,7 @@ void ScreenRow::navigateTo(string row_name)
 void ScreenRow::navigateTo(string row_name, string col_name)
 {
   navigateTo(row_name);
-  ScreenCol curr = elements[rowIndex];
+  ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
   for (int i = 0; i < curr->getSize(); i++)
   {
     if ((*curr)[i]->name == col_name)
@@ -411,10 +411,10 @@ void ScreenRow::navigateTo(string row_name, string col_name)
 
 void ScreenRow::navigateTo(char dir)
 {
-  switch (char)
+  switch (dir)
   {
     case 'u':
-      UIElement* curr = elements[rowIndex];
+      ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
       int newIndex = curr->getColIndex() - 1;
       if (newIndex > 0) {
         if (newIndex < curr->getSize());
@@ -429,7 +429,7 @@ void ScreenRow::navigateTo(char dir)
       navigateTo(newIndex);
       break;
     case 'd':
-      UIElement* curr = elements[rowIndex];
+      ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
       int newIndex = curr->getColIndex() + 1;
       if (newIndex > 0) {
         if (newIndex < curr->getSize());
@@ -437,7 +437,7 @@ void ScreenRow::navigateTo(char dir)
       } else {
         newIndex = 0;
       }
-      elements[rowIndex]->navigateTo(newIndex);
+      curr->navigateTo(newIndex);
       break;
     case 'r':
       int newIndex = (rowIndex + 1) % size;

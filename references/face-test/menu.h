@@ -39,7 +39,7 @@ float easeInOut(int t, int i);
 void jpegRender(int xpos, int ypos);
 
 class UIElement {
-  protected:
+  public:
     string name;
     int x;
     int y;
@@ -52,13 +52,12 @@ class UIElement {
     int target;
     int iterator;
 
-  public:
     UIElement(int init_x = 0, int init_y = 0, int init_w = 0, int init_h = 0, string init_name = "");
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int delta_x, int delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int));
     void update(float (*velocityFunc)(int, int));
-    void addKeyframe(int new_x, int new_y, int new_w, int new_h, int timestamp, bool new_visible = true, int new_align = -1, int new_justify = -1);
+    void addKeyframe(int new_x, int new_y, int new_w, int new_h, float new_timestamp, bool new_visible = true);
     keyframe getCurrentKeyFrame() const;
     void setVisible(bool isVisible)
     {
@@ -164,7 +163,7 @@ class ScreenRow : public UIElGroup {
     ScreenRow(string init_name, int init_size);
     void navigateTo(int i);
     void navigateTo(int row, int col);
-    int navigateTo(string row_name);
+    void navigateTo(string row_name);
     void navigateTo(string row_name, string col_name);
     void navigateTo(char dir);
     void draw() override;
