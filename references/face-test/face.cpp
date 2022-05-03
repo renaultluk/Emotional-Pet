@@ -8,6 +8,7 @@ void Eyelid::draw()
     int vertical_pt_x = dir_right ? horizontal_pt_x : x;
     int vertical_pt_y = y + h;
     // tft.fillTriangle(x, y, horizontal_pt_x, horizontal_pt_y, vertical_pt_x, vertical_pt_y, PRIMARY_COLOR);
+    cout << "Eyelid " << dir_right << " drawn" << endl;
   }
 }
 
