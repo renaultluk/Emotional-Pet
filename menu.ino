@@ -201,6 +201,14 @@ void UIElGroup::update(float (*velocityFunc)(int, int))
   }
 }
 
+void UIElGroup::draw()
+{
+  for (int i = 0; i < amount; i++)
+  {
+    elements[i]->draw();
+  }
+}
+
 
 void Block::draw()
 {
@@ -414,35 +422,43 @@ void ScreenRow::navigateTo(char dir)
   switch (dir)
   {
     case 'u':
-      ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
-      int newIndex = curr->getColIndex() - 1;
-      if (newIndex > 0) {
-        if (newIndex < curr->getSize());
-        else newIndex = curr->getSize();
-      } else {
-        newIndex = 0;
+      {
+        ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
+        int newIndex = curr->getColIndex() - 1;
+        if (newIndex > 0) {
+          if (newIndex < curr->getSize());
+          else newIndex = curr->getSize();
+        } else {
+          newIndex = 0;
+        }
+        curr->navigateTo(newIndex);
+        break;
       }
-      curr->navigateTo(newIndex);
-      break;
     case 'l':
-      int newIndex = (rowIndex - 1) % size;
-      navigateTo(newIndex);
-      break;
-    case 'd':
-      ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
-      int newIndex = curr->getColIndex() + 1;
-      if (newIndex > 0) {
-        if (newIndex < curr->getSize());
-        else newIndex = curr->getSize();
-      } else {
-        newIndex = 0;
+      {
+        int newIndex = (rowIndex - 1) % size;
+        navigateTo(newIndex);
+        break;
       }
-      curr->navigateTo(newIndex);
-      break;
+    case 'd':
+      {
+        ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
+        int newIndex = curr->getColIndex() + 1;
+        if (newIndex > 0) {
+          if (newIndex < curr->getSize());
+          else newIndex = curr->getSize();
+        } else {
+          newIndex = 0;
+        }
+        curr->navigateTo(newIndex);
+        break;
+      }
     case 'r':
-      int newIndex = (rowIndex + 1) % size;
-      navigateTo(newIndex);
-      break;
+      {
+        int newIndex = (rowIndex + 1) % size;
+        navigateTo(newIndex);
+        break;
+      }
     default:
       break;
   }

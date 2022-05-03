@@ -1,3 +1,6 @@
+#ifndef MENU_H
+#define MENU_H
+
 #include "main.h"
 
 #define FRAME_RATE      15
@@ -54,14 +57,14 @@ class UIElement {
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int16_t delta_x, int16_t delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int));
-    void update(float (*velocityFunc)(int, int));
+    virtual void update(float (*velocityFunc)(int, int));
     void addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible = true);
     keyframe getCurrentKeyFrame() const;
     void setVisible(bool isVisible)
     {
       visible = isVisible;
     }
-    virtual void draw();
+    virtual void draw() = 0;
 
     static int anim_iterator;
     static int anim_time;
@@ -166,3 +169,5 @@ class ScreenRow : public UIElGroup {
     void navigateTo(char dir);
     void draw() override;
 };
+
+#endif
