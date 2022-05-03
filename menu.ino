@@ -85,7 +85,7 @@ void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t
   keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, new_timestamp * FRAME_RATE};
 }
 
-keyframe getCurrentKeyframe() const
+keyframe UIElement::getCurrentKeyframe() const
 {
   return keyframes[head];
 }
