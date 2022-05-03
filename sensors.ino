@@ -96,12 +96,12 @@ void IRAM_ATTR touch2Callback() {
 }
 
 void checkPetting() {
-  if (!touch1 && !touch2) {
+  if (!touched1 && !touched2) {
     touchQueue[0] = 0;
     touchQueue[1] = 0;
   }
 
-  if (touch2) {
+  if (touched2) {
     if (touchQueue[1] == 1) {
       // petted
     }
