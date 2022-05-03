@@ -1,6 +1,8 @@
 #include "face.h"
+#include "menu.h"
 
-void main() {
+int main() {
   Face face;
   face.draw();
+  return 0;
 }
