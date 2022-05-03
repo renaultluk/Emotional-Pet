@@ -1,5 +1,9 @@
+#ifndef MENU_H
+#define MENU_H
+
 #include <iostream>
 #include <string>
+#include <cmath>
 
 using namespace std;
 
@@ -57,14 +61,14 @@ class UIElement {
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int delta_x, int delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int));
-    void update(float (*velocityFunc)(int, int));
+    virtual void update(float (*velocityFunc)(int, int));
     void addKeyframe(int new_x, int new_y, int new_w, int new_h, float new_timestamp, bool new_visible = true);
     keyframe getCurrentKeyFrame() const;
     void setVisible(bool isVisible)
     {
       visible = isVisible;
     }
-    virtual void draw();
+    virtual void draw() = 0;
 
     static int anim_iterator;
     static int anim_time;
@@ -169,3 +173,7 @@ class ScreenRow : public UIElGroup {
     void navigateTo(char dir);
     void draw() override;
 };
+
+#include "menu.cpp"
+
+#endif
