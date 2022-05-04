@@ -2,7 +2,7 @@
 
 float linear(int t, int i)
 {
-  return 1/t;
+  return i/t;
 }
 
 float easeIn(int t, int i)
