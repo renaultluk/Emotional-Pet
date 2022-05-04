@@ -95,8 +95,8 @@ void Face::changeFaceState(faceState_t newFaceState)
   {
     case NEUTRAL:
       forehead.addKeyframe(43, 0, 156, 69, 2);
-      leftEyelid.addKeyframe(42, 20, 50, 50, 2);
-      rightEyelid.addKeyframe(200, 20, 50, 50, 2);
+      leftEyelid.addKeyframe(42, 20, 50, 50, 2, false);
+      rightEyelid.addKeyframe(200, 20, 50, 50, 2, false);
       leftEye.addKeyframe(46, 69, 37, 104, 2);
       rightEye.addKeyframe(158, 69, 37, 104, 2);
       faceBottom.addKeyframe(18, 178, 204, 63, 2);

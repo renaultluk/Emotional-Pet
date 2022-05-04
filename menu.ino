@@ -64,13 +64,17 @@ void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
 void UIElement::update(float (*velocityFunc)(int, int))
 {
   if (head == tail) return;
-  if (iterator == 0 && keyframes[target].visible == true) visible = true;
+  if (iterator == 0 && head != tail)
+  {
+    target = (head + 1) % 5;
+    if (keyframes[target].visible == true) setVisible(true);
+  }
   int t = keyframes[target].timestamp;
   if (iterator == t)
   {
     if (keyframes[target].visible == false) visible = false;
     head++;
-    target = (head + 1) % 5;
+    // target = (head + 1) % 5;
     iterator = 0;
   } else {
     if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, iterator, velocityFunc);
