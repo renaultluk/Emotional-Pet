@@ -65,7 +65,10 @@ void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
 void UIElement::update(float (*velocityFunc)(int, int))
 {
   if (head == tail) return;
-  if (iterator == 0) setVisible(keyframes[target].visible);
+  if (iterator == 0 && head != tail) {
+      target = (head + 1) % 5;
+      setVisible(keyframes[target].visible);
+  }
   int t = keyframes[target].timestamp;
   if (iterator == t)
   {
@@ -225,6 +228,8 @@ void Block::draw()
   if (visible) 
     // tft.fillRect(x, y, w, h, PRIMARY_COLOR);
     cout << "Block " << name << " drawn" << endl;
+  else
+    cout << "Block " << name << " not visible" << endl;
 }
 
 void Rounded::draw()
@@ -237,17 +242,23 @@ void Rounded::draw()
     else
       // tft.fillRoundRect(x, y, w, h, CORNER_RADIUS, SECONDARY_COLOR);
       cout << "Secondary Rounded " << name << " drawn" << endl;
+  } else {
+    cout << "Rounded " << name << " not visible" << endl;
   }
 }
 
 void Circle::draw()
 {
-  if (filled) 
-    // tft.fillCircle(x, y, w / 2, PRIMARY_COLOR);
-    cout << "Filled Circle " << name << " drawn" << endl;
-  else 
-    // tft.drawCircle(x, y, w / 2, PRIMARY_COLOR);
-    cout << "Unfilled Circle " << name << " drawn" << endl;
+  if (visible) {
+    if (filled) 
+      // tft.fillCircle(x, y, w / 2, PRIMARY_COLOR);
+      cout << "Filled Circle " << name << " drawn" << endl;
+    else 
+      // tft.drawCircle(x, y, w / 2, PRIMARY_COLOR);
+      cout << "Unfilled Circle " << name << " drawn" << endl;
+  } else {
+    cout << "Circle " << name << " not visible" << endl;
+  }
 }
 
 void Image::draw()

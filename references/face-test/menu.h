@@ -67,6 +67,7 @@ class UIElement {
     void setVisible(bool isVisible)
     {
       visible = isVisible;
+      cout << "Element visible? " << visible << endl;
     }
     virtual void draw() = 0;
 
