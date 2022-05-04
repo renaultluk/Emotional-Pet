@@ -14,7 +14,7 @@ class Eyelid : public UIElement {
       dir_right = right;
       visible = false;
     };
-    void setDir(bool newDir) { dir_right = newDir };
+    void setDir(bool newDir) { dir_right = newDir; };
     void draw();
 };
 
@@ -36,7 +36,7 @@ class Face {
   public:
     Face();
     void changeFaceState(faceState_t newFaceState);
-    void update() override;
+    void update();
     void draw();
 };
 

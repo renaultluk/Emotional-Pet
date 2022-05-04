@@ -5,8 +5,6 @@
 
 #define FRAME_RATE      15
 
-#define PI              3.14159
-
 #define CORNER_RADIUS   5
 
 #define PRIMARY_COLOR   TFT_WHITE

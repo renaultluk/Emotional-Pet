@@ -79,7 +79,7 @@ void UIElement::update(float (*velocityFunc)(int, int))
   }
 }
 
-void UIElement::addKeyFrame(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible)
+void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible)
 {
   tail = (tail + 1) % 5;
   keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, (int)(new_timestamp * FRAME_RATE)};
