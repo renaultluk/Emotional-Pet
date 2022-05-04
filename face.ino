@@ -13,8 +13,8 @@ void Eyelid::draw()
 
 Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(42, 20, 50, 50, true), leftEye(42, 20, 50, 50, false), rightEye(42, 20, 50, 50, false), faceBottom(43, 69, 156, 69), menu("menu", 3)
 {
-  anim_iterator = 0;
-  anim_time = 0;
+  // anim_iterator = 0;
+  // anim_time = 0;
   faceState = NEUTRAL;
 
   // forehead = Block(43, 0, 156, 69);
@@ -41,7 +41,7 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new UIElGroup("main", 3));
   curr->add(new UIElGroup("record", 3));
 
-  menu["settings"]->add(new UIElGroup("main", 2));
+  static_cast<UIElGroup*>(menu["settings"])->add(new UIElGroup("main", 2));
 
   // Page Content
   curr = static_cast<UIElGroup*>(menu["listen"]);
@@ -101,7 +101,7 @@ void Face::changeFaceState(faceState_t newFaceState)
       rightEye.addKeyframe(158, 69, 37, 104, 2);
       faceBottom.addKeyframe(18, 178, 204, 63, 2);
       velocityFunc = easeOut;
-      anim_time = 2 * FRAME_RATE;
+      // anim_time = 2 * FRAME_RATE;
       break;
 
     case HAPPY:
@@ -112,7 +112,7 @@ void Face::changeFaceState(faceState_t newFaceState)
       rightEye.addKeyframe(117, 35, 37, 104, 2);
       faceBottom.addKeyframe(18, 178, 204, 63, 2);
       velocityFunc = easeInOut;
-      anim_time = 2 * FRAME_RATE;
+      // anim_time = 2 * FRAME_RATE;
       break;
 
     case SAD:
@@ -123,7 +123,7 @@ void Face::changeFaceState(faceState_t newFaceState)
       rightEye.addKeyframe(175, 94, 37, 104, 2);
       faceBottom.addKeyframe(36, 203, 204, 63, 2);
       velocityFunc = easeInOut;
-      anim_time = 2 * FRAME_RATE;
+      // anim_time = 2 * FRAME_RATE;
       break;
     
     case BLINK:
@@ -131,7 +131,7 @@ void Face::changeFaceState(faceState_t newFaceState)
       forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h + 120, 0.5);
       forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h, 0.5);
       velocityFunc = linear;
-      anim_time = FRAME_RATE;
+      // anim_time = FRAME_RATE;
       break;
   }
 }
