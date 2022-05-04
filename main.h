@@ -3,7 +3,7 @@
 
 // ******* Includes ******* //
 
-// #include <Arduino.h>
+#include <Arduino.h>
 #include <TFT_eSPI.h>
 #include <SPI.h>
 #include <MPU6050.h>

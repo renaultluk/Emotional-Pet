@@ -39,7 +39,7 @@ void jpegRender(int16_t xpos, int16_t ypos);
 
 class UIElement {
   public:
-    string name;
+    String name;
     int16_t x;
     int16_t y;
     int16_t w;
@@ -51,7 +51,7 @@ class UIElement {
     int target;
     int iterator;
 
-    UIElement(int16_t init_x = 0, int16_t init_y = 0, int16_t init_w = 0, int16_t init_h = 0, string init_name = "");
+    UIElement(int16_t init_x = 0, int16_t init_y = 0, int16_t init_w = 0, int16_t init_h = 0, String init_name = "");
     void move(int t, int i, float (*velocityFunc)(int, int));
     void move(int16_t delta_x, int16_t delta_y);
     void scale(int t, int i, float (*velocityFunc)(int, int));
@@ -76,21 +76,21 @@ class UIElGroup : public UIElement {
 
   public:
     UIElGroup() : UIElement() { amount = 0; iterator = 0; };
-    UIElGroup(string init_name, int init_size);
+    UIElGroup(String init_name, int init_size);
     ~UIElGroup();
     int getSize() const;
     void add(UIElement* element);
     void remove(UIElement* target);
     void updateAttr();
     UIElement* operator[](int i);
-    UIElement* operator[](string query);
+    UIElement* operator[](String query);
     void update(float (*velocityFunc)(int, int)) override;
     void draw();
 };
 
 class Block : public UIElement {
   public:
-    Block(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, string name = "") : UIElement(init_x, init_y, init_w, init_h, name) { };
+    Block(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, String name = "") : UIElement(init_x, init_y, init_w, init_h, name) { };
     void draw();
 };
 
@@ -98,7 +98,7 @@ class Rounded : public UIElement {
   private:
     bool primary;
   public:
-    Rounded(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, bool isPrimary, string name = "") : UIElement(init_x, init_y, init_w, init_h)
+    Rounded(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, bool isPrimary, String name = "") : UIElement(init_x, init_y, init_w, init_h)
     {
       primary = isPrimary;
     };
@@ -110,7 +110,7 @@ class Circle : public UIElement {
     bool filled;
 
   public:
-    Circle(int16_t init_x, int16_t init_y, int16_t init_r, bool isFilled, string name = "") : UIElement(init_x, init_y, init_r, init_r)
+    Circle(int16_t init_x, int16_t init_y, int16_t init_r, bool isFilled, String name = "") : UIElement(init_x, init_y, init_r, init_r)
     {
       filled = isFilled;
     }
@@ -119,10 +119,10 @@ class Circle : public UIElement {
 
 class Image : public UIElement {
   private:
-    string src;
+    String src;
 
   public:
-    Image(int16_t init_x, int16_t init_y, string init_src) : UIElement(init_x, init_y)
+    Image(int16_t init_x, int16_t init_y, String init_src) : UIElement(init_x, init_y)
     {
       src = init_src;
     }
@@ -131,11 +131,11 @@ class Image : public UIElement {
 
 class Text : public UIElement {
   private:
-    string content;
+    String content;
     bool primary;
 
   public:
-    Text(int16_t init_x, int16_t init_y, string init_content, bool isPrimary, string name = "") : UIElement(init_x, init_y, 0, 0, name)
+    Text(int16_t init_x, int16_t init_y, String init_content, bool isPrimary, String name = "") : UIElement(init_x, init_y, 0, 0, name)
     {
       content = init_content;
       primary = isPrimary;
@@ -148,7 +148,7 @@ class ScreenCol : public UIElGroup {
     int colIndex;
   public:
     ScreenCol();
-    ScreenCol(string init_name, int init_size);
+    ScreenCol(String init_name, int init_size);
     void navigateTo(int i);
     int getColIndex() const;
     void draw() override;
@@ -159,11 +159,11 @@ class ScreenRow : public UIElGroup {
     int rowIndex;
   public:
     ScreenRow();
-    ScreenRow(string init_name, int init_size);
+    ScreenRow(String init_name, int init_size);
     void navigateTo(int i);
     void navigateTo(int row, int col);
-    void navigateTo(string row_name);
-    void navigateTo(string row_name, string col_name);
+    void navigateTo(String row_name);
+    void navigateTo(String row_name, String col_name);
     void navigateTo(char dir);
     void draw() override;
 };

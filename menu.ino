@@ -22,7 +22,7 @@ float easeInOut(int t, int i)
   return res;
 }
 
-UIElement::UIElement(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, string init_name)
+UIElement::UIElement(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, String init_name)
 {
   name = init_name;
   x = init_x;
@@ -89,12 +89,12 @@ void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t
   keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, (int)(new_timestamp * FRAME_RATE)};
 }
 
-keyframe UIElement::getCurrentKeyframe() const
+keyframe UIElement::getCurrentKeyFrame() const
 {
   return keyframes[head];
 }
 
-UIElGroup::UIElGroup(string init_name, int init_size) : UIElement(0, 0, 0, 0, init_name)
+UIElGroup::UIElGroup(String init_name, int init_size) : UIElement(0, 0, 0, 0, init_name)
 {
   size = init_size;
   amount = 0;
@@ -177,7 +177,7 @@ UIElement* UIElGroup::operator[](int i)
   return elements[i];
 }
 
-UIElement* UIElGroup::operator[](string query)
+UIElement* UIElGroup::operator[](String query)
 {
   for (int i = 0; i < size; i++)
   {
@@ -354,7 +354,7 @@ ScreenCol::ScreenCol() : UIElGroup()
   colIndex = 0;
 }
 
-ScreenCol::ScreenCol(string init_name, int init_size) : UIElGroup(init_name, init_size)
+ScreenCol::ScreenCol(String init_name, int init_size) : UIElGroup(init_name, init_size)
 {
   colIndex = 0;
 }
@@ -380,7 +380,7 @@ ScreenRow::ScreenRow() : UIElGroup()
   visible = false;
 }
 
-ScreenRow::ScreenRow(string init_name, int init_size) : UIElGroup(init_name, init_size)
+ScreenRow::ScreenRow(String init_name, int init_size) : UIElGroup(init_name, init_size)
 {
   rowIndex = 0;
   visible = false;
@@ -397,7 +397,7 @@ void ScreenRow::navigateTo(int row, int col)
   static_cast<ScreenCol*>(elements[row])->navigateTo(col);
 }
 
-void ScreenRow::navigateTo(string row_name)
+void ScreenRow::navigateTo(String row_name)
 {
   for (int i = 0; i < size; i++)
   {
@@ -408,7 +408,7 @@ void ScreenRow::navigateTo(string row_name)
   }
 }
 
-void ScreenRow::navigateTo(string row_name, string col_name)
+void ScreenRow::navigateTo(String row_name, String col_name)
 {
   navigateTo(row_name);
   ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
