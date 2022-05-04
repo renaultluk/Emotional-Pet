@@ -3,6 +3,7 @@
 
 // ******* Includes ******* //
 
+// #include <Arduino.h>
 #include <TFT_eSPI.h>
 #include <SPI.h>
 #include <MPU6050.h>
@@ -10,6 +11,8 @@
 #include <SD.h>
 #include <JPEGDecoder.h>
 #include <MAX30105.h>
+
+using namespace std::__cxx11;
 
 // ******* Finite State Machine ******* //
 
