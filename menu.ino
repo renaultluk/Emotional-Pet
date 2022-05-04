@@ -110,7 +110,7 @@ int UIElGroup::getSize() const
 void UIElGroup::add(UIElement* element)
 {
   
-  if (amount + 1 < size)
+  if (amount < size)
   {
     elements[amount] = element;
     amount++;

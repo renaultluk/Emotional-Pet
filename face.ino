@@ -11,7 +11,7 @@ void Eyelid::draw()
   }
 }
 
-Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(42, 20, 50, 50, true), leftEye(42, 20, 50, 50, false), rightEye(42, 20, 50, 50, true), faceBottom(43, 69, 156, 69), menu("menu", 3)
+Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(42, 20, 50, 50, true), leftEye(42, 20, 50, 50, false), rightEye(42, 20, 50, 50, false), faceBottom(43, 69, 156, 69), menu("menu", 3)
 {
   anim_iterator = 0;
   anim_time = 0;
