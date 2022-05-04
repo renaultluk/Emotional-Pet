@@ -35,6 +35,7 @@ UIElement::UIElement(int init_x, int init_y, int init_w, int init_h, string init
   head = 0;
   tail = 0;
   target = 0;
+  iterator = 0;
 }
 
 void UIElement::move(int t, int i, float (*velocityFunc)(int, int))
@@ -64,7 +65,7 @@ void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
 void UIElement::update(float (*velocityFunc)(int, int))
 {
   if (head == tail) return;
-  if (iterator == 0 && keyframes[target].visible == true) visible = true;
+  if (iterator == 0) setVisible(keyframes[target].visible);
   int t = keyframes[target].timestamp;
   if (iterator == t)
   {
@@ -110,23 +111,30 @@ int UIElGroup::getSize() const
 void UIElGroup::add(UIElement* element)
 {
   
-  if (amount + 1 < size)
+  if (amount < size)
   {
     elements[amount] = element;
     amount++;
     updateAttr();
     return;
   }
+  cout << "need expansion" << endl;
   UIElement** newList = new UIElement* [size * 2];
   for (int i = 0; i < size; i++)
   {
     newList[i] = elements[i];
   }
   newList[size] = element;
-  elements = newList;
+  elements = new UIElement* [size * 2];
+  for (int i = 0; i < size + 1; i++)
+  {
+    elements[i] = newList[i];
+  }
   size *= 2;
   amount++;
   updateAttr();
+  delete[] newList;
+  cout << "finish expansion" << endl;
 }
 
 void UIElGroup::remove(UIElement* element)
@@ -149,6 +157,7 @@ void UIElGroup::remove(UIElement* element)
 
 void UIElGroup::updateAttr()
 {
+  // cout << "Updating attributes" << endl;
   int min_x = elements[0]->x;
   int min_y = elements[0]->y;
   int max_x = elements[0]->x;
@@ -166,6 +175,7 @@ void UIElGroup::updateAttr()
   y = min_y;
   w = max_x - min_x;
   h = max_y - min_y;
+  // cout << "Finished updating attributes" << endl;
 }
 
 UIElement* UIElGroup::operator[](int i)

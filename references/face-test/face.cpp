@@ -12,7 +12,7 @@ void Eyelid::draw()
   }
 }
 
-Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(42, 20, 50, 50, true), leftEye(42, 20, 50, 50, false), rightEye(42, 20, 50, 50, true), faceBottom(43, 69, 156, 69), menu("menu", 3)
+Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(42, 20, 50, 50, true), leftEye(42, 20, 50, 50, false), rightEye(42, 20, 50, 50, false), faceBottom(43, 69, 156, 69), menu("menu", 3)
 {
   // anim_iterator = 0;
   // anim_time = 0;
@@ -43,6 +43,8 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new UIElGroup("record", 3));
 
   static_cast<UIElGroup*>(menu["settings"])->add(new UIElGroup("main", 2));
+
+  cout << "Added Screens" << endl;
 
   // Page Content
   curr = static_cast<UIElGroup*>(menu["listen"]);
@@ -88,10 +90,13 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr = static_cast<UIElGroup*>((*curr)["main"]);
   curr->add(new Image(93, 80, "icons/settings.jpg"));
   curr->add(new Text(89, 155, "Settings", true));
+
+  cout << "Finished constructing face" << endl;
 }
 
 void Face::changeFaceState(faceState_t newFaceState)
 {
+  cout << "Changing face state to " << newFaceState << endl;
   switch (newFaceState)
   {
     case NEUTRAL:
@@ -118,8 +123,8 @@ void Face::changeFaceState(faceState_t newFaceState)
 
     case SAD:
       forehead.addKeyframe(60, 38, 156, 45, 2);
-      leftEyelid.addKeyframe(83, 83, 50, 50, 2);
-      rightEyelid.addKeyframe(215, 83, 50, 50, 2);
+      leftEyelid.addKeyframe(83, 83, 50, 50, 2, true);
+      rightEyelid.addKeyframe(215, 83, 50, 50, 2, true);
       leftEye.addKeyframe(83, 94, 37, 104, 2);
       rightEye.addKeyframe(175, 94, 37, 104, 2);
       faceBottom.addKeyframe(36, 203, 204, 63, 2);
@@ -135,21 +140,30 @@ void Face::changeFaceState(faceState_t newFaceState)
       // anim_time = FRAME_RATE;
       break;
   }
+  cout << "Finished changing face state" << endl;
 }
 
 void Face::update()
 {
   forehead.update(velocityFunc);
+  cout << "updated forehead" << endl;
   leftEyelid.update(velocityFunc);
+  cout << "updated leftEyelid" << endl;
   rightEyelid.update(velocityFunc);
+  cout << "updated rightEyelid" << endl;
   leftEye.update(velocityFunc);
+  cout << "updated leftEye" << endl;
   rightEye.update(velocityFunc);
+  cout << "updated rightEye" << endl;
   faceBottom.update(velocityFunc);
+  cout << "updated faceBottom" << endl;
   menu.update(velocityFunc);
+  cout << "updated menu" << endl;
 }
 
 void Face::draw()
 {
+  cout << "face draw" << endl;
   // tft.fillScreen(PRIMARY_COLOR);
   leftEye.draw();
   rightEye.draw();

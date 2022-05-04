@@ -3,6 +3,8 @@
 
 int main() {
   Face face;
+  face.changeFaceState(SAD);
+  face.update();
   face.draw();
   return 0;
 }
