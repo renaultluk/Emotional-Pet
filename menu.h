@@ -143,6 +143,20 @@ class Text : public UIElement {
     void draw();
 };
 
+class ListItem : public UIElement {
+  private:
+    String title;
+    String subtitle;
+  
+  public:
+    ListItem(int16_t init_x, int16_t init_y, String init_title, String init_subtitle, String name = "") : UIElement(init_x, init_y, 130, 60, name)
+    {
+      title = init_title;
+      subtitle = init_subtitle;
+    }
+    void draw();
+};
+
 class ScreenCol : public UIElGroup {
   private:
     int colIndex;

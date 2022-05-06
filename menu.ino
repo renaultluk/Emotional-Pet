@@ -349,6 +349,18 @@ void Text::draw()
   tft.drawString(content, x, y, 4);
 }
 
+void ListItem::draw()
+{
+  if (visible)
+  {
+    tft.setTextColor(PRIMARY_COLOR);
+    tft.drawString(title, x + 7, y + 5, 4);
+    tft.setTextColor(SECONDARY_COLOR);
+    tft.drawString(subtitle, x + 98, y + 5, 4);
+    tft.drawFastHLine(x, y + h, w, SECONDARY_COLOR);
+  }
+}
+
 ScreenCol::ScreenCol() : UIElGroup()
 {
   colIndex = 0;
