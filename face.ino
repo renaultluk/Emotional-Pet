@@ -11,7 +11,7 @@ void Eyelid::draw()
   }
 }
 
-Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(42, 20, 50, 50, true), leftEye(42, 20, 50, 50, false), rightEye(42, 20, 50, 50, false), faceBottom(43, 69, 156, 69), menu("menu", 3)
+Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(200, 20, 50, 50, true), leftEye(46, 69, 37, 104, false), rightEye(158, 69, 37, 104, false), faceBottom(18, 178, 204, 63), menu("menu", 3)
 {
   // anim_iterator = 0;
   // anim_time = 0;
@@ -91,9 +91,11 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
 
 void Face::changeFaceState(faceState_t newFaceState)
 {
+  Serial.print("Switched to ");
+  Serial.println(newFaceState);
   switch (newFaceState)
   {
-    case NEUTRAL:
+    case NEUTRAL: {
       forehead.addKeyframe(43, 0, 156, 69, 2);
       leftEyelid.addKeyframe(42, 20, 50, 50, 2, false);
       rightEyelid.addKeyframe(200, 20, 50, 50, 2, false);
@@ -103,8 +105,9 @@ void Face::changeFaceState(faceState_t newFaceState)
       velocityFunc = easeOut;
       // anim_time = 2 * FRAME_RATE;
       break;
+    }
 
-    case HAPPY:
+    case HAPPY: {
       forehead.addKeyframe(23, 0, 156, 35, 2);
       leftEyelid.addKeyframe(25, -4, 50, 50, 2, false);
       rightEyelid.addKeyframe(157, -4, 50, 50, 2, false);
@@ -114,8 +117,9 @@ void Face::changeFaceState(faceState_t newFaceState)
       velocityFunc = easeInOut;
       // anim_time = 2 * FRAME_RATE;
       break;
+    }
 
-    case SAD:
+    case SAD: {
       forehead.addKeyframe(60, 38, 156, 45, 2);
       leftEyelid.addKeyframe(83, 83, 50, 50, 2);
       rightEyelid.addKeyframe(215, 83, 50, 50, 2);
@@ -125,14 +129,28 @@ void Face::changeFaceState(faceState_t newFaceState)
       velocityFunc = easeInOut;
       // anim_time = 2 * FRAME_RATE;
       break;
+    }
     
-    case BLINK:
+    case BLINK: {
       keyframe snapshot = forehead.getCurrentKeyFrame();
-      forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h + 120, 0.5);
+      forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h + 150, 0.5);
       forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h, 0.5);
       velocityFunc = linear;
       // anim_time = FRAME_RATE;
       break;
+    }
+
+    default: {
+      forehead.addKeyframe(43, 0, 156, 69, 2);
+      leftEyelid.addKeyframe(42, 20, 50, 50, 2, false);
+      rightEyelid.addKeyframe(200, 20, 50, 50, 2, false);
+      leftEye.addKeyframe(46, 69, 37, 104, 2);
+      rightEye.addKeyframe(158, 69, 37, 104, 2);
+      faceBottom.addKeyframe(18, 178, 204, 63, 2);
+      velocityFunc = easeOut;
+      // anim_time = 2 * FRAME_RATE;
+      break;
+    }
   }
 }
 

@@ -12,6 +12,8 @@
 #include <JPEGDecoder.h>
 #include <MAX30105.h>
 
+#include "face.h"
+
 using namespace std::__cxx11;
 
 // ******* Finite State Machine ******* //

@@ -5,10 +5,10 @@
 
 #define FRAME_RATE      15
 
-#define CORNER_RADIUS   5
+#define CORNER_RADIUS   18
 
 #define PRIMARY_COLOR   TFT_WHITE
-#define SECONDARY_COLOR TFT_BLUE
+#define SECONDARY_COLOR TFT_SKYBLUE
 
 typedef enum {
   NEUTRAL,
