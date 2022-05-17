@@ -52,37 +52,27 @@ void loop() {
     tilt_up = false;
     tilt_down = false;
     tilt_ready = true;
-    Serial.print("tilt_center");
-    Serial.println("");
   }
   if ((a.acceleration.x > tilt_value) && (tilt_ready == true)){
     tilt_right = true;
     tilt_center = false;
     tilt_ready = false;
-    Serial.print("tilt right");
-    Serial.println("");
     
   }
   if ((a.acceleration.x < -tilt_value) && (tilt_ready == true)){
     tilt_left = true;
     tilt_center = false;
     tilt_ready = false;
-    Serial.print("tilt left");
-    Serial.println("");
   }
   if ((a.acceleration.y > tilt_value) && (tilt_ready == true)){
     tilt_up = true;
     tilt_center = false;
     tilt_ready = false;
-    Serial.print("tilt up");
-    Serial.println("");
   }
   if ((a.acceleration.y < -tilt_value) && (tilt_ready == true)){
     tilt_down = true;
     tilt_center = false;
     tilt_ready = false;
-    Serial.print("tilt down");
-    Serial.println("");
   }
 
 }
