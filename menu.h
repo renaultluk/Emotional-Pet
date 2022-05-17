@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define FRAME_RATE      15
+#define FRAME_RATE      20
 
 #define CORNER_RADIUS   18
 
@@ -45,7 +45,7 @@ class UIElement {
     int16_t w;
     int16_t h;
     bool visible;
-    keyframe keyframes[5];
+    keyframe keyframes[10];
     int head;
     int tail;
     int target;
@@ -62,7 +62,7 @@ class UIElement {
     {
       visible = isVisible;
     }
-    virtual void draw() = 0;
+    virtual void draw(bool sel) = 0;
 
     static int anim_iterator;
     static int anim_time;
@@ -85,13 +85,13 @@ class UIElGroup : public UIElement {
     UIElement* operator[](int i);
     UIElement* operator[](String query);
     void update(float (*velocityFunc)(int, int)) override;
-    void draw();
+    void draw(bool sel);
 };
 
 class Block : public UIElement {
   public:
     Block(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, String name = "") : UIElement(init_x, init_y, init_w, init_h, name) { };
-    void draw();
+    void draw(bool sel);
 };
 
 class Rounded : public UIElement {
@@ -102,7 +102,7 @@ class Rounded : public UIElement {
     {
       primary = isPrimary;
     };
-    void draw();
+    void draw(bool sel);
 };
 
 class Circle : public UIElement {
@@ -114,7 +114,7 @@ class Circle : public UIElement {
     {
       filled = isFilled;
     }
-    void draw();
+    void draw(bool sel);
 };
 
 class Image : public UIElement {
@@ -126,7 +126,7 @@ class Image : public UIElement {
     {
       src = init_src;
     }
-    void draw();
+    void draw(bool sel);
 };
 
 class Text : public UIElement {
@@ -140,7 +140,7 @@ class Text : public UIElement {
       content = init_content;
       primary = isPrimary;
     }
-    void draw();
+    void draw(bool sel);
 };
 
 class ListItem : public UIElement {
@@ -154,7 +154,7 @@ class ListItem : public UIElement {
       title = init_title;
       subtitle = init_subtitle;
     }
-    void draw();
+    void draw(bool sel);
 };
 
 class ScreenCol : public UIElGroup {
@@ -165,7 +165,7 @@ class ScreenCol : public UIElGroup {
     ScreenCol(String init_name, int init_size);
     void navigateTo(int i);
     int getColIndex() const;
-    void draw() override;
+    void draw(bool sel) override;
 };
 
 class ScreenRow : public UIElGroup {
@@ -179,7 +179,7 @@ class ScreenRow : public UIElGroup {
     void navigateTo(String row_name);
     void navigateTo(String row_name, String col_name);
     void navigateTo(char dir);
-    void draw() override;
+    void draw(bool sel) override;
 };
 
 #endif

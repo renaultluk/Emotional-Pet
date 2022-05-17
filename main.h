@@ -61,6 +61,8 @@ int touchQueue[2];
 // ******* Component Objects ******* //
 
 TFT_eSPI tft = TFT_eSPI();
+TFT_eSprite spr[2] = {TFT_eSprite(&tft), TFT_eSprite(&tft)};
+uint16_t* sprPtr[2];
 SPIClass spiSD(HSPI);
 MPU6050 mpu;
 MAX30105 heartRateSensor;

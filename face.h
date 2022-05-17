@@ -15,7 +15,7 @@ class Eyelid : public UIElement {
       visible = false;
     };
     void setDir(bool newDir) { dir_right = newDir; };
-    void draw();
+    void draw(bool sel);
 };
 
 class Face {
@@ -37,7 +37,7 @@ class Face {
     Face();
     void changeFaceState(faceState_t newFaceState);
     void update();
-    void draw();
+    void draw(bool sel);
 };
 
 int UIElement::anim_iterator = 0;

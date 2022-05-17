@@ -1,13 +1,13 @@
 #include "face.h"
 
-void Eyelid::draw()
+void Eyelid::draw(bool sel)
 {
   if (visible) {
     int horizontal_pt_x = x + w;
     int horizontal_pt_y = y;
     int vertical_pt_x = dir_right ? horizontal_pt_x : x;
     int vertical_pt_y = y + h;
-    tft.fillTriangle(x, y, horizontal_pt_x, horizontal_pt_y, vertical_pt_x, vertical_pt_y, PRIMARY_COLOR);
+    spr[sel].fillTriangle(x, y, horizontal_pt_x, horizontal_pt_y, vertical_pt_x, vertical_pt_y, PRIMARY_COLOR);
   }
 }
 
@@ -132,8 +132,10 @@ void Face::changeFaceState(faceState_t newFaceState)
     }
     
     case BLINK: {
-      keyframe snapshot = forehead.getCurrentKeyFrame();
-      forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h + 150, 0.5);
+      keyframe snapshot;
+      if (faceState == NEUTRAL)
+        snapshot = {43, 0, 156, 69, true, 2};
+      forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h + 120, 0.5);
       forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h, 0.5);
       velocityFunc = linear;
       // anim_time = FRAME_RATE;
@@ -165,16 +167,19 @@ void Face::update()
   menu.update(velocityFunc);
 }
 
-void Face::draw()
+void Face::draw(bool sel)
 {
-  tft.fillScreen(PRIMARY_COLOR);
-  leftEye.draw();
-  rightEye.draw();
-  leftEyelid.draw();
-  rightEyelid.draw();
-  faceBottom.draw();
-  forehead.draw();
+  spr[sel].fillScreen(PRIMARY_COLOR);
+  leftEye.draw(sel);
+  rightEye.draw(sel);
+  leftEyelid.draw(sel);
+  rightEyelid.draw(sel);
+  faceBottom.draw(sel);
+  forehead.draw(sel);
 
-  menu.draw();
+  menu.draw(sel);
+
+  tft.pushImageDMA(0, sel * TFT_HEIGHT / 2, TFT_WIDTH, TFT_HEIGHT / 2, sprPtr[sel]);
+  if (sel) update();
 }
 
