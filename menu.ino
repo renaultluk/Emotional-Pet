@@ -14,7 +14,9 @@ float easeIn(int t, int i)
 
 float easeOut(int t, int i)
 {
-  return 1 - (1 - i/t) * (1 - i/t);  // Quadratic Ease Out
+  float i_flt = i * 1.0;
+  float t_flt = t * 1.0;
+  return 1 - (1 - i_flt/t_flt) * (1 - i_flt/t_flt);  // Quadratic Ease Out
 }
 
 float easeInOut(int t, int i)
@@ -41,7 +43,9 @@ UIElement::UIElement(int16_t init_x, int16_t init_y, int16_t init_w, int16_t ini
 
 void UIElement::move(int t, int i, float (*velocityFunc)(int, int))
 {
-  float coef = velocityFunc(t, i);
+  float coef = linear(t, i);
+  Serial.print("coef: ");
+  Serial.println(coef);
   int delta_x = coef * (keyframes[target].x - keyframes[head].x);
   int delta_y = coef * (keyframes[target].y - keyframes[head].y);
   x = (abs(delta_x) > abs(keyframes[target].x - x)) ? keyframes[target].x : keyframes[head].x + delta_x;  // prevent overshooting
@@ -56,7 +60,7 @@ void UIElement::move(int16_t delta_x, int16_t delta_y)
 
 void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
 {
-  float coef = velocityFunc(t, i);
+  float coef = linear(t, i);
   int delta_w = coef * (keyframes[target].w - keyframes[head].w);
   int delta_h = coef * (keyframes[target].h - keyframes[head].h);
   w = (abs(delta_w) > abs(keyframes[target].w - w)) ? keyframes[target].w : keyframes[head].w + delta_w;  // prevent overshooting
@@ -71,12 +75,12 @@ void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
 
 void UIElement::update(float (*velocityFunc)(int, int))
 {
-  if (head == tail) 
+  if (head == tail)   // No outstanding keyframes
   {
     // Serial.println("no change");
     return;
   }
-  if (iterator == 0 && head != tail)
+  if (iterator == 0 && head != tail && anim_iterator == 0)  // Starting animation
   {
     target = (target + 1) % 10;
     // Serial.print("new target \t x = ");
@@ -92,11 +96,12 @@ void UIElement::update(float (*velocityFunc)(int, int))
     Serial.print("Inital h:");
     Serial.print(keyframes[head].h);
     Serial.print("Target h:");
-    Serial.print(keyframes[target].h);
+    Serial.println(keyframes[target].h);
+    if (keyframes[target].timestamp > anim_time) anim_time = keyframes[target].timestamp;
     if (keyframes[target].visible == true) setVisible(true);
   }
   int t = keyframes[target].timestamp;
-  if (iterator >= t + 1)
+  if (iterator >= t + 1)    // Finish animation
   {
     Serial.print("FINISHED FROM ");
     Serial.print(head);
@@ -104,13 +109,17 @@ void UIElement::update(float (*velocityFunc)(int, int))
     Serial.println(target);
     if (keyframes[target].visible == false) visible = false;
     head = (head + 1) % 10;
-    // target = (head + 1) % 5;
+    target = (head + 1) % 5;
+    if (iterator >=  anim_time + 1) {   // animation done globally
+      anim_iterator = 0;
+      anim_time = 0;
+    }
     iterator = 0;
   } else {
-    // Serial.print("Iterating ");
-    // Serial.print(iterator);
-    // Serial.print("/");
-    // Serial.println(t);
+    Serial.print("Iterating ");
+    Serial.print(iterator);
+    Serial.print("/");
+    Serial.println(t);
 
     if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, iterator, velocityFunc);
     if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, iterator, velocityFunc);

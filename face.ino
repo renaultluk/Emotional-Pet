@@ -103,19 +103,19 @@ void Face::changeFaceState(faceState_t newFaceState)
       rightEye.addKeyframe(158, 69, 37, 104, 2);
       faceBottom.addKeyframe(18, 178, 204, 63, 2);
       velocityFunc = easeOut;
-      // anim_time = 2 * FRAME_RATE;
+      anim_time = 2 * FRAME_RATE;
       break;
     }
 
     case HAPPY: {
-      forehead.addKeyframe(23, 0, 156, 35, 2);
-      leftEyelid.addKeyframe(25, -4, 50, 50, 2, false);
-      rightEyelid.addKeyframe(157, -4, 50, 50, 2, false);
-      leftEye.addKeyframe(26, 35, 37, 104, 2);
-      rightEye.addKeyframe(117, 35, 37, 104, 2);
-      faceBottom.addKeyframe(18, 178, 204, 63, 2);
+      forehead.addKeyframe(23, 0, 170, 35, 5);
+      leftEyelid.addKeyframe(25, -4, 50, 50, 5, false);
+      rightEyelid.addKeyframe(157, -4, 50, 50, 5, false);
+      leftEye.addKeyframe(26, 35, 37, 104, 5);
+      rightEye.addKeyframe(117, 35, 37, 104, 5);
+      faceBottom.addKeyframe(18, 178, 204, 63, 5);
       velocityFunc = easeInOut;
-      // anim_time = 2 * FRAME_RATE;
+      anim_time = 5 * FRAME_RATE;
       break;
     }
 
@@ -127,18 +127,16 @@ void Face::changeFaceState(faceState_t newFaceState)
       rightEye.addKeyframe(175, 94, 37, 104, 2);
       faceBottom.addKeyframe(36, 203, 204, 63, 2);
       velocityFunc = easeInOut;
-      // anim_time = 2 * FRAME_RATE;
+      anim_time = 2 * FRAME_RATE;
       break;
     }
     
     case BLINK: {
-      keyframe snapshot;
-      if (faceState == NEUTRAL)
-        snapshot = {43, 0, 156, 69, true, 2};
+      keyframe snapshot = forehead.getCurrentKeyFrame();
       forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h + 120, 0.5);
       forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h, 0.5);
       velocityFunc = linear;
-      // anim_time = FRAME_RATE;
+      anim_time = 0.5 * FRAME_RATE;
       break;
     }
 
@@ -150,7 +148,7 @@ void Face::changeFaceState(faceState_t newFaceState)
       rightEye.addKeyframe(158, 69, 37, 104, 2);
       faceBottom.addKeyframe(18, 178, 204, 63, 2);
       velocityFunc = easeOut;
-      // anim_time = 2 * FRAME_RATE;
+      anim_time = 2 * FRAME_RATE;
       break;
     }
   }
@@ -165,6 +163,12 @@ void Face::update()
   rightEye.update(velocityFunc);
   faceBottom.update(velocityFunc);
   menu.update(velocityFunc);
+
+  anim_iterator++;
+  Serial.print("Global iterating: ");
+  Serial.print(anim_iterator);
+  Serial.print("/");
+  Serial.println(anim_time);
 }
 
 void Face::draw(bool sel)

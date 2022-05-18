@@ -39,6 +39,9 @@ void setup() {
   prev_blink = millis();
   curr_blink = millis();
 
+  anim_iterator = 0;
+  anim_time = 0;
+
   tft.fillScreen(TFT_WHITE);
   // face.changeFaceState(SAD);
   // face.draw();
@@ -53,8 +56,10 @@ void loop() {
   // if (btnPr)
 
   if (curr_time - prev_time > (1000 / FRAME_RATE)) {
-    if (curr_blink - prev_blink > 5000) {
+    if (curr_blink - prev_blink > 10000) {
       face.changeFaceState(BLINK);
+      face.changeFaceState(HAPPY);
+      face.changeFaceState(NEUTRAL);
       prev_blink = curr_blink;
     }
     face.draw(0);

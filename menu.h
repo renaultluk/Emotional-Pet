@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define FRAME_RATE      20
+#define FRAME_RATE      5
 
 #define CORNER_RADIUS   18
 
@@ -26,6 +26,9 @@ typedef struct keyframe {
   bool visible;
   int timestamp;
 } keyframe;
+
+int anim_iterator = 0;
+int anim_time = 0;
 
 float linear(int t, int i);
 
@@ -63,9 +66,6 @@ class UIElement {
       visible = isVisible;
     }
     virtual void draw(bool sel) = 0;
-
-    static int anim_iterator;
-    static int anim_time;
 };
 
 class UIElGroup : public UIElement {
@@ -181,5 +181,8 @@ class ScreenRow : public UIElGroup {
     void navigateTo(char dir);
     void draw(bool sel) override;
 };
+
+
+
 
 #endif

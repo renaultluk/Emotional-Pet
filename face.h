@@ -40,7 +40,5 @@ class Face {
     void draw(bool sel);
 };
 
-int UIElement::anim_iterator = 0;
-int UIElement::anim_time = 0;
 
 #endif
