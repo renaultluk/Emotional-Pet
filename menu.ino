@@ -278,8 +278,8 @@ void Rounded::draw(bool sel)
 {
   if (visible) 
   {
-    if (primary) spr[sel].fillRoundRect(x, y, w, h, CORNER_RADIUS, PRIMARY_COLOR);
-    else spr[sel].fillRoundRect(x, y, w, h, CORNER_RADIUS, SECONDARY_COLOR);
+    if (primary) spr[sel].fillRoundRect(x, y, w, h, rad, PRIMARY_COLOR);
+    else spr[sel].fillRoundRect(x, y, w, h, rad, SECONDARY_COLOR);
   }
 }
 
@@ -397,11 +397,39 @@ void jpegRender(int16_t xpos, int16_t ypos, bool sel) {
   // showTime(millis() - drawTime); // These lines are for sketch testing only
 }
 
+void Text::setContent(String newContent)
+{
+  content = newContent;
+}
+
 void Text::draw(bool sel)
 {
   if (primary) spr[sel].setTextColor(PRIMARY_COLOR);
   else spr[sel].setTextColor(SECONDARY_COLOR);
-  spr[sel].drawString(content, x, y, 4);
+  switch (size) {
+    case 0:
+      spr[sel].setFreeFont(TT1);
+      break;
+    case 1:
+      spr[sel].setFreeFont(FSS9);
+      break;
+    case 2:
+      spr[sel].setFreeFont(FSS12);
+      break;
+    case 3:
+      spr[sel].setFreeFont(FSS18);
+      break;
+    case 4:
+      spr[sel].setFreeFont(FSS24);
+      break;
+  }
+  spr[sel].drawString(content, x, y, GFXFF);
+}
+
+void Bar::draw(bool sel)
+{
+  if (primary) spr[sel].drawFastHLine(x, y, w, PRIMARY_COLOR);
+  else spr[sel].drawFastHLine(x, y, w, SECONDARY_COLOR);
 }
 
 void ListItem::draw(bool sel)

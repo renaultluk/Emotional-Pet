@@ -34,7 +34,7 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   UIElGroup* curr = static_cast<UIElGroup*>(menu["listen"]);
   curr->add(new UIElGroup("main", 2));
   curr->add(new UIElGroup("choose", 6));
-  curr->add(new UIElGroup("audio", 8));
+  curr->add(new UIElGroup("audio", 9));
   curr->add(new UIElGroup("friends", 8));
 
   curr = static_cast<UIElGroup*>(menu["record"]);
@@ -51,25 +51,26 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
 
   curr = static_cast<UIElGroup*>(menu["listen"]);
   curr = static_cast<UIElGroup*>((*curr)["choose"]);
-  curr->add(new Rounded(55, 63, 62, 115, true));
-  curr->add(new Rounded(123, 63, 62, 115, true));
+  curr->add(new Rounded(41, 55, 78, 130, true));
+  curr->add(new Rounded(124, 55, 78, 130, true));
   // curr->add(new Image(71, 83, "icons/friends.jpg"));
   // curr->add(new Image(135, 92, "icons/explore.jpg"));
-  curr->add(new Text(69, 149, "Friends", false));
-  curr->add(new Text(139, 149, "Explore", false));
+  curr->add(new Text(79, 148, "Friends", false, "frdsStr", 1));
+  curr->add(new Text(163, 148, "Explore", false, "exploreStr", 1));
 
   // TODO: menu[listen][audio], menu[listen][friends]
 
   curr = static_cast<UIElGroup*>(menu["listen"]);
   curr = static_cast<UIElGroup*>((*curr)["audio"]);
-  curr->add(new Rounded(55, 66, 132, 112, true));
-  curr->add(new Block(62, 113, 0, 2, "progressBar"));
-  curr->add(new Text(62, 118, "00:00", false, "audioProgress"));
-  curr->add(new Text(161, 118, "00:00", false, "audioLength"));
-  curr->add(new Rounded(62, 129, 46, 12, false));
-  curr->add(new Rounded(133, 129, 46, 12, false));
-  curr->add(new Text(75, 155, "Reply", true));
-  curr->add(new Text(138, 130, "Add Friend", true));
+  curr->add(new Rounded(41, 59, 159, 126, true));
+  curr->add(new Bar(49, 112, 142, true));
+  curr->add(new Bar(49, 112, 142, false, "progressBar"));
+  curr->add(new Text(62, 125, "00:00", false, "audioProgress", 0));
+  curr->add(new Text(185, 125, "00:00", false, "audioLength", 0));
+  curr->add(new Rounded(49, 132, 68, 27, false, "replyBtn", 6));
+  curr->add(new Rounded(123, 132, 68, 27, false, "frdBtn", 6));
+  curr->add(new Text(82, 142, "Reply", true, "replyStr", 1));
+  curr->add(new Text(155, 142, "+ Friend", true, "frdStr", 1));
 
   curr = static_cast<UIElGroup*>(menu["record"]);
   curr = static_cast<UIElGroup*>((*curr)["main"]);

@@ -73,22 +73,28 @@ void loop() {
         face.changeFaceState(MENU);
       }
       else if (testCounter == 4) {
-        face.menu.navigateTo('r');
+        face.menu.navigateTo("listen", "audio");
       }
       else if (testCounter == 5) {
-        face.menu.navigateTo("record", "record");
+        face.menu.navigateTo("listen", "choose");
       }
       else if (testCounter == 6) {
-        face.menu.navigateTo("settings", "main");
+        face.menu.navigateTo("record", "main");
       }
       else if (testCounter == 7) {
+        face.menu.navigateTo("record", "record");
+      }
+      else if (testCounter == 8) {
+        face.menu.navigateTo("settings", "main");
+      }
+      else if (testCounter == 9) {
         face.menu.setVisible(false);
         face.menu.navigateTo("listen", "main");
         face.changeFaceState(NEUTRAL);
       }
 
       prev_blink = curr_blink;
-      testCounter = (testCounter + 1) % 8;
+      testCounter = (testCounter + 1) % 10;
     }
     face.draw(0);
     face.draw(1);

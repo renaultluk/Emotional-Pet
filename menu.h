@@ -12,6 +12,13 @@
 #define PRIMARY_COLOR   TFT_WHITE
 #define SECONDARY_COLOR TFT_SKYBLUE
 
+#define GFXFF 1
+#define TT1 &TomThumb
+#define FSS9 &FreeSans9pt7b
+#define FSS12 &FreeSans12pt7b
+#define FSS18 &FreeSans18pt7b
+#define FSS24 &FreeSans24pt7b
+
 typedef enum {
   NEUTRAL,
   HAPPY,
@@ -99,10 +106,13 @@ class Block : public UIElement {
 class Rounded : public UIElement {
   private:
     bool primary;
+    int rad;
+
   public:
-    Rounded(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, bool isPrimary, String name = "") : UIElement(init_x, init_y, init_w, init_h)
+    Rounded(int16_t init_x, int16_t init_y, int16_t init_w, int16_t init_h, bool isPrimary, String name = "", int init_rad = CORNER_RADIUS) : UIElement(init_x, init_y, init_w, init_h)
     {
       primary = isPrimary;
+      rad = init_rad;
     };
     void draw(bool sel);
 };
@@ -134,12 +144,27 @@ class Image : public UIElement {
 class Text : public UIElement {
   private:
     String content;
+    int size;
     bool primary;
 
   public:
-    Text(int16_t init_x, int16_t init_y, String init_content, bool isPrimary, String name = "") : UIElement(init_x, init_y, 0, 0, name)
+    Text(int16_t init_x, int16_t init_y, String init_content, bool isPrimary, String name = "", int init_size = 2) : UIElement(init_x, init_y, 0, 0, name)
     {
       content = init_content;
+      primary = isPrimary;
+      size = init_size;
+    }
+    void setContent(String newContent);
+    void draw(bool sel);
+};
+
+class Bar : public UIElement {
+  private:
+    bool primary;
+  
+  public:
+    Bar(int16_t init_x, int16_t init_y, int16_t init_w, bool isPrimary, String name = "") : UIElement(init_x, init_y, init_w, 0, name)
+    {
       primary = isPrimary;
     }
     void draw(bool sel);
