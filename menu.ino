@@ -283,6 +283,11 @@ void Rounded::draw(bool sel)
   }
 }
 
+void Circle::setFilled(bool newFilled)
+{
+  filled = newFilled;
+}
+
 void Circle::draw(bool sel)
 {
   if (filled) spr[sel].fillCircle(x, y, w / 2, PRIMARY_COLOR);

@@ -126,6 +126,7 @@ class Circle : public UIElement {
     {
       filled = isFilled;
     }
+    void setFilled(bool newFilled);
     void draw(bool sel);
 };
 

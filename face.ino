@@ -41,7 +41,7 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new UIElGroup("main", 3));
   curr->add(new UIElGroup("record", 3));
 
-  static_cast<UIElGroup*>(menu["settings"])->add(new UIElGroup("main", 2));
+  static_cast<UIElGroup*>(menu["settings"])->add(new UIElGroup("main", 4));
 
   // Page Content
   curr = static_cast<UIElGroup*>(menu["listen"]);
@@ -65,8 +65,8 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new Rounded(41, 59, 159, 126, true));
   curr->add(new Bar(49, 112, 142, true));
   curr->add(new Bar(49, 112, 142, false, "progressBar"));
-  curr->add(new Text(62, 125, "00:00", false, "audioProgress", 0));
-  curr->add(new Text(185, 125, "00:00", false, "audioLength", 0));
+  curr->add(new Text(62, 124, "00:00", false, "audioProgress", 0));
+  curr->add(new Text(185, 124, "00:00", false, "audioLength", 0));
   curr->add(new Rounded(49, 132, 68, 27, false, "replyBtn", 6));
   curr->add(new Rounded(123, 132, 68, 27, false, "frdBtn", 6));
   curr->add(new Text(82, 142, "Reply", true, "replyStr", 1));
@@ -87,6 +87,9 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr = static_cast<UIElGroup*>(menu["settings"]);
   curr = static_cast<UIElGroup*>((*curr)["main"]);
   // curr->add(new Image(93, 80, "icons/settings.jpg"));
+  curr->add(new Circle(81, 105, 25, true));
+  curr->add(new Circle(120, 105, 25, true));
+  curr->add(new Circle(157, 105, 25, true));
   curr->add(new Text(120, 170, "Settings", true));
 }
 
