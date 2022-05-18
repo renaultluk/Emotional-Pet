@@ -27,13 +27,13 @@ class Face {
     Rounded rightEye;
     Block faceBottom;
 
-    ScreenRow menu;
-    
     faceState_t faceState;
 
     float (*velocityFunc)(int, int);
 
   public:
+    ScreenRow menu;
+
     Face();
     void changeFaceState(faceState_t newFaceState);
     void update();

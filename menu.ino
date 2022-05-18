@@ -2,14 +2,16 @@
 
 float linear(int t, int i)
 {
-  float a = (i + 1) * 1.0;
-  float b = t * 1.0;
-  return a/b;
+  float i_flt = i * 1.0;
+  float t_flt = t * 1.0;
+  return i_flt/t_flt;
 }
 
 float easeIn(int t, int i)
 {
-  return (i/t) * (i/t);   // Quadratic Ease In
+  float i_flt = i * 1.0;
+  float t_flt = t * 1.0;
+  return (i_flt/t_flt) * (i_flt/t_flt);   // Quadratic Ease In
 }
 
 float easeOut(int t, int i)
@@ -21,7 +23,9 @@ float easeOut(int t, int i)
 
 float easeInOut(int t, int i)
 {
-  float func_x = (1 + i/t) * PI;
+  float i_flt = i * 1.0;
+  float t_flt = t * 1.0;
+  float func_x = (1 + i_flt/t_flt) * PI;
   float res = cos(func_x);  // Sine Ease-In-Out
   return res;
 }
@@ -43,7 +47,7 @@ UIElement::UIElement(int16_t init_x, int16_t init_y, int16_t init_w, int16_t ini
 
 void UIElement::move(int t, int i, float (*velocityFunc)(int, int))
 {
-  float coef = linear(t, i);
+  float coef = velocityFunc(t, i);
   Serial.print("coef: ");
   Serial.println(coef);
   int delta_x = coef * (keyframes[target].x - keyframes[head].x);
@@ -60,7 +64,7 @@ void UIElement::move(int16_t delta_x, int16_t delta_y)
 
 void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
 {
-  float coef = linear(t, i);
+  float coef = velocityFunc(t, i);
   int delta_w = coef * (keyframes[target].w - keyframes[head].w);
   int delta_h = coef * (keyframes[target].h - keyframes[head].h);
   w = (abs(delta_w) > abs(keyframes[target].w - w)) ? keyframes[target].w : keyframes[head].w + delta_w;  // prevent overshooting

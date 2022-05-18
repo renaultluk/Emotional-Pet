@@ -58,19 +58,37 @@ void loop() {
   // if (btnPr)
 
   if (curr_time - prev_time > (1000 / FRAME_RATE)) {
-    if (curr_blink - prev_blink > 10000) {
+    if (curr_blink - prev_blink > 6000) {
       // face.changeFaceState(BLINK);
       if (testCounter == 0) face.changeFaceState(BLINK);
       else if (testCounter == 1) {
         face.changeFaceState(SAD);
         face.changeFaceState(NEUTRAL);
       }
-      if (testCounter == 2) {
+      else if (testCounter == 2) {
         face.changeFaceState(HAPPY);
         face.changeFaceState(NEUTRAL);
       }
+      else if (testCounter == 3) {
+        face.changeFaceState(MENU);
+      }
+      else if (testCounter == 4) {
+        face.menu.navigateTo('r');
+      }
+      else if (testCounter == 5) {
+        face.menu.navigateTo("record", "record");
+      }
+      else if (testCounter == 6) {
+        face.menu.navigateTo("settings", "main");
+      }
+      else if (testCounter == 7) {
+        face.menu.setVisible(false);
+        face.menu.navigateTo("listen", "main");
+        face.changeFaceState(NEUTRAL);
+      }
+
       prev_blink = curr_blink;
-      testCounter = (testCounter + 1) % 3;
+      testCounter = (testCounter + 1) % 8;
     }
     face.draw(0);
     face.draw(1);

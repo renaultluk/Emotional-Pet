@@ -46,15 +46,15 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   // Page Content
   curr = static_cast<UIElGroup*>(menu["listen"]);
   curr = static_cast<UIElGroup*>((*curr)["main"]);
-  curr->add(new Image(75, 75, "icons/headphones.jpg"));
-  curr->add(new Text(97, 155, "Listen", true));
+  // curr->add(new Image(75, 75, "icons/headphones.jpg"));
+  curr->add(new Text(120, 170, "Listen", true));
 
   curr = static_cast<UIElGroup*>(menu["listen"]);
   curr = static_cast<UIElGroup*>((*curr)["choose"]);
   curr->add(new Rounded(55, 63, 62, 115, true));
   curr->add(new Rounded(123, 63, 62, 115, true));
-  curr->add(new Image(71, 83, "icons/friends.jpg"));
-  curr->add(new Image(135, 92, "icons/explore.jpg"));
+  // curr->add(new Image(71, 83, "icons/friends.jpg"));
+  // curr->add(new Image(135, 92, "icons/explore.jpg"));
   curr->add(new Text(69, 149, "Friends", false));
   curr->add(new Text(139, 149, "Explore", false));
 
@@ -68,25 +68,25 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new Text(161, 118, "00:00", false, "audioLength"));
   curr->add(new Rounded(62, 129, 46, 12, false));
   curr->add(new Rounded(133, 129, 46, 12, false));
-  curr->add(new Text(75, 130, "Reply", true));
+  curr->add(new Text(75, 155, "Reply", true));
   curr->add(new Text(138, 130, "Add Friend", true));
 
   curr = static_cast<UIElGroup*>(menu["record"]);
   curr = static_cast<UIElGroup*>((*curr)["main"]);
-  curr->add(new Circle(88, 75, 61, false));
-  curr->add(new Circle(95, 82, 48, true));
-  curr->add(new Text(139, 149, "Record", true));
+  curr->add(new Circle(120, 105, 60, false));
+  curr->add(new Circle(120, 105, 48, true));
+  curr->add(new Text(120, 170, "Record", true));
 
   curr = static_cast<UIElGroup*>(menu["record"]);
   curr = static_cast<UIElGroup*>((*curr)["record"]);
-  curr->add(new Circle(80, 64, 80, false));
-  curr->add(new Circle(90, 73, 62, false, "innerCircle"));
-  curr->add(new Text(139, 149, "00:00", true, "timer"));
+  curr->add(new Circle(120, 105, 80, false));
+  curr->add(new Circle(120, 105, 62, false, "innerCircle"));
+  curr->add(new Text(120, 170, "00:00", true, "timer"));
 
   curr = static_cast<UIElGroup*>(menu["settings"]);
   curr = static_cast<UIElGroup*>((*curr)["main"]);
-  curr->add(new Image(93, 80, "icons/settings.jpg"));
-  curr->add(new Text(89, 155, "Settings", true));
+  // curr->add(new Image(93, 80, "icons/settings.jpg"));
+  curr->add(new Text(120, 170, "Settings", true));
 }
 
 void Face::changeFaceState(faceState_t newFaceState)
@@ -113,7 +113,7 @@ void Face::changeFaceState(faceState_t newFaceState)
       rightEyelid.addKeyframe(157, -4, 50, 50, 3, false);
       leftEye.addKeyframe(26, 35, 37, 104, 3);
       rightEye.addKeyframe(117, 35, 37, 104, 3);
-      faceBottom.addKeyframe(18, 100, 204, 63, 3);
+      faceBottom.addKeyframe(18, 110, 204, 63, 3);
       velocityFunc = easeInOut;
       anim_time = 5 * FRAME_RATE;
       break;
@@ -137,6 +137,20 @@ void Face::changeFaceState(faceState_t newFaceState)
       forehead.addKeyframe(snapshot.x, snapshot.y, snapshot.w, snapshot.h, 0.5);
       velocityFunc = linear;
       anim_time = 0.5 * FRAME_RATE;
+      break;
+    }
+
+    case MENU: {
+      forehead.addKeyframe(43, 0, 156, 0, 2, false);
+      leftEyelid.addKeyframe(42, 20, 50, 0, 2, false);
+      rightEyelid.addKeyframe(200, 20, 50, 0, 2, false);
+      leftEye.addKeyframe(30, 30, 180, 180, 2);
+      rightEye.addKeyframe(30, 30, 180, 180, 2, false);
+      faceBottom.addKeyframe(18, 240, 204, 0, 2, false);
+      menu.setVisible(true);
+      // menu.addKeyframe(30, 30, 180, 180, 2);
+      velocityFunc = linear;
+      anim_time = 2 * FRAME_RATE;
       break;
     }
 
@@ -165,10 +179,10 @@ void Face::update()
   menu.update(velocityFunc);
 
   anim_iterator++;
-  Serial.print("Global iterating: ");
-  Serial.print(anim_iterator);
-  Serial.print("/");
-  Serial.println(anim_time);
+  // Serial.print("Global iterating: ");
+  // Serial.print(anim_iterator);
+  // Serial.print("/");
+  // Serial.println(anim_time);
 }
 
 void Face::draw(bool sel)
