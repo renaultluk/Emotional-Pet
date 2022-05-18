@@ -10,6 +10,8 @@ int test_emotion = 0;
 
 bool btnPress = false;
 
+int testCounter = 0;
+
 void btnCallback() {
   btnPress = true;
 }
@@ -57,10 +59,18 @@ void loop() {
 
   if (curr_time - prev_time > (1000 / FRAME_RATE)) {
     if (curr_blink - prev_blink > 10000) {
-      face.changeFaceState(BLINK);
-      face.changeFaceState(HAPPY);
-      face.changeFaceState(NEUTRAL);
+      // face.changeFaceState(BLINK);
+      if (testCounter == 0) face.changeFaceState(BLINK);
+      else if (testCounter == 1) {
+        face.changeFaceState(SAD);
+        face.changeFaceState(NEUTRAL);
+      }
+      if (testCounter == 2) {
+        face.changeFaceState(HAPPY);
+        face.changeFaceState(NEUTRAL);
+      }
       prev_blink = curr_blink;
+      testCounter = (testCounter + 1) % 3;
     }
     face.draw(0);
     face.draw(1);

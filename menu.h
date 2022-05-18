@@ -3,9 +3,11 @@
 
 #include "main.h"
 
-#define FRAME_RATE      5
+#define FRAME_RATE      20
 
 #define CORNER_RADIUS   18
+
+#define KEYFRAME_QUEUE_SIZE 24
 
 #define PRIMARY_COLOR   TFT_WHITE
 #define SECONDARY_COLOR TFT_SKYBLUE
@@ -48,7 +50,7 @@ class UIElement {
     int16_t w;
     int16_t h;
     bool visible;
-    keyframe keyframes[10];
+    keyframe keyframes[KEYFRAME_QUEUE_SIZE];
     int head;
     int tail;
     int target;

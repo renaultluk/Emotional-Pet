@@ -80,19 +80,19 @@ void UIElement::update(float (*velocityFunc)(int, int))
     // Serial.println("no change");
     return;
   }
-  if (iterator == 0 && head != tail && anim_iterator == 0)  // Starting animation
+  if (iterator == 0 && head != tail)  // Starting animation
   {
-    target = (target + 1) % 10;
-    // Serial.print("new target \t x = ");
-    // Serial.print(keyframes[target].x);
-    // Serial.print("\t y = ");
-    // Serial.print(keyframes[target].y);
-    // Serial.print("\t w = ");
-    // Serial.print(keyframes[target].w);
-    // Serial.print("\t h = ");
-    // Serial.print(keyframes[target].h);
-    // Serial.print("\t time = ");
-    // Serial.println(keyframes[target].timestamp);
+    target = (target + 1) % KEYFRAME_QUEUE_SIZE;
+    Serial.print("new target \t x = ");
+    Serial.print(keyframes[target].x);
+    Serial.print("\t y = ");
+    Serial.print(keyframes[target].y);
+    Serial.print("\t w = ");
+    Serial.print(keyframes[target].w);
+    Serial.print("\t h = ");
+    Serial.print(keyframes[target].h);
+    Serial.print("\t time = ");
+    Serial.println(keyframes[target].timestamp);
     Serial.print("Inital h:");
     Serial.print(keyframes[head].h);
     Serial.print("Target h:");
@@ -108,8 +108,8 @@ void UIElement::update(float (*velocityFunc)(int, int))
     Serial.print(" TO ");
     Serial.println(target);
     if (keyframes[target].visible == false) visible = false;
-    head = (head + 1) % 10;
-    target = (head + 1) % 5;
+    head = (head + 1) % KEYFRAME_QUEUE_SIZE;
+    // target = (head + 1) % KEYFRAME_QUEUE_SIZE;
     if (iterator >=  anim_time + 1) {   // animation done globally
       anim_iterator = 0;
       anim_time = 0;
@@ -129,7 +129,7 @@ void UIElement::update(float (*velocityFunc)(int, int))
 
 void UIElement::addKeyframe(int16_t new_x, int16_t new_y, int16_t new_w, int16_t new_h, float new_timestamp, bool new_visible)
 {
-  tail = (tail + 1) % 10;
+  tail = (tail + 1) % KEYFRAME_QUEUE_SIZE;
   keyframes[tail] = {new_x, new_y, new_w, new_h, new_visible, (int)(new_timestamp * FRAME_RATE)};
   // Serial.print("{");
   // for (int i = 0; i < 10; i++) {

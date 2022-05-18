@@ -108,12 +108,12 @@ void Face::changeFaceState(faceState_t newFaceState)
     }
 
     case HAPPY: {
-      forehead.addKeyframe(23, 0, 170, 35, 5);
-      leftEyelid.addKeyframe(25, -4, 50, 50, 5, false);
-      rightEyelid.addKeyframe(157, -4, 50, 50, 5, false);
-      leftEye.addKeyframe(26, 35, 37, 104, 5);
-      rightEye.addKeyframe(117, 35, 37, 104, 5);
-      faceBottom.addKeyframe(18, 178, 204, 63, 5);
+      forehead.addKeyframe(23, 0, 170, 35, 3);
+      leftEyelid.addKeyframe(25, -4, 50, 50, 3, false);
+      rightEyelid.addKeyframe(157, -4, 50, 50, 3, false);
+      leftEye.addKeyframe(26, 35, 37, 104, 3);
+      rightEye.addKeyframe(117, 35, 37, 104, 3);
+      faceBottom.addKeyframe(18, 100, 204, 63, 3);
       velocityFunc = easeInOut;
       anim_time = 5 * FRAME_RATE;
       break;
@@ -122,7 +122,7 @@ void Face::changeFaceState(faceState_t newFaceState)
     case SAD: {
       forehead.addKeyframe(60, 38, 156, 45, 2);
       leftEyelid.addKeyframe(83, 83, 50, 50, 2);
-      rightEyelid.addKeyframe(215, 83, 50, 50, 2);
+      rightEyelid.addKeyframe(162, 83, 50, 50, 2);
       leftEye.addKeyframe(83, 94, 37, 104, 2);
       rightEye.addKeyframe(175, 94, 37, 104, 2);
       faceBottom.addKeyframe(36, 203, 204, 63, 2);
