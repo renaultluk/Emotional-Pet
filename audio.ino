@@ -36,7 +36,7 @@ void playAudio(const char* path) {
 }
 
 void record(const char filename[], const int record_time){
-  const int waveDataSize = record_time * 88000;
+  const int waveDataSize = record_time * 176000;
 
   
   CreateWavHeader(header, waveDataSize);
