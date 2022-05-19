@@ -52,8 +52,12 @@ void UIElement::move(int t, int i, float (*velocityFunc)(int, int))
   Serial.println(coef);
   int delta_x = coef * (keyframes[target].x - keyframes[head].x);
   int delta_y = coef * (keyframes[target].y - keyframes[head].y);
-  x = (abs(delta_x) > abs(keyframes[target].x - x)) ? keyframes[target].x : keyframes[head].x + delta_x;  // prevent overshooting
-  y = (abs(delta_y) > abs(keyframes[target].y - y)) ? keyframes[target].y : keyframes[head].y + delta_y;
+  x = keyframes[head].x + delta_x;
+  y = keyframes[head].y + delta_y;
+  Serial.print("\t y:");
+  Serial.print(y);
+  Serial.print("\t delta y:");
+  Serial.println(delta_y);
 }
 
 void UIElement::move(int16_t delta_x, int16_t delta_y)
@@ -67,8 +71,8 @@ void UIElement::scale(int t, int i, float (*velocityFunc)(int, int))
   float coef = velocityFunc(t, i);
   int delta_w = coef * (keyframes[target].w - keyframes[head].w);
   int delta_h = coef * (keyframes[target].h - keyframes[head].h);
-  w = (abs(delta_w) > abs(keyframes[target].w - w)) ? keyframes[target].w : keyframes[head].w + delta_w;  // prevent overshooting
-  h = (abs(delta_h) > abs(keyframes[target].h - h)) ? keyframes[target].h : keyframes[head].h + delta_h;
+  w = keyframes[head].w + delta_w;
+  h = keyframes[head].h + delta_h;
   Serial.print("coef: ");
   Serial.println(coef);
   Serial.print("\t h:");
@@ -163,7 +167,7 @@ UIElGroup::~UIElGroup()
 
 int UIElGroup::getSize() const
 {
-  return size;
+  return amount;
 }
 
 void UIElGroup::add(UIElement* element)
@@ -565,6 +569,37 @@ void ScreenRow::navigateTo(char dir)
       }
     default:
       break;
+  }
+}
+
+int ScreenRow::getRowIndex() const
+{
+  return rowIndex;
+}
+
+UIElGroup* ScreenRow::screen(int row, int col)
+{
+  ScreenCol* temp = static_cast<ScreenCol*>(elements[row]);
+  return static_cast<UIElGroup*>((*temp)[col]);
+}
+
+UIElGroup* ScreenRow::screen(String row_name, String col_name)
+{
+  ScreenCol* temp = nullptr;
+  for (int i = 0; i < amount; i++)
+  {
+    if (elements[i]->name == row_name)
+    {
+      temp = static_cast<ScreenCol*>(elements[i]);
+    }
+    break;
+  }
+  for (int i = 0; i < temp->getSize(); i++)
+  {
+    if ((*temp)[i]->name == col_name)
+    {
+      return static_cast<UIElGroup*>((*temp)[i]);
+    }
   }
 }
 

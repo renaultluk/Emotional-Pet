@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define FRAME_RATE      20
+#define FRAME_RATE      24
 
 #define CORNER_RADIUS   18
 
@@ -207,6 +207,9 @@ class ScreenRow : public UIElGroup {
     void navigateTo(String row_name);
     void navigateTo(String row_name, String col_name);
     void navigateTo(char dir);
+    int getRowIndex() const;
+    UIElGroup* screen(String row_name, String col_name);
+    UIElGroup* screen(int row, int col);
     void draw(bool sel) override;
 };
 

@@ -69,7 +69,7 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new Text(185, 124, "00:00", false, "audioLength", 0));
   curr->add(new Rounded(49, 132, 68, 27, false, "replyBtn", 6));
   curr->add(new Rounded(123, 132, 68, 27, false, "frdBtn", 6));
-  curr->add(new Text(82, 142, "Reply", true, "replyStr", 1));
+  curr->add(new Text(84, 142, "Reply", true, "replyStr", 1));
   curr->add(new Text(155, 142, "+ Friend", true, "frdStr", 1));
 
   curr = static_cast<UIElGroup*>(menu["record"]);
@@ -112,12 +112,12 @@ void Face::changeFaceState(faceState_t newFaceState)
     }
 
     case HAPPY: {
-      forehead.addKeyframe(23, 0, 170, 35, 3);
-      leftEyelid.addKeyframe(25, -4, 50, 50, 3, false);
-      rightEyelid.addKeyframe(157, -4, 50, 50, 3, false);
-      leftEye.addKeyframe(26, 35, 37, 104, 3);
-      rightEye.addKeyframe(117, 35, 37, 104, 3);
-      faceBottom.addKeyframe(18, 110, 204, 63, 3);
+      forehead.addKeyframe(23, 0, 170, 35, 2);
+      leftEyelid.addKeyframe(25, -4, 50, 50, 2, false);
+      rightEyelid.addKeyframe(157, -4, 50, 50, 2, false);
+      leftEye.addKeyframe(26, 35, 37, 104, 2);
+      rightEye.addKeyframe(117, 35, 37, 104, 2);
+      faceBottom.addKeyframe(18, 110, 204, 63, 2);
       velocityFunc = easeInOut;
       anim_time = 5 * FRAME_RATE;
       break;
