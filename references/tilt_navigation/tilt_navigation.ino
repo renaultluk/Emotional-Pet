@@ -13,6 +13,8 @@ bool tilt_left;
 bool tilt_right;
 bool tilt_up;
 bool tilt_down;
+bool idle;
+int idle_count;
 
 Adafruit_MPU6050 mpu;
 
@@ -45,6 +47,9 @@ void loop() {
 
   /* Start setting flags */
   
+  if (idle_count >= 500){
+    idle = true;
+  }
   if ((a.acceleration.x < tilt_value) && (a.acceleration.x > -tilt_value)&&(a.acceleration.y > -tilt_value)&&(a.acceleration.y < tilt_value)){
     tilt_center = true;
     tilt_right = false;
@@ -52,27 +57,38 @@ void loop() {
     tilt_up = false;
     tilt_down = false;
     tilt_ready = true;
+    if (idle_count <= 500){
+      idle_count++;
+    }
   }
   if ((a.acceleration.x > tilt_value) && (tilt_ready == true)){
     tilt_right = true;
     tilt_center = false;
     tilt_ready = false;
+    idle = false;
+    idle_count = 0;
     
   }
   if ((a.acceleration.x < -tilt_value) && (tilt_ready == true)){
     tilt_left = true;
     tilt_center = false;
     tilt_ready = false;
+    idle = false;
+    idle_count = 0;
   }
   if ((a.acceleration.y > tilt_value) && (tilt_ready == true)){
     tilt_up = true;
     tilt_center = false;
     tilt_ready = false;
+    idle = false;
+    idle_count = 0;
   }
   if ((a.acceleration.y < -tilt_value) && (tilt_ready == true)){
     tilt_down = true;
     tilt_center = false;
     tilt_ready = false;
+    idle = false;
+    idle_count = 0;
   }
 
 }
