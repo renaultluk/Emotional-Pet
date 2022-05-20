@@ -484,3 +484,27 @@ void ScreenRow::draw()
 {
   if (visible) elements[rowIndex]->draw();
 }
+
+void main_navigation(){
+  if (tilt_up){
+    navigateTo(u); //(up down left right = u d l r)
+    //playAudio(const char* path);
+    PlayHaptic(1); //PlayHaptic(effect number)
+    }
+  if (tilt_down){
+    navigateTo(d); //(up down left right = u d l r)
+    //playAudio(const char* path);
+    PlayHaptic(4); //PlayHaptic(effect number)
+    }
+  if (tilt_left){
+    navigateTo(l); //(up down left right = u d l r)
+    //playAudio(const char* path);
+    PlayHaptic(27); //PlayHaptic(effect number)
+    }
+  if (tilt_right){
+    navigateTo(r); //(up down left right = u d l r)
+    //playAudio(const char* path);
+    PlayHaptic(27); //PlayHaptic(effect number)
+    }
+    
+}
