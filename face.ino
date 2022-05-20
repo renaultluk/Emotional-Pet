@@ -11,7 +11,7 @@ void Eyelid::draw(bool sel)
   }
 }
 
-Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(200, 20, 50, 50, true), leftEye(46, 69, 37, 104, false), rightEye(158, 69, 37, 104, false), faceBottom(18, 178, 204, 63), menu("menu", 3)
+Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), rightEyelid(200, 20, 50, 50, true), leftEye(46, 69, 37, 104, false), rightEye(158, 69, 37, 104, false), faceBottom(18, 178, 204, 63), menu("menu", 4)
 {
   // anim_iterator = 0;
   // anim_time = 0;
@@ -30,6 +30,7 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   menu.add(new ScreenCol("listen", 4));
   menu.add(new ScreenCol("record", 2));
   menu.add(new ScreenCol("settings", 1));
+  menu.add(new ScreenCol("emotion", 3));
 
   UIElGroup* curr = static_cast<UIElGroup*>(menu["listen"]);
   curr->add(new UIElGroup("main", 2));
@@ -42,6 +43,11 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new UIElGroup("record", 3));
 
   static_cast<UIElGroup*>(menu["settings"])->add(new UIElGroup("main", 4));
+
+  curr = static_cast<UIElGroup*>(menu["emotion"]);
+  curr->add(new UIElGroup("main", 4));
+  curr->add(new UIElGroup("measure", 3));
+  curr->add(new UIElGroup("feedback", 2));
 
   // Page Content
   curr = static_cast<UIElGroup*>(menu["listen"]);
@@ -91,6 +97,9 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new Circle(120, 105, 25, true));
   curr->add(new Circle(157, 105, 25, true));
   curr->add(new Text(120, 170, "Settings", true));
+
+  // curr = static_cast<UIElGroup*>(menu["emotion"]);
+  // curr = static_cast<UIElGroup*>((*curr)["main"]);
 }
 
 void Face::changeFaceState(faceState_t newFaceState)

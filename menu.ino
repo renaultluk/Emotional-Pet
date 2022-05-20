@@ -106,7 +106,7 @@ void UIElement::update(float (*velocityFunc)(int, int))
     Serial.print("Target h:");
     Serial.println(keyframes[target].h);
     if (keyframes[target].timestamp > anim_time) anim_time = keyframes[target].timestamp;
-    if (keyframes[target].visible == true) setVisible(true);
+    if (keyframes[target].visible == true) setVisible(true);  // set visible before animation start
   }
   int t = keyframes[target].timestamp;
   if (iterator >= t + 1)    // Finish animation
