@@ -13,6 +13,8 @@
 #include <MAX30105.h>
 
 #include "face.h"
+#include "userFile.h"
+#include "audio.h"
 
 using namespace std::__cxx11;
 
