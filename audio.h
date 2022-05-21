@@ -2,6 +2,8 @@
 #ifndef _AUDIO_H
 #define _AUDIO_H
 
+#include "main.h"
+
 // library: esp8266 audio
 #include <AudioFileSourceID3.h>
 #include <AudioFileSourceSD.h>

@@ -1,6 +1,8 @@
 #ifndef _SDCARD_H
 #define _SDCARD_H
 
+#include "main.h"
+
 // some utility
 // determine have userSetting.txt or not
 bool haveSetting(fs::FS &fs);

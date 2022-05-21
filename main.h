@@ -83,10 +83,10 @@ uint16_t* sprPtr[2];
 SPIClass spiSD(HSPI);
 MAX30105 heartRateSensor;
 Adafruit_MPU6050 mpu;
+Adafruit_DRV2605 drv;
 
 // ******* Functions ******* //
 
-void playAudio(const char* path);
 
 // ******* Sensors ******* //
 
@@ -99,5 +99,11 @@ void touch2Callback();
 void heartRateInit();
 void getHeartRate();
 
+// ******* Actuators ******* //
+
+void hapticInit();
+void PlayHaptic(int effect);
+
+void playAudio(const char* path);
 
 #endif

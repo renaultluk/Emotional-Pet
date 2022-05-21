@@ -42,11 +42,14 @@ void checkNavigation(){
 
 void setup() {
   Serial.begin(115200);
+
+  MPUInit();
+  hapticsInit();
+  
   tft.init();
   tft.initDMA();
   tft.startWrite();
 
-  // checkMPUSettings();
   // heartRateInit();
 
   // touchAttachInterrupt(TOUCH_PIN1, touch1Callback, TOUCH_THRESHOLD);
@@ -71,6 +74,7 @@ void setup() {
   tft.fillScreen(TFT_WHITE);
   // face.changeFaceState(SAD);
   // face.draw();
+
 }
 
 void loop() {
