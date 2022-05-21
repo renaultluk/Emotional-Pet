@@ -6,7 +6,7 @@
 //don't know how to get enum work in constructer though
 //false for Female, true for male
 
-/*format
+/*format - userSetting.txt
  * userSetting
  * Female/Male
  * int represent age
