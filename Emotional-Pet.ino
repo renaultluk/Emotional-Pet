@@ -39,6 +39,11 @@ void checkNavigation(){
     }
 }
 
+void mainControlFlow()
+{
+  
+}
+
 
 void setup() {
   Serial.begin(115200);
@@ -74,58 +79,8 @@ void setup() {
   tft.fillScreen(TFT_WHITE);
   // face.changeFaceState(SAD);
   // face.draw();
-
 }
 
 void loop() {
-  curr_time = millis();
-  curr_blink = millis();
-
-  // face.update();
-
-  // if (btnPr)
-
-  if (curr_time - prev_time > (1000 / FRAME_RATE)) {
-    if (curr_blink - prev_blink > 6000) {
-      // face.changeFaceState(BLINK);
-      if (testCounter == 0) face.changeFaceState(BLINK);
-      else if (testCounter == 1) {
-        face.changeFaceState(SAD);
-        face.changeFaceState(NEUTRAL);
-      }
-      else if (testCounter == 2) {
-        face.changeFaceState(HAPPY);
-        face.changeFaceState(NEUTRAL);
-      }
-      else if (testCounter == 3) {
-        face.changeFaceState(MENU);
-      }
-      else if (testCounter == 4) {
-        face.menu.navigateTo("listen", "audio");
-      }
-      else if (testCounter == 5) {
-        face.menu.navigateTo("listen", "choose");
-      }
-      else if (testCounter == 6) {
-        face.menu.navigateTo("record", "main");
-      }
-      else if (testCounter == 7) {
-        face.menu.navigateTo("record", "record");
-      }
-      else if (testCounter == 8) {
-        face.menu.navigateTo("settings", "main");
-      }
-      else if (testCounter == 9) {
-        face.menu.setVisible(false);
-        face.menu.navigateTo("listen", "main");
-        face.changeFaceState(NEUTRAL);
-      }
-
-      prev_blink = curr_blink;
-      testCounter = (testCounter + 1) % 10;
-    }
-    face.draw(0);
-    face.draw(1);
-    prev_time = curr_time;
-  }
+  
 }

@@ -14,6 +14,7 @@
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
+#include <Adafruit_DRV2605.h>
 
 #include "face.h"
 #include "userFile.h"
@@ -60,11 +61,13 @@ typedef enum {
 
 // ******* Global Variables ******* //
 
+// Touch Pads
 bool touched1 = false;
 bool touched2 = false;
 
 int touchQueue[2];
 
+// IMU
 bool tilt_ready; //boolean to prevent keep creating other input unless it's change stated
 bool tilt_center;
 bool shake;
@@ -74,6 +77,9 @@ bool tilt_up;
 bool tilt_down;
 bool idle;
 int idle_count;
+
+// Heart Rate Sensor
+
 
 // ******* Component Objects ******* //
 
