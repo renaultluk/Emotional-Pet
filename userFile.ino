@@ -1,6 +1,7 @@
 #include "userFile.h"
 #include "SDcard.h"
 
+// The constructor read the data from txt file and create user object
 user::user(){
   userName = readFileline(SD, "/userSetting.txt", 2);
   String genderString = readFileline(SD, "/userSetting.txt", 3);
@@ -11,12 +12,13 @@ user::user(){
   age = ageString.toInt();
 }
 
+// The constructor read create userSetting.txt, put in the userdata and create user object
 user::user(String Name, bool g, int a){
 
   userName = Name;
   gender = g;
   age = a;
-  // with new user data, old userSetting deleted and new userSetting write
+  // with new user data, old userSetting deleted and new userSetting overwrite
   deleteFile(SD, "/userSetting.txt");
   writeFile(SD, "/userSetting.txt", "userSetting\n");
   
