@@ -11,6 +11,9 @@
 #include <SD.h>
 #include <JPEGDecoder.h>
 #include <MAX30105.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+#include <Wire.h>
 
 #include "face.h"
 #include "userFile.h"
@@ -49,6 +52,8 @@ typedef enum {
 #define TOUCH_PIN1        0
 #define TOUCH_PIN2        0
 
+#define tilt_value 5   // accelerometer tilt threshold (in ms^-2)
+
 // ******* Constants ******* //
 
 #define TOUCH_THRESHOLD   40
@@ -60,21 +65,33 @@ bool touched2 = false;
 
 int touchQueue[2];
 
+bool tilt_ready; //boolean to prevent keep creating other input unless it's change stated
+bool tilt_center;
+bool shake;
+bool tilt_left;
+bool tilt_right;
+bool tilt_up;
+bool tilt_down;
+bool idle;
+int idle_count;
+
 // ******* Component Objects ******* //
 
 TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite spr[2] = {TFT_eSprite(&tft), TFT_eSprite(&tft)};
 uint16_t* sprPtr[2];
 SPIClass spiSD(HSPI);
-MPU6050 mpu;
 MAX30105 heartRateSensor;
+Adafruit_MPU6050 mpu;
 
 // ******* Functions ******* //
 
+void playAudio(const char* path);
+
 // ******* Sensors ******* //
 
-void checkMPUSettings();
-void getMPUData();
+void MPUInit();
+void checkMPU();
 
 void touch1Callback();
 void touch2Callback();
