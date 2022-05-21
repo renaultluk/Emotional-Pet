@@ -78,6 +78,8 @@ bool tilt_down;
 bool idle;
 int idle_count;
 
+UIElGroup* currScreen = nullptr;
+
 // Heart Rate Sensor
 
 
@@ -90,6 +92,7 @@ SPIClass spiSD(HSPI);
 MAX30105 heartRateSensor;
 Adafruit_MPU6050 mpu;
 Adafruit_DRV2605 drv;
+Face face;
 
 // ******* Functions ******* //
 

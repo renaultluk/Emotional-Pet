@@ -35,6 +35,7 @@ class Face {
     ScreenRow menu;
 
     Face();
+    faceState_t getFaceState() const;
     void changeFaceState(faceState_t newFaceState);
     void update();
     void draw(bool sel);

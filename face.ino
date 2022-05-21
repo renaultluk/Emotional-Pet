@@ -102,6 +102,11 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   // curr = static_cast<UIElGroup*>((*curr)["main"]);
 }
 
+facceState_t Face::getFaceState() const
+{
+  return faceState;
+}
+
 void Face::changeFaceState(faceState_t newFaceState)
 {
   Serial.print("Switched to ");
