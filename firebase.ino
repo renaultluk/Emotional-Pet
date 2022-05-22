@@ -80,6 +80,7 @@ void streamTimeoutCallback(bool timeout)
 void firebaseInit()
 {
   config.api_key = FB_API_KEY;
+  config.database_url = FB_DATABASE_URL;
   Firebase.begin(&config, &auth);
   Firebase.reconnectWiFi(true);
 
@@ -117,4 +118,24 @@ void addFriend(int friendID)
   FirebaseJsonArray friendArr = Firebase.RTDB.getArray(&fbdo, "test/friends");
   friendArr.add(friendID);
   
+}
+
+void getFriends()
+{
+
+}
+
+void getAudio(String path)
+{
+
+}
+
+void postAudio()
+{
+
+}
+
+void getEmotion()
+{
+
 }

@@ -98,6 +98,10 @@ void firebaseInit();
 void uploadFile(String path);
 void downloadFile(String remote_path, String local_path);
 void checkFirebaseDataChanged();
-
+void addFriend(int friendID);
+void getFriends();
+void getAudio(String path);
+void postAudio();
+void getEmotion();
 
 #endif
