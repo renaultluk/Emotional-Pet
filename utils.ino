@@ -29,7 +29,7 @@ void menuNavigation(){
 
 void mainControlFlow()
 {
-  if (face.menu.getFaceState() == MENU)
+  if (face.getFaceState() == MENU)
   {
     if ((currScreen == face.menu.screen("listen","main")) || (currScreen == face.menu.screen("record","main"))
      || (currScreen == face.menu.screen("settings","main")) || (currScreen == face.menu.screen("emotion","main")))

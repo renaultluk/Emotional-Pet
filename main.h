@@ -114,7 +114,6 @@ void touch2Callback();
 void checkSwiping();
 
 void heartRateInit();
-void getHeartRate();
 void stressCheckUp();
 
 // ******* Actuators ******* //
