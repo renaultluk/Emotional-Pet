@@ -466,6 +466,7 @@ ScreenCol::ScreenCol(String init_name, int init_size) : UIElGroup(init_name, ini
 void ScreenCol::navigateTo(int i)
 {
   colIndex = i;
+  currScreen = static_cast<UIElGroup*>(elements[i]);
 }
 
 int ScreenCol::getColIndex() const

@@ -75,15 +75,28 @@ void IRAM_ATTR touch2Callback() {
   touched2 = true;
 }
 
-void checkPetting() {
+void checkSwiping() {
   if (!touched1 && !touched2) {
-    touchQueue[0] = 0;
-    touchQueue[1] = 0;
+    touchBuffer = 0;
   }
 
   if (touched2) {
-    if (touchQueue[1] == 1) {
-      // petted
+    touched2 = false;
+    if (touchBuffer == 1) {
+      swipe_down = true;
+    }
+    else {
+      touchBuffer = 2;
+    }
+  }
+
+  if (touched1) {
+    touched1 = false;
+    if (touchBuffer == 2) {
+      swipe_up = true;
+    }
+    else {
+      touchBuffer = 1;
     }
   }
 }
@@ -145,7 +158,7 @@ void getHeartRate() {
   }
 
 
-  void loop() { 
+  void stressCheckUp() { 
 
     if(start == false) {
       Serial.println("Do you feel (1)positively STRESSED, (2)negatively STRESSED or (3)RELAXED? Please enter the number.");

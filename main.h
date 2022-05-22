@@ -65,7 +65,10 @@ typedef enum {
 bool touched1 = false;
 bool touched2 = false;
 
-int touchQueue[2];
+int touchBuffer = 0;
+
+bool swipe_up;
+bool swipe_down;
 
 // IMU
 bool tilt_ready; //boolean to prevent keep creating other input unless it's change stated
@@ -79,6 +82,8 @@ bool idle;
 int idle_count;
 
 UIElGroup* currScreen = nullptr;
+UIElGroup* screenStack[3];
+int stackNum = 0;
 
 // Heart Rate Sensor
 
@@ -96,6 +101,8 @@ Face face;
 
 // ******* Functions ******* //
 
+void mainControlFlow();
+
 
 // ******* Sensors ******* //
 
@@ -104,9 +111,11 @@ void checkMPU();
 
 void touch1Callback();
 void touch2Callback();
+void checkSwiping();
 
 void heartRateInit();
 void getHeartRate();
+void stressCheckUp();
 
 // ******* Actuators ******* //
 

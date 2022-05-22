@@ -54,5 +54,7 @@ void setup() {
 }
 
 void loop() {
-  
+  checkIMU();
+  checkSwiping();
+  mainControlFlow();
 }
