@@ -10,14 +10,17 @@
 #include <SD.h>
 #include <JPEGDecoder.h>
 #include <MAX30105.h>
+#include <WiFi.h>
+#include <Firebase_ESP_Client.h>
+#include <addons/RTDBHelper.h>
 
 // ******* Finite State Machine ******* //
 
 typedef struct {
-  STATE_INIT,
-  STATE_FACE,
-  STATE_MENU,
-  STATE_VOICE_MESSAGE,
+  // STATE_INIT,
+  // STATE_FACE,
+  // STATE_MENU,
+  // STATE_VOICE_MESSAGE,
 } screenState_t;
 
 // ******* Pins ******* //
@@ -46,6 +49,15 @@ typedef struct {
 
 #define TOUCH_THRESHOLD   40
 
+// ******* Credentials ******* //
+
+#define WIFI_SSID ""
+#define WIFI_PW ""
+
+#define FB_API_KEY ""
+#define FB_DATABASE_URL ""
+#define FB_STORAGE_BUCKET_ID ""
+
 // ******* Global Variables ******* //
 
 bool touched1 = false;
@@ -53,12 +65,19 @@ bool touched2 = false;
 
 int touchQueue[2];
 
+volatile bool dataChanged = false;
+
 // ******* Component Objects ******* //
 
 TFT_eSPI tft = TFT_eSPI();
 SPIClass spiSD(HSPI);
 MPU6050 mpu;
 MAX30105 heartRateSensor;
+
+FirebaseData fbdo;
+FirebaseData stream;
+FirebaseAuth auth;
+FirebaseConfig config;
 
 // ******* Functions ******* //
 
@@ -72,6 +91,13 @@ void touch2Callback();
 
 void heartRateInit();
 void getHeartRate();
+
+// ******* Firebase ******* //
+
+void firebaseInit();
+void uploadFile(String path);
+void downloadFile(String remote_path, String local_path);
+void checkFirebaseDataChanged();
 
 
 #endif
