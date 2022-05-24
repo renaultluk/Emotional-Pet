@@ -45,9 +45,9 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   static_cast<UIElGroup*>(menu["settings"])->add(new UIElGroup("main", 4));
 
   curr = static_cast<UIElGroup*>(menu["emotion"]);
-  curr->add(new UIElGroup("main", 4));
+  curr->add(new UIElGroup("main", 11));
   curr->add(new UIElGroup("measure", 3));
-  curr->add(new UIElGroup("feedback", 2));
+  curr->add(new UIElGroup("feedback", 5));
 
   // Page Content
   curr = static_cast<UIElGroup*>(menu["listen"]);
@@ -98,8 +98,33 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new Circle(157, 105, 25, true));
   curr->add(new Text(120, 170, "Settings", true));
 
-  // curr = static_cast<UIElGroup*>(menu["emotion"]);
-  // curr = static_cast<UIElGroup*>((*curr)["main"]);
+  curr = static_cast<UIElGroup*>(menu["emotion"]);
+  curr = static_cast<UIElGroup*>((*curr)["main"]);
+  curr->add(new Text(120, 62, "Are you feeling", true, "feel1", 1));
+  curr->add(new Text(120, 89, "relaxed/stressed?", true, "feel2", 1));
+  curr->add(new Circle(80, 156, 57, true));
+  curr->add(new Circle(162, 156, 57, true));
+  curr->add(new Rounded(64, 136, 9, 23, false, "eye", 4));
+  curr->add(new Rounded(85, 136, 9, 23, false, "eye", 4));
+  curr->add(new Rounded(147, 144, 9, 23, false, "eye", 4));
+  curr->add(new Rounded(168, 144, 9, 23, false, "eye", 4));
+  curr->add(new Block(57, 154, 43, 16));
+  curr->add(new Eyelid(145, 143, 13, 11, false, true));
+  curr->add(new Eyelid(166, 143, 13, 11, true, true));
+
+  curr = static_cast<UIElGroup*>(menu["emotion"]);
+  curr = static_cast<UIElGroup*>((*curr)["measure"]);
+  curr->add(new Circle(120, 105, 80, false));
+  curr->add(new Circle(120, 105, 62, false, "innerCircle"));
+  curr->add(new Text(120, 170, "00:00", true, "timer"));
+
+  curr = static_cast<UIElGroup*>(menu["emotion"]);
+  curr = static_cast<UIElGroup*>((*curr)["feedback"]);
+  curr->add(new Text(91, 87, "Your HRV: ", true, "yourhrv", 1));
+  curr->add(new Text(171, 87, "00.00", true, "hrvLabel", 1));
+  curr->add(new Text(120, 133, "You have", true, "have", 1));
+  curr->add(new Text(79, 153, "MILD", true, "anxietyLevel", 1));
+  curr->add(new Text(144, 153, "Anxiety", true, "anxiety", 1));
 }
 
 void Face::changeFaceState(faceState_t newFaceState)

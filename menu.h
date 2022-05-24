@@ -113,6 +113,14 @@ class Rounded : public UIElement {
     {
       primary = isPrimary;
       rad = init_rad;
+      if (init_rad > init_w / 2)
+      {
+        rad = init_w / 2;
+      }
+      if (init_rad > init_h / 2)
+      {
+        rad = init_h / 2;
+      }
     };
     void draw(bool sel);
 };
