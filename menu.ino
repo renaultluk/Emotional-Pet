@@ -467,6 +467,8 @@ void ScreenCol::navigateTo(int i)
 {
   colIndex = i;
   currScreen = static_cast<UIElGroup*>(elements[i]);
+  //playAudio(const char* path);
+  PlayHaptic(1); //PlayHaptic(effect number)
 }
 
 int ScreenCol::getColIndex() const
@@ -494,6 +496,8 @@ ScreenRow::ScreenRow(String init_name, int init_size) : UIElGroup(init_name, ini
 void ScreenRow::navigateTo(int i)
 {
   rowIndex = i;
+  //playAudio(const char* path);
+  PlayHaptic(1); //PlayHaptic(effect number)
 }
 
 void ScreenRow::navigateTo(int row, int col)
