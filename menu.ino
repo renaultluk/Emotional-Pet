@@ -445,11 +445,14 @@ void ListItem::draw(bool sel)
 {
   if (visible)
   {
-    spr[sel].setTextColor(PRIMARY_COLOR);
-    spr[sel].drawString(title, x + 7, y + 5, 4);
+    spr[sel].setFreeFont(FSS9);
+    tft.setTextDatum(TL_DATUM);
     spr[sel].setTextColor(SECONDARY_COLOR);
-    spr[sel].drawString(subtitle, x + 98, y + 5, 4);
-    spr[sel].drawFastHLine(x, y + h, w, SECONDARY_COLOR);
+    spr[sel].drawString(title, x + 15, y + 15, GFXFF);
+    spr[sel].setTextColor(GREY_COLOR);
+    spr[sel].drawString(subtitle, x + 98, y + 15, GFXFF);
+    spr[sel].drawFastHLine(x, y + h, w, GREY_COLOR);
+    tft.setTextDatum(MC_DATUM);
   }
 }
 
