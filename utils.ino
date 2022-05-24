@@ -107,6 +107,8 @@ void mainControlFlow()
       if (currScreen == face.menu.screen("record", "record"))
       {
         // TODO: Start recording
+        record("/audio/newest.wav", 20000);
+        face.menu.navigateTo('u');
       }
       else if (currScreen == face.menu.screen("emotion", "measure"))
       {

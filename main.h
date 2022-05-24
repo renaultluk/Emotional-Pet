@@ -98,6 +98,10 @@ int stackNum = 0;
 enum str_conditions { STRESSED , RELAXED };
 int menuChoice = 0;
 
+// Audio
+String replyTarget;
+String audioTarget;
+
 
 // ******* Component Objects ******* //
 
