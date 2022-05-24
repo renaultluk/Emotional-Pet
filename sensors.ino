@@ -168,7 +168,7 @@ void getHeartRate() {
   void loop() { 
 
     if(start == false) {
-      Serial.println("Do you feel (1)positively STRESSED, (2)negatively STRESSED or (3)RELAXED? Please enter the number.");
+      Serial.println("Do you feel (1)STRESSED or (2)RELAXED? Please enter the number.");
       while (Serial.available() == 0) {
       }
       menuChoice = Serial.parseInt();
@@ -230,29 +230,23 @@ void getHeartRate() {
         LPF_beat = (1.0 - weight) * LPF_beat + weight * beatsPerMinute;
         Serial.println(LPF_beat);    
     }*/
+    
     if (hrvComplete == true && rmssd < 100) {
       Serial.print("Your HRV reading is: ");
       Serial.println(rmssd);
-      float phq_posstr_hrv = -0.07761*rmssd + 14.40413;
-      float phq_negstr_hrv = -0.08183*rmssd + 15.12931;
+      float phq_str_hrv = -0.0785*rmssd + 14.6913;
       float phq_rel_hrv = -0.2331*rmssd + 29.3654;
-      float gad_posstr_hrv = -0.09276*rmssd + 14.14535;
-      float gad_negstr_hrv = -0.09875*rmssd + 15.06781;
+      float gad_str_hrv = -0.09432*rmssd + 14.51642;
       float gad_rel_hrv = -0.1847*rmssd + 24.3324;
 
       switch (menuChoice) {
 
         case 1:
-        phq_func (phq_posstr_hrv);
-        gad_func (gad_posstr_hrv);
+        phq_func (phq_str_hrv);
+        gad_func (gad_str_hrv);
         break;
 
         case 2:
-        phq_func (phq_negstr_hrv);
-        gad_func (gad_negstr_hrv);
-        break;
-
-        case 3:
         phq_func (phq_rel_hrv);
         gad_func (gad_rel_hrv);
         break;
