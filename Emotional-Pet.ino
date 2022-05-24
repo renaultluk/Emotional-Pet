@@ -5,6 +5,7 @@ int curr_blink;
 int prev_blink;
 
 void setup() {
+  Wire.begin();
   Serial.begin(115200);
 
   MPUInit();

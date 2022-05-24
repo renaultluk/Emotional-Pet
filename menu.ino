@@ -91,19 +91,19 @@ void UIElement::update(float (*velocityFunc)(int, int))
   if (iterator == 0 && head != tail)  // Starting animation
   {
     target = (target + 1) % KEYFRAME_QUEUE_SIZE;
-    Serial.print("new target \t x = ");
-    Serial.print(keyframes[target].x);
-    Serial.print("\t y = ");
-    Serial.print(keyframes[target].y);
-    Serial.print("\t w = ");
-    Serial.print(keyframes[target].w);
-    Serial.print("\t h = ");
-    Serial.print(keyframes[target].h);
-    Serial.print("\t time = ");
-    Serial.println(keyframes[target].timestamp);
-    Serial.print("Inital h:");
-    Serial.print(keyframes[head].h);
-    Serial.print("Target h:");
+    // Serial.print("new target \t x = ");
+    // Serial.print(keyframes[target].x);
+    // Serial.print("\t y = ");
+    // Serial.print(keyframes[target].y);
+    // Serial.print("\t w = ");
+    // Serial.print(keyframes[target].w);
+    // Serial.print("\t h = ");
+    // Serial.print(keyframes[target].h);
+    // Serial.print("\t time = ");
+    // Serial.println(keyframes[target].timestamp);
+    // Serial.print("Inital h:");
+    // Serial.print(keyframes[head].h);
+    // Serial.print("Target h:");
     Serial.println(keyframes[target].h);
     if (keyframes[target].timestamp > anim_time) anim_time = keyframes[target].timestamp;
     if (keyframes[target].visible == true) setVisible(true);  // set visible before animation start
@@ -124,10 +124,10 @@ void UIElement::update(float (*velocityFunc)(int, int))
     }
     iterator = 0;
   } else {
-    Serial.print("Iterating ");
-    Serial.print(iterator);
-    Serial.print("/");
-    Serial.println(t);
+    // Serial.print("Iterating ");
+    // Serial.print(iterator);
+    // Serial.print("/");
+    // Serial.println(t);
 
     if ((keyframes[target].w != w) || (keyframes[target].h != h)) scale(t, iterator, velocityFunc);
     if ((keyframes[target].x != x) || (keyframes[target].y != y)) move(t, iterator, velocityFunc);

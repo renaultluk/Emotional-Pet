@@ -144,6 +144,7 @@ void mainControlFlow()
   {
     if (tilt_up)
     {
+      tilt_up = false;
       face.changeFaceState(MENU);
     }
     else if (swipe_up || swipe_down)

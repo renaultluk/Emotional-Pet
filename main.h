@@ -6,7 +6,6 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 #include <SPI.h>
-#include <MPU6050.h>
 #include <FS.h>
 #include "SD.h"
 #include <JPEGDecoder.h>
@@ -84,14 +83,14 @@ bool hold_finish = false;
 int start_touch_time;
 
 // IMU
-bool tilt_ready; //boolean to prevent keep creating other input unless it's change stated
-bool tilt_center;
-bool shake;
-bool tilt_left;
-bool tilt_right;
-bool tilt_up;
-bool tilt_down;
-bool idle;
+bool tilt_ready = false; //boolean to prevent keep creating other input unless it's change stated
+bool tilt_center = false;
+bool shake = false;
+bool tilt_left = false;
+bool tilt_right = false;
+bool tilt_up = false;
+bool tilt_down = false;
+bool idle = false;
 int idle_count;
 
 UIElGroup* currScreen = nullptr;

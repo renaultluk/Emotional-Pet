@@ -57,6 +57,7 @@ void checkMPU() {
     tilt_ready = false;
     idle = false;
     idle_count = 0;
+    Serial.println("tilted up");
   }
   if ((a.acceleration.y < -tilt_value) && (tilt_ready == true)){
     tilt_down = true;
