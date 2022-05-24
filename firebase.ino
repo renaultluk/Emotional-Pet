@@ -1,5 +1,8 @@
 #include "main.h"
 
+const char* userID = "abc123";
+const char* parentPath = "/users/" + userID;
+
 void fcsUploadCallback(FCS_UploadStatusInfo info)
 {
     if (info.status == fb_esp_fcs_upload_status_init)
@@ -81,8 +84,15 @@ void firebaseInit()
 {
   config.api_key = FB_API_KEY;
   config.database_url = FB_DATABASE_URL;
-  Firebase.begin(&config, &auth);
+
   Firebase.reconnectWiFi(true);
+  fbdo.setResponseSize(4096);
+
+  config.token_status_callback = tokenStatusCallback;
+  config.max_token_generation_retry = 5;
+
+  Firebase.signUp(&config, &auth, "", "");
+  Firebase.begin(&config, &auth);
 
   config.fcs.upload_buffer_size = 512;
 
@@ -115,8 +125,6 @@ void checkFirebaseDataChanged()
 
 void addFriend(int friendID)
 {
-  FirebaseJsonArray friendArr = Firebase.RTDB.getArray(&fbdo, "test/friends");
-  friendArr.add(friendID);
   
 }
 

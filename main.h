@@ -12,6 +12,7 @@
 #include <MAX30105.h>
 #include <WiFi.h>
 #include <Firebase_ESP_Client.h>
+#include "addons/TokenHelper.h"
 #include <addons/RTDBHelper.h>
 
 // ******* Finite State Machine ******* //
