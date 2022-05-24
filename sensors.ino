@@ -152,8 +152,6 @@ float rmssd = -1.0;
 float LPF = 0.0;
 float LPF_beat = 0.0;
 bool start = false;
-enum str_conditions { STRESSED , RELAXED };
-int menuChoice = 0;
 
 void(* resetFunc) (void) = 0;//declare reset function at address 0
 
@@ -176,9 +174,9 @@ void stressCheckUp() {
 
   if(start == false) {
     Serial.println("Do you feel (1)positively STRESSED, (2)negatively STRESSED or (3)RELAXED? Please enter the number.");
-    while (Serial.available() == 0) {
-    }
-    menuChoice = Serial.parseInt();
+    // while (Serial.available() == 0) {
+    // }
+    // menuChoice = Serial.parseInt();
     delay(5000);
     start = true;
   }

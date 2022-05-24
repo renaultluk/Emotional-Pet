@@ -50,6 +50,7 @@ void mainControlFlow()
       else if (currScreen == face.menu.screen("emotion", "main"))
       {
         // TODO: Select relaxed
+        menuChoice = 1;
         face.menu.navigateTo('d');
       }
     }
@@ -73,6 +74,7 @@ void mainControlFlow()
       else if (currScreen == face.menu.screen("emotion", "main"))
       {
         // TODO: Select stressed
+        menuChoice = 0;
         face.menu.navigateTo('d');
       }
     }
@@ -109,6 +111,7 @@ void mainControlFlow()
       else if (currScreen == face.menu.screen("emotion", "measure"))
       {
         // TODO: Start recording
+        stressCheckUp();
       }
     }
     else if (hold_finish)

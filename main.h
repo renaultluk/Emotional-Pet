@@ -95,6 +95,9 @@ int stackNum = 0;
 
 // Heart Rate Sensor
 
+enum str_conditions { STRESSED , RELAXED };
+int menuChoice = 0;
+
 
 // ******* Component Objects ******* //
 

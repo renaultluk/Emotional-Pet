@@ -1,20 +1,8 @@
 #include "main.h"
 
-
 int prev_time;
 int curr_blink;
 int prev_blink;
-
-int test_emotion = 0;
-
-bool btnPress = false;
-
-int testCounter = 0;
-
-void btnCallback() {
-  btnPress = true;
-}
-
 
 void setup() {
   Serial.begin(115200);
