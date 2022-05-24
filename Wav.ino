@@ -47,4 +47,3 @@ void CreateWavHeader(byte* header, int waveDataSize){
   header[42] = (byte)((waveDataSize >> 16) & 0xFF);
   header[43] = (byte)((waveDataSize >> 24) & 0xFF);
 }
-
