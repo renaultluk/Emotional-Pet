@@ -16,6 +16,11 @@
 #include <Wire.h>
 #include <Adafruit_DRV2605.h>
 
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+ #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
+#endif
+
 #include "face.h"
 #include "userFile.h"
 #include "audio.h"
