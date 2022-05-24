@@ -11,6 +11,7 @@
 
 #define PRIMARY_COLOR   TFT_WHITE
 #define SECONDARY_COLOR TFT_SKYBLUE
+#define GREY_COLOR      TFT_DARKGREY
 
 #define GFXFF 1
 #define TT1 &TomThumb
@@ -185,10 +186,15 @@ class ListItem : public UIElement {
     String subtitle;
   
   public:
-    ListItem(int16_t init_x, int16_t init_y, String init_title, String init_subtitle, String name = "") : UIElement(init_x, init_y, 130, 60, name)
+    ListItem(int16_t init_x, int16_t init_y, String init_title, String init_subtitle, String name = "") : UIElement(init_x, init_y, 130, 30, name)
     {
       title = init_title;
       subtitle = init_subtitle;
+    }
+    void setText(String new_title, String new_subtitle)
+    {
+      title =  new_title;
+      subtitle = new_subtitle;
     }
     void draw(bool sel);
 };

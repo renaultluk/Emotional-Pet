@@ -97,13 +97,16 @@ void loop() {
         face.menu.navigateTo("emotion", "feedback");
       }
       else if (testCounter == 12) {
+        face.menu.navigateTo("listen", "friends");
+      }
+      else if (testCounter == 13) {
         face.menu.setVisible(false);
         face.menu.navigateTo("listen", "main");
         face.changeFaceState(NEUTRAL);
       }
 
       prev_blink = curr_blink;
-      testCounter = (testCounter + 1) % 13;
+      testCounter = (testCounter + 1) % 14;
     }
     face.draw(0);
     face.draw(1);

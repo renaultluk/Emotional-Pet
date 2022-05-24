@@ -78,6 +78,15 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new Text(84, 142, "Reply", true, "replyStr", 1));
   curr->add(new Text(155, 142, "+ Friend", true, "frdStr", 1));
 
+  curr = static_cast<UIElGroup*>(menu["listen"]);
+  curr = static_cast<UIElGroup*>((*curr)["friends"]);
+  curr->add(new Text(82, 51, "Friends", true));
+  curr->add(new Rounded(44, 70, 157, 116, true));
+  curr->add(new ListItem(55, 70, "", ""));
+  curr->add(new ListItem(55, 98, "", ""));
+  curr->add(new ListItem(55, 128, "", ""));
+  curr->add(new ListItem(55, 158, "", ""));
+
   curr = static_cast<UIElGroup*>(menu["record"]);
   curr = static_cast<UIElGroup*>((*curr)["main"]);
   curr->add(new Circle(120, 105, 60, false));
