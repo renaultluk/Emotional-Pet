@@ -1,7 +1,6 @@
 #include "main.h"
 
 
-int curr_time;
 int prev_time;
 int curr_blink;
 int prev_blink;
@@ -41,7 +40,6 @@ void setup() {
   spr[1].setTextDatum(MC_DATUM);
 
   prev_time = millis();
-  curr_time = millis();
   prev_blink = millis();
   curr_blink = millis();
 
@@ -49,12 +47,17 @@ void setup() {
   anim_time = 0;
 
   tft.fillScreen(TFT_WHITE);
-  // face.changeFaceState(SAD);
-  // face.draw();
 }
 
 void loop() {
   checkMPU();
-  checkSwiping();
+  checkTouch();
   mainControlFlow();
+  int curr_time = millis();
+  if (curr_time - prev_time > FRAME_RATE)
+  {
+    face.draw(0);
+    face.draw(1);
+    prev_time = curr_time;
+  }
 }

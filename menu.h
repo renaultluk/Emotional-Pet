@@ -3,8 +3,6 @@
 
 #include "main.h"
 
-#define FRAME_RATE      24
-
 #define CORNER_RADIUS   18
 
 #define KEYFRAME_QUEUE_SIZE 24

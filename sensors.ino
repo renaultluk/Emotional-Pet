@@ -75,9 +75,30 @@ void IRAM_ATTR touch2Callback() {
   touched2 = true;
 }
 
-void checkSwiping() {
-  if (!touched1 && !touched2) {
+void checkTouch() {
+  bool anyTouched = (touched1 || touched2);
+  if (touchBuffer == 0 && anyTouched)
+  {
+    start_touch_time = millis();
+  }
+
+  int time_difference = millis() - start_touch_time;
+  if (anyTouched && time_difference > HOLD_THRESHOLD)
+  {
+    touch_hold = true;
+  }
+
+  if (!anyTouched) {
     touchBuffer = 0;
+    if (time_difference < HOLD_THRESHOLD)
+    {
+      tapped = true;
+    }
+    else
+    {
+      hold_finish = true;
+      touch_hold = false;
+    }
   }
 
   if (touched2) {

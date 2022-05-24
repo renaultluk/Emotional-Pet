@@ -58,6 +58,9 @@ typedef enum {
 // ******* Constants ******* //
 
 #define TOUCH_THRESHOLD   40
+#define HOLD_THRESHOLD    500
+
+#define FRAME_RATE      24
 
 // ******* Global Variables ******* //
 
@@ -67,8 +70,13 @@ bool touched2 = false;
 
 int touchBuffer = 0;
 
-bool swipe_up;
-bool swipe_down;
+bool swipe_up = false;
+bool swipe_down = false;
+bool tapped = false;
+bool touch_hold = false;
+bool hold_finish = false;
+
+int start_touch_time;
 
 // IMU
 bool tilt_ready; //boolean to prevent keep creating other input unless it's change stated
@@ -111,7 +119,7 @@ void checkMPU();
 
 void touch1Callback();
 void touch2Callback();
-void checkSwiping();
+void checkTouch();
 
 void heartRateInit();
 void stressCheckUp();
