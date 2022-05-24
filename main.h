@@ -8,7 +8,7 @@
 #include <SPI.h>
 #include <MPU6050.h>
 #include <FS.h>
-#include <SD.h>
+#include "SD.h"
 #include <JPEGDecoder.h>
 #include <MAX30105.h>
 #include <Adafruit_MPU6050.h>

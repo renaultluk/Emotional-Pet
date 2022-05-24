@@ -40,10 +40,15 @@ void I2S_Init(i2s_mode_t MODE, i2s_bits_per_sample_t BPS)
 
 int I2S_Read(char *data, int numData)
 {
-  return i2s_read_bytes(I2S_NUM_0, (char *)data, numData, portMAX_DELAY);
+  size_t i2s_bytes_read = 0;
+  i2s_read(I2S_NUM_0, (void *)data, numData, &i2s_bytes_read, portMAX_DELAY);
+  return i2s_bytes_read;
+//  return i2s_read_bytes(I2S_NUM_0, (char *)data, numData, portMAX_DELAY);
 }
 
 void I2S_Write(char *data, int numData)
 {
-  i2s_write_bytes(I2S_NUM_0, (const char *)data, numData, portMAX_DELAY);
+  size_t i2s_bytes_write = 0;
+  i2s_write(I2S_NUM_0, (const void*)data, numData,&i2s_bytes_write, portMAX_DELAY);
+//  i2s_write_bytes(I2S_NUM_0, (const char *)data, numData, portMAX_DELAY);
 }
