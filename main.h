@@ -14,10 +14,10 @@
 // ******* Finite State Machine ******* //
 
 typedef struct {
-  STATE_INIT,
-  STATE_FACE,
-  STATE_MENU,
-  STATE_VOICE_MESSAGE,
+  // STATE_INIT,
+  // STATE_FACE,
+  // STATE_MENU,
+  // STATE_VOICE_MESSAGE,
 } screenState_t;
 
 // ******* Pins ******* //
