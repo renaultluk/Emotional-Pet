@@ -35,6 +35,13 @@ typedef enum {
   STATE_VOICE_MESSAGE,
 } screenState_t;
 
+typedef struct OthersAudio_t {
+  String userID;
+  String username;
+  String cloudPath;
+  String localPath;
+} OthersAudio_t;
+
 // ******* Pins ******* //
 
 #define SCL_PIN           0
@@ -106,6 +113,11 @@ int menuChoice = 0;
 String replyTarget;
 String audioTarget;
 
+// Audio Data Object
+OthersAudio_t friendsList[20];
+int friendHead = 0;
+int currFriend = 0;
+int numFriends = 0;
 
 // ******* Component Objects ******* //
 

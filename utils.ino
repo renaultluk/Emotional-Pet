@@ -44,7 +44,7 @@ void mainControlFlow()
       }
       else if (currScreen == face.menu.screen("listen", "audio"))
       {
-        // TODO: Reply
+        replyTarget = audioTarget;
         face.menu.navigateTo("record", "record");
       }
       else if (currScreen == face.menu.screen("emotion", "main"))
@@ -135,7 +135,8 @@ void mainControlFlow()
       tapped = false;
       if (currScreen == face.menu.screen("listen", "friends"))
       {
-        // TODO: Select friend
+        audioTarget = friendsList[currFriend].userID;
+        // TODO: Fetch selected friend's audio
         face.menu.navigateTo("listen", "audio");
       }
     }

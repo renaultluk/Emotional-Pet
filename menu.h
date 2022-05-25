@@ -48,6 +48,9 @@ float easeInOut(int t, int i);
 
 void jpegRender(int16_t xpos, int16_t ypos);
 
+void scrollList();
+void updateList();
+
 class UIElement {
   public:
     String name;

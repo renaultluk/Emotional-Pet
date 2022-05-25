@@ -466,6 +466,94 @@ void ListItem::draw(bool sel)
   }
 }
 
+void scrollList(bool up)
+{
+  int currItem = currFriend % 4;
+
+  if (currItem == 0)
+  {
+    if (up && currFriend != 0)
+    {
+      friendHead -= 4;
+      friendHead = friendHead < 0 ? 0 : friendHead;
+      updateList();
+    }
+    else if (!up)
+    {
+      static_cast<ListItem*>((*currScreen)["frd0"])->setSelected(false);
+      static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(true);
+    }
+  }
+  else if (currItem == 1)
+  {
+    static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(false);
+    if (up)
+    {
+      static_cast<ListItem*>((*currScreen)["frd0"])->setSelected(true);
+    }
+    else
+    {
+      static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(true);
+    }
+  }
+  else if (currItem == 2)
+  {
+    static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(false);
+    if (up)
+    {
+      static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(true);
+    }
+    else
+    {
+      static_cast<ListItem*>((*currScreen)["frd3"])->setSelected(true);
+    }
+  }
+  else
+  {
+    if (up)
+    {
+      static_cast<ListItem*>((*currScreen)["frd3"])->setSelected(false);
+      static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(true);
+    }
+    else if (!up && currFriend < numFriends)
+    {
+      friendHead += 4;
+      updateList();
+    }
+  }
+
+  if (up)
+  {
+    currFriend--;
+    currFriend = currFriend < 0 ? 0 : currFriend;
+  }
+  else
+  {
+    currFriend++;
+    currFriend = currFriend >= numFriends ? numFriends - 1 : currFriend;
+  }
+
+}
+
+void updateList()
+{
+  for (int i = 0; i < 4; i++)
+  {
+    String query = "frd" + i;
+    ListItem* currItem = static_cast<ListItem*>((*currScreen)[query]);
+    int currIndex = friendHead + i;
+    if (currIndex >= numFriends)
+    {
+      currItem->setText("", "");
+    }
+    else
+    {
+      currItem->setText(friendsList[currIndex].username, "");
+    }
+  }
+  static_cast<ListItem*>((*currScreen)["frd0"])->setSelected(true);
+}
+
 ScreenCol::ScreenCol() : UIElGroup()
 {
   colIndex = 0;
