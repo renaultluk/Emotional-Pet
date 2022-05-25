@@ -68,6 +68,9 @@ int touchQueue[2];
 
 volatile bool dataChanged = false;
 
+int friendListPointer = 0;
+char friendList[20][10]; //friend list with 20 slots, 10 char max in each element
+
 // ******* Component Objects ******* //
 
 TFT_eSPI tft = TFT_eSPI();
