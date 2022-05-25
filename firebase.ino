@@ -1,4 +1,5 @@
 #include "main.h"
+#include <string>
 
 const char* userID = "abc123";
 const char* parentPath = "/users/" + userID;
@@ -125,12 +126,33 @@ void checkFirebaseDataChanged()
 
 void addFriend(int friendID)
 {
-  
+/*
+    friendList[friendListPointer] = friendID; //add friend element into the array
+    friendListPointer ++;
+    
+    if Firebase.RTDB,setArray(&fbdo, "/users/userId/friends", friendList)) { //upload and check if elements are uploaded successfully into Firebase
+    Serial.println("PASSED");
+    Serial.println("PATH: " + fbdo.dataPath());
+    Serial.println("TYPE: " + fbdo.dataType());
+    }
+    else {
+    Serial.println("FAILED");
+    Serial.println("REASON: " + fbdo.errorReason());
+    }
+*/
 }
 
 void getFriends()
 {
-
+/*
+    if (Firebase.RTDB.getArray(&fbdo, "/users/userId/friends")) { //if there's data
+    friendList = fbdo.jsonArray();
+    }
+    else {
+    Serial.println("FAILED");
+    Serial.println("REASON: " + fbdo.errorReason());
+    }
+*/
 }
 
 void getAudio(String path)
@@ -145,5 +167,14 @@ void postAudio()
 
 void getEmotion()
 {
-
+/*
+     if (Firebase.RTDB.getString(&fbdo, "/users/userId/emotion")) { //**the address is not set
+     if (fbdo.dataType() == "string") {
+        return fbdo.stringData();
+      }
+    }
+    else {
+      return;
+    }
+*/
 }
