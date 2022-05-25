@@ -243,6 +243,7 @@ void stressCheckUp() {
   if (hrvComplete == true && rmssd < 100) {
     Serial.print("Your HRV reading is: ");
     Serial.println(rmssd);
+    static_cast<Text*>((*(face.menu.screen("emotion", "feedback")))["hrvLabel"])->setText(rmssd);
     float phq_str_hrv = -0.0785*rmssd + 14.6913;
     float phq_rel_hrv = -0.2331*rmssd + 29.3654;
     float gad_str_hrv = -0.09432*rmssd + 14.51642;
