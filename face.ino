@@ -34,7 +34,7 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
 
   UIElGroup* curr = static_cast<UIElGroup*>(menu["listen"]);
   curr->add(new UIElGroup("main", 2));
-  curr->add(new UIElGroup("choose", 6));
+  curr->add(new UIElGroup("choose", 8));
   curr->add(new UIElGroup("audio", 9));
   curr->add(new UIElGroup("friends", 8));
 
@@ -59,10 +59,12 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr = static_cast<UIElGroup*>((*curr)["choose"]);
   curr->add(new Rounded(41, 55, 78, 130, true));
   curr->add(new Rounded(124, 55, 78, 130, true));
-  // curr->add(new Image(71, 83, "icons/friends.jpg"));
-  // curr->add(new Image(135, 92, "icons/explore.jpg"));
   curr->add(new Text(79, 148, "Friends", false, "frdsStr", 1));
   curr->add(new Text(163, 148, "Explore", false, "exploreStr", 1));
+  curr->add(new Rounded(58, 101, 23, 36, false));
+  curr->add(new Rounded(80, 102, 19, 29, false, "body", 9));
+  curr->add(new Circle(68, 90, 23, true, "head", false));
+  curr->add(new Circle(89, 93, 18, true, "head", false));
 
   // TODO: menu[listen][audio], menu[listen][friends]
 
