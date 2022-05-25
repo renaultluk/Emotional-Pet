@@ -49,7 +49,6 @@ void mainControlFlow()
       }
       else if (currScreen == face.menu.screen("emotion", "main"))
       {
-        // TODO: Select relaxed
         menuChoice = 1;
         face.menu.navigateTo('d');
       }
@@ -73,7 +72,6 @@ void mainControlFlow()
       }
       else if (currScreen == face.menu.screen("emotion", "main"))
       {
-        // TODO: Select stressed
         menuChoice = 0;
         face.menu.navigateTo('d');
       }
@@ -83,7 +81,7 @@ void mainControlFlow()
       swipe_up = false;
       if (currScreen == face.menu.screen("listen", "friends"))
       {
-        // TODO: friends screen scroll
+        scrollList(1);
       }
       else if (currScreen == face.menu.screen("listen", "audio"))
       {
@@ -95,7 +93,7 @@ void mainControlFlow()
       swipe_down = false;
       if (currScreen == face.menu.screen("listen", "friends"))
       {
-        // TODO: friends screen scroll
+        scrollList(0);
       }
       else if (currScreen == face.menu.screen("listen", "audio"))
       {
@@ -150,7 +148,9 @@ void mainControlFlow()
     }
     else if (swipe_up || swipe_down)
     {
-      // TODO: Petting
+      swipe_up = false;
+      swipe_down = false;
+      face.changeFaceState(HAPPY);
     }
   }
 }
