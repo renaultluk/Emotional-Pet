@@ -447,10 +447,20 @@ void ListItem::draw(bool sel)
   {
     spr[sel].setFreeFont(FSS9);
     tft.setTextDatum(TL_DATUM);
-    spr[sel].setTextColor(SECONDARY_COLOR);
-    spr[sel].drawString(title, x + 15, y + 15, GFXFF);
-    spr[sel].setTextColor(GREY_COLOR);
-    spr[sel].drawString(subtitle, x + 98, y + 15, GFXFF);
+    if (selected)
+    {
+      spr[sel].fillRect(x, y, w, h, TFT_BLUE);
+      spr[sel].setTextColor(PRIMARY_COLOR);
+      spr[sel].drawString(title, x + 15, y + 15, GFXFF);
+      spr[sel].drawString(subtitle, x + 98, y + 15, GFXFF);
+    }
+    else
+    {
+      spr[sel].setTextColor(SECONDARY_COLOR);
+      spr[sel].drawString(title, x + 15, y + 15, GFXFF);
+      spr[sel].setTextColor(GREY_COLOR);
+      spr[sel].drawString(subtitle, x + 98, y + 15, GFXFF);
+    }
     spr[sel].drawFastHLine(x, y + h, w, GREY_COLOR);
     tft.setTextDatum(MC_DATUM);
   }
