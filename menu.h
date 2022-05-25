@@ -119,7 +119,7 @@ class Rounded : public UIElement {
       {
         rad = init_w / 2;
       }
-      if (init_rad > init_h / 2)
+      if (rad > init_h / 2)
       {
         rad = init_h / 2;
       }
@@ -130,11 +130,13 @@ class Rounded : public UIElement {
 class Circle : public UIElement {
   private:
     bool filled;
+    bool primary;
 
   public:
-    Circle(int16_t init_x, int16_t init_y, int16_t init_r, bool isFilled, String name = "") : UIElement(init_x, init_y, init_r, init_r)
+    Circle(int16_t init_x, int16_t init_y, int16_t init_r, bool isFilled, String name = "", bool isPrimary = true) : UIElement(init_x, init_y, init_r, init_r)
     {
       filled = isFilled;
+      primary = isPrimary;
     }
     void setFilled(bool newFilled);
     void draw(bool sel);
@@ -177,6 +179,10 @@ class Bar : public UIElement {
     Bar(int16_t init_x, int16_t init_y, int16_t init_w, bool isPrimary, String name = "") : UIElement(init_x, init_y, init_w, 0, name)
     {
       primary = isPrimary;
+    }
+    void setWidth(int16_t new_width)
+    {
+      w = new_width;
     }
     void draw(bool sel);
 };

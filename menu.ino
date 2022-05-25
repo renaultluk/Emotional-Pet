@@ -294,7 +294,11 @@ void Circle::setFilled(bool newFilled)
 
 void Circle::draw(bool sel)
 {
-  if (filled) spr[sel].fillCircle(x, y, w / 2, PRIMARY_COLOR);
+  if (filled)
+  {
+    if (primary) spr[sel].fillCircle(x, y, w / 2, PRIMARY_COLOR);
+    else spr[sel].fillCircle(x, y, w / 2, SECONDARY_COLOR);
+  }
   else spr[sel].drawCircle(x, y, w / 2, PRIMARY_COLOR);
 }
 
