@@ -11,6 +11,12 @@
 #include <JPEGDecoder.h>
 #include <MAX30105.h>
 
+#include <EloquentTinyML.h>
+#include "libmfcc.h"
+
+#include "audio.h"
+#include "SDcard.h"
+
 // ******* Finite State Machine ******* //
 
 typedef struct {
@@ -46,6 +52,10 @@ typedef struct {
 
 #define TOUCH_THRESHOLD   40
 
+#define NUMBER_OF_INPUTS 216
+#define NUMBER_OF_OUTPUTS 1
+#define TENSOR_ARENA_SIZE 8*1024
+
 // ******* Global Variables ******* //
 
 bool touched1 = false;
@@ -59,6 +69,7 @@ TFT_eSPI tft = TFT_eSPI();
 SPIClass spiSD(HSPI);
 MPU6050 mpu;
 MAX30105 heartRateSensor;
+Eloquent::TinyML::TfLite<NUMBER_OF_INPUTS, NUMBER_OF_OUTPUTS, TENSOR_ARENA_SIZE> ml;
 
 // ******* Functions ******* //
 
