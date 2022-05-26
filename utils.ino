@@ -162,6 +162,11 @@ void mainControlFlow()
         face.menu.navigateTo("listen", "audio");
       }
     }
+
+    if (currScreen == face.menu.screen(3, 1))
+    {
+      stressCheckUp();
+    }
   }
   else
   {

@@ -160,7 +160,7 @@ void heartRateInit() {
   heartRateSensor.setup();
 }
 
-const int ecgPin = 25;
+const int ecgPin = 34;
 int upperThreshold = 1500;
 int lowerThreshold = 100;
 int ecgOffset = 8000;
@@ -182,6 +182,8 @@ float rmssd = -1.0;
 float LPF = 0.0;
 float LPF_beat = 0.0;
 bool start = false;
+int prevSecond;
+int seconds = 0;
 
 void(* resetFunc) (void) = 0;//declare reset function at address 0
 
@@ -204,16 +206,34 @@ void stressCheckUp() {
 
   if(start == false) {
     Serial.println("Do you feel (1)STRESSED or (2)RELAXED? Please enter the number.");
+    haveAnim = true;
+    static_cast<Text*>((*face.menu.screen(3,1))["timer"])->setContent("Ready...");
+    face.draw(0);
+    face.draw(1);
     // while (Serial.available() == 0) {
     // }
     // menuChoice = Serial.parseInt();
     delay(5000);
+    Serial.println("Start measure");
     start = true;
+    static_cast<Text*>((*face.menu.screen(3,1))["timer"])->setContent("00:00");
+    face.draw(0);
+    face.draw(1);
+    prevSecond = millis();
   }
 
   float weight = 0.1;                               
   LPF = (1.0 - weight) * LPF + weight * (analogRead(ecgPin)*500);
   int ecgReading = LPF + ecgOffset; 
+  Serial.println("reading... ecgReading=");
+  // Serial.println(ecgReading);
+
+  if (millis() - prevSecond > 1000)
+  {
+    prevSecond = millis();
+    String timerStr = ++seconds >= 10 ? "00:" + String(seconds) : "00:0" + String(seconds);
+    static_cast<Text*>((*face.menu.screen(3,1))["timer"])->setContent(timerStr);
+  }
 
   if (ecgReading > upperThreshold && alreadyPeaked == false) { 
 
@@ -258,13 +278,13 @@ void stressCheckUp() {
     hrvComplete = true;
   } 
 
-  //Serial.println(ecgReading);
-  //Serial.println(rrInterval);
-  /*if (beatsPerMinute >= 60 && beatsPerMinute <= 140){
+  Serial.println(ecgReading);
+  Serial.println(rrInterval);
+  if (beatsPerMinute >= 60 && beatsPerMinute <= 140){
       float weight = 0.1;                               
       LPF_beat = (1.0 - weight) * LPF_beat + weight * beatsPerMinute;
       Serial.println(LPF_beat);    
-  }*/
+  }
   
   if (hrvComplete == true && rmssd < 100) {
     Serial.print("Your HRV reading is: ");
@@ -293,7 +313,9 @@ void stressCheckUp() {
     Serial.println("please try not to move and relax");
     Serial.println("taking reading again");
     delay(5000);
-    resetFunc();  //call reset
+    // resetFunc();  //call reset
+    haveAnim = false;
+    face.menu.navigateTo("emotion", "feedback");
   }
   delay(10);
 }

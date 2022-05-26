@@ -47,7 +47,7 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr = static_cast<UIElGroup*>(menu["emotion"]);
   curr->add(new UIElGroup("main", 11));
   curr->add(new UIElGroup("measure", 3));
-  curr->add(new UIElGroup("feedback", 5));
+  curr->add(new UIElGroup("feedback", 7));
 
   // Page Content
   curr = static_cast<UIElGroup*>(menu["listen"]);
@@ -140,9 +140,11 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr = static_cast<UIElGroup*>((*curr)["feedback"]);
   curr->add(new Text(91, 87, "Your HRV: ", true, "yourhrv", 1));
   curr->add(new Text(171, 87, "00.00", true, "hrvLabel", 1));
-  curr->add(new Text(120, 133, "You have", true, "have", 1));
-  curr->add(new Text(79, 153, "MILD", true, "anxietyLevel", 1));
-  curr->add(new Text(144, 153, "Anxiety", true, "anxiety", 1));
+  curr->add(new Text(120, 108, "You have", true, "have", 1));
+  curr->add(new Text(79, 140, "MILD", true, "anxietyLevel", 1));
+  curr->add(new Text(144, 140, "Anxiety", true, "anxiety", 1));
+  curr->add(new Text(70, 161, "MILD", true, "depLevel", 1));
+  curr->add(new Text(151, 161, "Depression", true, "depression", 1));
 }
 
 faceState_t Face::getFaceState() const
