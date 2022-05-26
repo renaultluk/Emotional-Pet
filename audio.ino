@@ -13,6 +13,7 @@ char communicationData[numCommunicationData];
 char partWavData[numPartWavData];
 
 void playAudio(const char* path) {
+  // tft.endWrite();
   File sd = SD.open(path);
   fileplay = new AudioFileSourceSD(path);
 //  id3 = new AudioFileSourceID3(file);
@@ -33,6 +34,7 @@ void playAudio(const char* path) {
       break;
     }
   }
+  // tft.startWrite();
 }
 
 void record(const char filename[], const int record_time){

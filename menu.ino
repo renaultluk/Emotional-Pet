@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "SDcard.h"
 
 float linear(int t, int i)
 {
@@ -573,8 +574,11 @@ void ScreenCol::navigateTo(int i)
 {
   colIndex = i;
   currScreen = static_cast<UIElGroup*>(elements[i]);
-  //playAudio(const char* path);
-  // PlayHaptic(1); //PlayHaptic(effect number)
+  listDir(SD, "/", 0);
+  playAudio("/test.wav");
+  PlayHaptic(1); //PlayHaptic(effect number)
+  face.draw(0);
+  face.draw(1);
 }
 
 int ScreenCol::getColIndex() const
@@ -602,8 +606,11 @@ ScreenRow::ScreenRow(String init_name, int init_size) : UIElGroup(init_name, ini
 void ScreenRow::navigateTo(int i)
 {
   rowIndex = i;
-  //playAudio(const char* path);
-  // PlayHaptic(1); //PlayHaptic(effect number)
+  listDir(SD, "/", 0);
+  playAudio("/test.wav");
+  PlayHaptic(1); //PlayHaptic(effect number)
+  face.draw(0);
+  face.draw(1);
 }
 
 void ScreenRow::navigateTo(int row, int col)
@@ -643,32 +650,22 @@ void ScreenRow::navigateTo(char dir)
     case 'u':
       {
         ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
-        int newIndex = curr->getColIndex() - 1;
-        if (newIndex > 0) {
-          if (newIndex < curr->getSize());
-          else newIndex = curr->getSize();
-        } else {
-          newIndex = 0;
-        }
+        int newIndex = curr->getColIndex();
+        newIndex = newIndex > 0 ? newIndex - 1 : curr->getSize() - 1;
         curr->navigateTo(newIndex);
         break;
       }
     case 'l':
       {
-        int newIndex = (rowIndex - 1) % size;
+        int newIndex = rowIndex > 0 ? (rowIndex - 1) % size : size - 1;
         navigateTo(newIndex);
         break;
       }
     case 'd':
       {
         ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
-        int newIndex = curr->getColIndex() + 1;
-        if (newIndex > 0) {
-          if (newIndex < curr->getSize());
-          else newIndex = curr->getSize();
-        } else {
-          newIndex = 0;
-        }
+        int newIndex = curr->getColIndex();
+        newIndex = newIndex < curr->getSize() ? newIndex + 1 : curr->getSize() - 1;
         curr->navigateTo(newIndex);
         break;
       }

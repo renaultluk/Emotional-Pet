@@ -37,7 +37,7 @@ void mainControlFlow()
       if (menu_top)
       {
         Serial.println("menu top tilt triggered");
-        face.menu.navigateTo("record", "record");
+        face.menu.navigateTo('l');
       }
       else if (currScreen == face.menu.screen("listen", "choose"))
       {

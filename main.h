@@ -64,7 +64,7 @@ typedef struct OthersAudio_t {
 #define TOUCH_PIN1        0
 #define TOUCH_PIN2        0
 
-#define tilt_value 8   // accelerometer tilt threshold (in ms^-2)
+#define tilt_value 5   // accelerometer tilt threshold (in ms^-2)
 
 // ******* Constants ******* //
 
@@ -155,7 +155,7 @@ void stressCheckUp();
 
 // ******* Actuators ******* //
 
-void hapticInit();
+void hapticsInit();
 void PlayHaptic(int effect);
 
 void playAudio(const char* path);

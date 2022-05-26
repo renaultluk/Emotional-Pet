@@ -8,6 +8,12 @@ void setup() {
   Wire.begin();
   Serial.begin(115200);
 
+  // spiSD.begin(14, 12, 13, 5);
+  // while (!SD.begin(5, spiSD))
+  // {
+  //   Serial.println("SD not begun");
+  //   delay(1000);
+  // }
   MPUInit();
   hapticsInit();
   
