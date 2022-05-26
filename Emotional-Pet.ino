@@ -41,7 +41,11 @@ void setup() {
   anim_iterator = 0;
   anim_time = 0;
 
-  currScreen = face.menu.screen("listen", "main");
+  currScreen = face.menu.screen(0,0);
+  Serial.print("currRow: ");
+  Serial.println(face.menu.getRowIndex());
+  Serial.print("currScreen: ");
+  Serial.print(currScreen->name);
   prev_control = millis();
 
   tft.fillScreen(TFT_WHITE);

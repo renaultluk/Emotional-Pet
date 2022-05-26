@@ -32,12 +32,12 @@ void checkMPU() {
     float accel_y = a.acceleration.y;
     float accel_z = a.acceleration.z;
   
-    Serial.print("accel x: ");
-    Serial.print(accel_x);
-    Serial.print(" accel y: ");
-    Serial.print(accel_y);
-    Serial.print(" accel z: ");
-    Serial.println(accel_z);
+    // Serial.print("accel x: ");
+    // Serial.print(accel_x);
+    // Serial.print(" accel y: ");
+    // Serial.print(accel_y);
+    // Serial.print(" accel z: ");
+    // Serial.println(accel_z);
     if ((accel_x < tilt_value) && (accel_x > -tilt_value)&&(accel_y > -tilt_value)&&(accel_y < tilt_value)){
       tilt_center = true;
       tilt_right = false;
@@ -160,7 +160,7 @@ void heartRateInit() {
   heartRateSensor.setup();
 }
 
-const int ecgPin = 0;
+const int ecgPin = 25;
 int upperThreshold = 1500;
 int lowerThreshold = 100;
 int ecgOffset = 8000;

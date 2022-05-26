@@ -4,8 +4,8 @@ void mainControlFlow()
 {
   if (face.getFaceState() == MENU)
   {
-    bool menu_top = (currScreen == face.menu.screen("listen", "main")) || (currScreen == face.menu.screen("record", "main"))
-        || (currScreen == face.menu.screen("emotion", "main")) || (currScreen == face.menu.screen("settings", "main"));
+    ScreenCol* temp = static_cast<ScreenCol*>(face.menu[face.menu.getRowIndex()]);
+    bool menu_top = (temp->getColIndex() == 0);
     if (tilt_up)
     {
       tilt_up = false;
@@ -13,33 +13,49 @@ void mainControlFlow()
       {
         face.menu.navigateTo('d');
       }
+      else if (currScreen == face.menu.screen(3, 1))
+      {
+        face.menu.navigateTo('d');
+      }
+      else if (currScreen == face.menu.screen(3, 2))
+      {
+        face.menu.navigateTo("emotion", "main");
+      }
     }
     else if (tilt_down)
     {
       tilt_down = false;
-      if (menu_top || currScreen == face.menu.screen("emotion", "feedback"))
+      if (menu_top || (currScreen == face.menu.screen("emotion", "feedback")))
       {
         face.menu.setVisible(false);
         face.changeFaceState(NEUTRAL);
       }
-      else if ((currScreen == face.menu.screen("listen", "friends")) || (currScreen == face.menu.screen("listen", "audio")))
+      else if ((currScreen == face.menu.screen(0, 3)) || (currScreen == face.menu.screen(0, 2)))
       {
         face.menu.navigateTo("listen", "choose");
       }
-      else if (currScreen == face.menu.screen("record", "record"))
+      else if (currScreen == face.menu.screen(0, 1))
       {
-        face.menu.navigateTo('u');
+        face.menu.navigateTo("listen", "main");
+      }
+      else if (currScreen == face.menu.screen(1, 1))
+      {
+        Serial.println(currScreen->name);
+        face.menu.navigateTo("record", "main");
       }
     }
     else if (tilt_left)
     {
       tilt_left = false;
-      if (menu_top)
+      Serial.print("currRow: ");
+      Serial.println(face.menu.getRowIndex());
+      Serial.print("currScreen: ");
+      Serial.print(currScreen->name);
+      if (menu_top && currScreen != face.menu.screen("emotion", "main"))
       {
-        Serial.println("menu top tilt triggered");
         face.menu.navigateTo('l');
       }
-      else if (currScreen == face.menu.screen("listen", "choose"))
+      else if (currScreen == face.menu.screen(0, 1))
       {
         face.menu.navigateTo("listen", "friends");
       }
@@ -48,20 +64,26 @@ void mainControlFlow()
         replyTarget = audioTarget;
         face.menu.navigateTo("record", "record");
       }
-      else if (currScreen == face.menu.screen("emotion", "main"))
+      else if (currScreen == face.menu.screen(3, 0))
       {
+        Serial.println("Navigate to emotion measurement");
         menuChoice = 1;
-        face.menu.navigateTo('d');
+        face.menu.navigateTo("emotion", "measure");
       }
     }
     else if (tilt_right)
     {
       tilt_right = false;
+      Serial.print("currRow: ");
+      Serial.println(face.menu.getRowIndex());
+      Serial.print("currScreen: ");
+      Serial.println(currScreen->name);
       if (menu_top)
       {
+        Serial.println("Menu top navigate right");
         face.menu.navigateTo('r');
       }
-      else if (currScreen == face.menu.screen("listen", "choose"))
+      else if (currScreen == face.menu.screen(0, 1))
       {
         // TODO: select random audio
         face.menu.navigateTo("listen", "audio");
@@ -71,10 +93,11 @@ void mainControlFlow()
         // TODO: Add friend
         // TODO: Go to next audio
       }
-      else if (currScreen == face.menu.screen("emotion", "main"))
+      else if (currScreen == face.menu.screen(3, 0))
       {
+        Serial.println("Navigate to emotion measurement");
         menuChoice = 0;
-        face.menu.navigateTo('d');
+        face.menu.navigateTo("emotion", "measure");
       }
     }
     else if (swipe_up)
@@ -146,7 +169,7 @@ void mainControlFlow()
     {
       tilt_up = false;
       face.changeFaceState(MENU);
-      currScreen = face.menu.screen("listen", "main");
+      // currScreen = face.menu.screen("listen", "main");
     }
     else if (swipe_up || swipe_down)
     {

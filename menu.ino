@@ -594,8 +594,11 @@ ScreenCol::ScreenCol(String init_name, int init_size) : UIElGroup(init_name, ini
 
 void ScreenCol::navigateTo(int i)
 {
+  Serial.println("Col wise Navigation");
   colIndex = i;
   currScreen = static_cast<UIElGroup*>(elements[i]);
+  Serial.print("Curr Screen: ");
+  Serial.println(currScreen->name);
   listDir(SD, "/", 0);
   playAudio("/test.wav");
   PlayHaptic(1); //PlayHaptic(effect number)
@@ -627,7 +630,18 @@ ScreenRow::ScreenRow(String init_name, int init_size) : UIElGroup(init_name, ini
 
 void ScreenRow::navigateTo(int i)
 {
+  // Serial.print("Curr Col: ");
+  // Serial.println(elements[rowIndex]->name);
+  Serial.print("Original screen: ");
+  Serial.println(currScreen->name);
   rowIndex = i;
+  ScreenCol* currCol = static_cast<ScreenCol*>(elements[i]);
+  currScreen = static_cast<UIElGroup*>((*currCol)[currCol->getColIndex()]);
+  Serial.println("Row wise Navigation");
+  Serial.print("Curr Col: ");
+  Serial.println(currCol->name);
+  Serial.print("Curr Screen: ");
+  Serial.println(currScreen->name);
   listDir(SD, "/", 0);
   playAudio("/test.wav");
   PlayHaptic(1); //PlayHaptic(effect number)
@@ -671,6 +685,7 @@ void ScreenRow::navigateTo(char dir)
   {
     case 'u':
       {
+        Serial.println("Navigate up");
         ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
         int newIndex = curr->getColIndex();
         newIndex = newIndex > 0 ? newIndex - 1 : curr->getSize() - 1;
@@ -679,12 +694,14 @@ void ScreenRow::navigateTo(char dir)
       }
     case 'l':
       {
+        Serial.println("Navigate left");
         int newIndex = rowIndex > 0 ? (rowIndex - 1) % size : size - 1;
         navigateTo(newIndex);
         break;
       }
     case 'd':
       {
+        Serial.println("Navigate down");
         ScreenCol* curr = static_cast<ScreenCol*>(elements[rowIndex]);
         int newIndex = curr->getColIndex();
         newIndex = newIndex < curr->getSize() ? newIndex + 1 : curr->getSize() - 1;
@@ -693,6 +710,7 @@ void ScreenRow::navigateTo(char dir)
       }
     case 'r':
       {
+        Serial.println("Navigate right");
         int newIndex = (rowIndex + 1) % size;
         navigateTo(newIndex);
         break;
