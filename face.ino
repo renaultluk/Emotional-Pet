@@ -33,8 +33,8 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   menu.add(new ScreenCol("emotion", 3));
 
   UIElGroup* curr = static_cast<UIElGroup*>(menu["listen"]);
-  curr->add(new UIElGroup("main", 2));
-  curr->add(new UIElGroup("choose", 8));
+  curr->add(new UIElGroup("main", 5));
+  curr->add(new UIElGroup("choose", 11));
   curr->add(new UIElGroup("audio", 9));
   curr->add(new UIElGroup("friends", 8));
 
@@ -52,8 +52,11 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   // Page Content
   curr = static_cast<UIElGroup*>(menu["listen"]);
   curr = static_cast<UIElGroup*>((*curr)["main"]);
-  // curr->add(new Image(75, 75, "icons/headphones.jpg"));
   curr->add(new Text(120, 170, "Listen", true));
+  curr->add(new Circle(120, 105, 61, false));
+  curr->add(new Rounded(75, 106, 88, 41, false));
+  curr->add(new Rounded(84, 102, 12, 30, true));
+  curr->add(new Rounded(147, 102, 12, 30, true));
 
   curr = static_cast<UIElGroup*>(menu["listen"]);
   curr = static_cast<UIElGroup*>((*curr)["choose"]);
@@ -65,6 +68,9 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new Rounded(80, 102, 19, 29, false, "body", 9));
   curr->add(new Circle(68, 90, 23, true, "head", false));
   curr->add(new Circle(89, 93, 18, true, "head", false));
+  curr->add(new Circle(170, 97, 39, false, "", false));
+  curr->add(new Triangle(154, 112, 143, 126, 151, 132));
+  curr->add(new Triangle(154, 112, 162, 118, 151, 132));
 
   // TODO: menu[listen][audio], menu[listen][friends]
 

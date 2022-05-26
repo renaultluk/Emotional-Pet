@@ -301,7 +301,29 @@ void Circle::draw(bool sel)
     if (primary) spr[sel].fillCircle(x, y, w / 2, PRIMARY_COLOR);
     else spr[sel].fillCircle(x, y, w / 2, SECONDARY_COLOR);
   }
-  else spr[sel].drawCircle(x, y, w / 2, PRIMARY_COLOR);
+  else 
+  {
+    if (primary) spr[sel].drawCircle(x, y, w / 2, PRIMARY_COLOR);
+    else spr[sel].drawCircle(x, y, w / 2, SECONDARY_COLOR);
+  }
+}
+
+Triangle::Triangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t x3, int16_t y3) : UIElement(0,0,0,0)
+{
+  this->x1 = x1;
+  this->y1 = y1;
+  this->x2 = x2;
+  this->y2 = y2;
+  this->x3 = x3;
+  this->y3 = y3;
+}
+
+void Triangle::draw(bool sel)
+{
+  if (visible)
+  {
+    spr[sel].fillTriangle(x1, y1, x2, y2, x3, y3, SECONDARY_COLOR);
+  }
 }
 
 void Image::draw(bool sel)
