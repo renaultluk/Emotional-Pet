@@ -148,6 +148,8 @@ void Face::changeFaceState(faceState_t newFaceState)
 {
   Serial.print("Switched to ");
   Serial.println(newFaceState);
+  haveAnim = true;
+  if (newFaceState != BLINK) faceState = newFaceState;
   switch (newFaceState)
   {
     case NEUTRAL: {

@@ -36,7 +36,8 @@ void mainControlFlow()
       tilt_left = false;
       if (menu_top)
       {
-        face.menu.navigateTo('l');
+        Serial.println("menu top tilt triggered");
+        face.menu.navigateTo("record", "record");
       }
       else if (currScreen == face.menu.screen("listen", "choose"))
       {
@@ -145,6 +146,7 @@ void mainControlFlow()
     {
       tilt_up = false;
       face.changeFaceState(MENU);
+      currScreen = face.menu.screen("listen", "main");
     }
     else if (swipe_up || swipe_down)
     {

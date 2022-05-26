@@ -64,7 +64,7 @@ typedef struct OthersAudio_t {
 #define TOUCH_PIN1        0
 #define TOUCH_PIN2        0
 
-#define tilt_value 5   // accelerometer tilt threshold (in ms^-2)
+#define tilt_value 8   // accelerometer tilt threshold (in ms^-2)
 
 // ******* Constants ******* //
 
@@ -73,7 +73,13 @@ typedef struct OthersAudio_t {
 
 #define FRAME_RATE      24
 
+#define CONTROL_FREQ    2
+
 // ******* Global Variables ******* //
+ int prev_control;
+
+ bool haveAnim = false;
+
 
 // Touch Pads
 bool touched1 = false;
@@ -153,5 +159,12 @@ void hapticInit();
 void PlayHaptic(int effect);
 
 void playAudio(const char* path);
+
+void LED_setup();
+void colorWipe2(int r, int g, int b);
+void RedLEDfade();
+void GreenLEDfade();
+void BlueLEDfade();
+void colorWipe(uint32_t color, int wait);
 
 #endif

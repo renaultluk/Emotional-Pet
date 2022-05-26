@@ -35,18 +35,27 @@ void setup() {
   anim_iterator = 0;
   anim_time = 0;
 
+  currScreen = face.menu.screen("listen", "main");
+  prev_control = millis();
+
   tft.fillScreen(TFT_WHITE);
+  face.draw(0);
+  face.draw(1);
+  Serial.println("setup done");
 }
 
 void loop() {
-  checkMPU();
   checkTouch();
   mainControlFlow();
   int curr_time = millis();
-  if (curr_time - prev_time > FRAME_RATE)
+  if ((curr_time - prev_time > FRAME_RATE) && haveAnim)
   {
     face.draw(0);
     face.draw(1);
     prev_time = curr_time;
+  }
+  else
+  {
+    checkMPU();
   }
 }

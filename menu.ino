@@ -48,16 +48,16 @@ UIElement::UIElement(int16_t init_x, int16_t init_y, int16_t init_w, int16_t ini
 void UIElement::move(int t, int i, float (*velocityFunc)(int, int))
 {
   float coef = velocityFunc(t, i);
-  Serial.print("coef: ");
-  Serial.println(coef);
+  // Serial.print("coef: ");
+  // Serial.println(coef);
   int delta_x = coef * (keyframes[target].x - keyframes[head].x);
   int delta_y = coef * (keyframes[target].y - keyframes[head].y);
   x = keyframes[head].x + delta_x;
   y = keyframes[head].y + delta_y;
-  Serial.print("\t y:");
-  Serial.print(y);
-  Serial.print("\t delta y:");
-  Serial.println(delta_y);
+  // Serial.print("\t y:");
+  // Serial.print(y);
+  // Serial.print("\t delta y:");
+  // Serial.println(delta_y);
 }
 
 void UIElement::move(int16_t delta_x, int16_t delta_y)
@@ -111,10 +111,10 @@ void UIElement::update(float (*velocityFunc)(int, int))
   int t = keyframes[target].timestamp;
   if (iterator >= t + 1)    // Finish animation
   {
-    Serial.print("FINISHED FROM ");
-    Serial.print(head);
-    Serial.print(" TO ");
-    Serial.println(target);
+    // Serial.print("FINISHED FROM ");
+    // Serial.print(head);
+    // Serial.print(" TO ");
+    // Serial.println(target);
     if (keyframes[target].visible == false) visible = false;
     head = (head + 1) % KEYFRAME_QUEUE_SIZE;
     // target = (head + 1) % KEYFRAME_QUEUE_SIZE;
@@ -123,6 +123,7 @@ void UIElement::update(float (*velocityFunc)(int, int))
       anim_time = 0;
     }
     iterator = 0;
+    haveAnim = false;
   } else {
     // Serial.print("Iterating ");
     // Serial.print(iterator);
@@ -573,7 +574,7 @@ void ScreenCol::navigateTo(int i)
   colIndex = i;
   currScreen = static_cast<UIElGroup*>(elements[i]);
   //playAudio(const char* path);
-  PlayHaptic(1); //PlayHaptic(effect number)
+  // PlayHaptic(1); //PlayHaptic(effect number)
 }
 
 int ScreenCol::getColIndex() const
@@ -602,7 +603,7 @@ void ScreenRow::navigateTo(int i)
 {
   rowIndex = i;
   //playAudio(const char* path);
-  PlayHaptic(1); //PlayHaptic(effect number)
+  // PlayHaptic(1); //PlayHaptic(effect number)
 }
 
 void ScreenRow::navigateTo(int row, int col)
@@ -695,22 +696,8 @@ UIElGroup* ScreenRow::screen(int row, int col)
 
 UIElGroup* ScreenRow::screen(String row_name, String col_name)
 {
-  ScreenCol* temp = nullptr;
-  for (int i = 0; i < amount; i++)
-  {
-    if (elements[i]->name == row_name)
-    {
-      temp = static_cast<ScreenCol*>(elements[i]);
-    }
-    break;
-  }
-  for (int i = 0; i < temp->getSize(); i++)
-  {
-    if ((*temp)[i]->name == col_name)
-    {
-      return static_cast<UIElGroup*>((*temp)[i]);
-    }
-  }
+  ScreenCol* temp = static_cast<ScreenCol*>(this->operator[](row_name));
+  return static_cast<UIElGroup*>(this->operator[](col_name));
 }
 
 void ScreenRow::draw(bool sel)

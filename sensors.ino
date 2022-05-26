@@ -8,7 +8,7 @@ void MPUInit() {
     }
   }
 
-  mpu.setAccelerometerRange(MPU6050_RANGE_16_G);
+  mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_250_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
   tilt_ready = false;
@@ -17,54 +17,80 @@ void MPUInit() {
 
 void checkMPU() {
   /* Get new sensor events with the readings */
-  sensors_event_t a, g, temp;
-  mpu.getEvent(&a, &g, &temp);
 
   /* Start setting flags */
-  
-  if (idle_count >= 500){
-    idle = true;
-  }
-  if ((a.acceleration.x < tilt_value) && (a.acceleration.x > -tilt_value)&&(a.acceleration.y > -tilt_value)&&(a.acceleration.y < tilt_value)){
-    tilt_center = true;
-    tilt_right = false;
-    tilt_left = false;
-    tilt_up = false;
-    tilt_down = false;
-    tilt_ready = true;
-    if (idle_count <= 500){
-      idle_count++;
-    }
-  }
-  if ((a.acceleration.x > tilt_value) && (tilt_ready == true)){
-    tilt_right = true;
-    tilt_center = false;
-    tilt_ready = false;
-    idle = false;
-    idle_count = 0;
+  if (millis() - prev_control >= 1000 / CONTROL_FREQ)
+  {
+    sensors_event_t a, g, temp;
+    mpu.getEvent(&a, &g, &temp);
     
-  }
-  if ((a.acceleration.x < -tilt_value) && (tilt_ready == true)){
-    tilt_left = true;
-    tilt_center = false;
-    tilt_ready = false;
-    idle = false;
-    idle_count = 0;
-  }
-  if ((a.acceleration.y > tilt_value) && (tilt_ready == true)){
-    tilt_up = true;
-    tilt_center = false;
-    tilt_ready = false;
-    idle = false;
-    idle_count = 0;
-    Serial.println("tilted up");
-  }
-  if ((a.acceleration.y < -tilt_value) && (tilt_ready == true)){
-    tilt_down = true;
-    tilt_center = false;
-    tilt_ready = false;
-    idle = false;
-    idle_count = 0;
+    if (idle_count >= 500){
+      idle = true;
+    }
+
+    float accel_x = a.acceleration.x;
+    float accel_y = a.acceleration.y;
+    float accel_z = a.acceleration.z;
+  
+    Serial.print("accel x: ");
+    Serial.print(accel_x);
+    Serial.print(" accel y: ");
+    Serial.print(accel_y);
+    Serial.print(" accel z: ");
+    Serial.println(accel_z);
+    if ((accel_x < tilt_value) && (accel_x > -tilt_value)&&(accel_y > -tilt_value)&&(accel_y < tilt_value)){
+      tilt_center = true;
+      tilt_right = false;
+      tilt_left = false;
+      tilt_up = false;
+      tilt_down = false;
+      tilt_ready = true;
+      if (idle_count <= 500){
+        idle_count++;
+      }
+    }
+    if ((accel_x > tilt_value) && (tilt_ready == true)){
+      tilt_right = true;
+      tilt_center = false;
+      tilt_ready = false;
+      idle = false;
+      idle_count = 0;
+      Serial.println("tilted right");
+      // Serial.print("accel x: ");
+      // Serial.println(a.acceleration.x);
+    }
+    if ((accel_x < -tilt_value) && (tilt_ready == true)){
+      tilt_left = true;
+      tilt_center = false;
+      tilt_ready = false;
+      idle = false;
+      idle_count = 0;
+      Serial.println("tilted left");
+      // Serial.print("accel x: ");
+      // Serial.println(a.acceleration.x);
+    }
+    if ((accel_y > tilt_value) && (tilt_ready == true)){
+      tilt_up = true;
+      tilt_center = false;
+      tilt_ready = false;
+      idle = false;
+      idle_count = 0;
+      Serial.println("tilted up");
+      // Serial.print("accel y: ");
+      // Serial.println(a.acceleration.y);
+    }
+    if ((accel_y < -tilt_value) && (tilt_ready == true)){
+      tilt_down = true;
+      tilt_center = false;
+      tilt_ready = false;
+      idle = false;
+      idle_count = 0;
+      Serial.println("tilted down");
+      // Serial.print("accel y: ");
+      // Serial.println(a.acceleration.y);
+    }
+
+    prev_control = millis();
   }
 }
 
@@ -243,7 +269,7 @@ void stressCheckUp() {
   if (hrvComplete == true && rmssd < 100) {
     Serial.print("Your HRV reading is: ");
     Serial.println(rmssd);
-    static_cast<Text*>((*(face.menu.screen("emotion", "feedback")))["hrvLabel"])->setText(rmssd);
+    static_cast<Text*>((*(face.menu.screen("emotion", "feedback")))["hrvLabel"])->setContent(String(rmssd, 2));
     float phq_str_hrv = -0.0785*rmssd + 14.6913;
     float phq_rel_hrv = -0.2331*rmssd + 29.3654;
     float gad_str_hrv = -0.09432*rmssd + 14.51642;
