@@ -68,7 +68,7 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr->add(new Rounded(80, 102, 19, 29, false, "body", 9));
   curr->add(new Circle(68, 90, 23, true, "head", false));
   curr->add(new Circle(89, 93, 18, true, "head", false));
-  curr->add(new Circle(187, 93, 39, true, "", false));
+  curr->add(new Circle(170, 97, 39, false, "", false));
   curr->add(new Triangle(154, 112, 143, 126, 151, 132));
   curr->add(new Triangle(154, 112, 162, 118, 151, 132));
 

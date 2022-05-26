@@ -153,7 +153,7 @@ class Triangle : public UIElement {
   public:
     Triangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t x3, int16_t y3);
     void draw(bool sel);
-}
+};
 
 class Image : public UIElement {
   private:

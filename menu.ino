@@ -306,7 +306,7 @@ void Circle::draw(bool sel)
   }
 }
 
-Triangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t x3, int16_t y3) : UIElement(0,0,0,0)
+Triangle::Triangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t x3, int16_t y3) : UIElement(0,0,0,0)
 {
   this->x1 = x1;
   this->y1 = y1;
