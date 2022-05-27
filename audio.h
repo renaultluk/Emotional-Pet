@@ -6,7 +6,7 @@
 
 // library: esp8266 audio
 #include <AudioFileSourceID3.h>
-#include <AudioFileSourceSD.h>
+#include <AudioFileSourceSPIFFS.h>
 #include <AudioGeneratorWAV.h>
 #include <AudioOutputI2S.h>
 
