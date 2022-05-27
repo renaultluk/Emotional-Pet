@@ -3,6 +3,7 @@
 AudioGeneratorWAV *wav;
 AudioFileSourceSD *fileplay;
 AudioOutputI2S *out;
+AudioFileSourceID3* id3;
 
 //for recording
 const int headerSize = 44;
@@ -13,9 +14,9 @@ char communicationData[numCommunicationData];
 char partWavData[numPartWavData];
 
 void playAudio(const char* path) {
-  File sd = SD.open(path);
-  fileplay = new AudioFileSourceSD(path);
-//  id3 = new AudioFileSourceID3(file);
+  File sd = SPIFFS.open(path);
+  fileplay = new AudioFileSourceSPIFFS(path);
+ id3 = new AudioFileSourceID3(fileplay);
   out = new AudioOutputI2S(0, 1);
   wav = new AudioGeneratorWAV();
   wav->begin(fileplay, out);
@@ -40,8 +41,8 @@ void record(const char filename[], const int record_time){
 
   
   CreateWavHeader(header, waveDataSize);
-  SD.remove(filename);
-  File file = SD.open(filename, FILE_WRITE);
+  SPIFFS.remove(filename);
+  File file = SPIFFS.open(filename, "a");
   if (!file) return;
   file.write(header, headerSize);
   I2S_Init(I2S_MODE, I2S_BITS_PER_SAMPLE_32BIT);
