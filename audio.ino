@@ -1,7 +1,7 @@
 #include "audio.h"
 
 AudioGeneratorWAV *wav;
-AudioFileSourceSD *fileplay;
+AudioFileSourceSPIFFS *fileplay;
 AudioOutputI2S *out;
 AudioFileSourceID3* id3;
 
