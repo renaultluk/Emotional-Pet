@@ -9,10 +9,20 @@ void mainControlFlow()
     if (tilt_up)
     {
       tilt_up = false;
-      if (menu_top && (currScreen != face.menu.screen("settings", "main")))
+      if (currScreen == face.menu.screen(3, 0))
+      {
+        face.menu.navigateTo('d');
+        stressCheckUp();
+      }
+      else if (menu_top)
       {
         face.menu.navigateTo('d');
       }
+      // else if (currScreen == face.menu.screen(3, 0))
+      // {
+      //   face.menu.navigateTo('d');
+      //   stressCheckUp();
+      // }
       else if (currScreen == face.menu.screen(3, 1))
       {
         face.menu.navigateTo('d');
@@ -163,10 +173,10 @@ void mainControlFlow()
       }
     }
 
-    if (currScreen == face.menu.screen(3, 1))
-    {
-      stressCheckUp();
-    }
+    // if (currScreen == face.menu.screen(3, 1))
+    // {
+    //   stressCheckUp();
+    // }
   }
   else
   {

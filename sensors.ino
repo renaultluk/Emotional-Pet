@@ -161,8 +161,8 @@ void heartRateInit() {
 }
 
 const int ecgPin = 34;
-int upperThreshold = 1500;
-int lowerThreshold = 100;
+int upperThreshold = -1320;
+int lowerThreshold = -1360;
 int ecgOffset = 8000;
 float beatsPerMinute = 0.0;
 bool alreadyPeaked = false;
@@ -222,71 +222,79 @@ void stressCheckUp() {
     prevSecond = millis();
   }
 
-  float weight = 0.1;                               
-  LPF = (1.0 - weight) * LPF + weight * (analogRead(ecgPin)*500);
-  int ecgReading = LPF + ecgOffset; 
-  Serial.println("reading... ecgReading=");
-  // Serial.println(ecgReading);
-
-  if (millis() - prevSecond > 1000)
+  while (millis() - hrvStartTime < 60000)
   {
-    prevSecond = millis();
-    String timerStr = ++seconds >= 10 ? "00:" + String(seconds) : "00:0" + String(seconds);
-    static_cast<Text*>((*face.menu.screen(3,1))["timer"])->setContent(timerStr);
+    float weight = 0.1;                               
+    LPF = (1.0 - weight) * LPF + weight * (analogRead(ecgPin));
+    int ecgReading = LPF + ecgOffset; 
+    ecgReading = map(ecgReading, 9500, 11500, -3000, 4000);
+    //erial.println("reading... ecgReading=");
+    // Serial.println(ecgReading);
+
+    // if (millis() - prevSecond > 1000)
+    // {
+    //   prevSecond = millis();
+    //   String timerStr = ++seconds >= 10 ? "00:" + String(seconds) : "00:0" + String(seconds);
+    //   static_cast<Text*>((*face.menu.screen(3,1))["timer"])->setContent(timerStr);
+    // }
+
+    if (ecgReading > upperThreshold && alreadyPeaked == false) { 
+
+        if (firstPeakTime == 0) {
+          firstPeakTime = millis();
+        }
+        else {
+          secondPeakTime = millis();
+          rrIntervalPrevious = rrInterval;
+          rrInterval = secondPeakTime - firstPeakTime;
+          firstPeakTime = secondPeakTime;
+          hrvUpdate = true;
+          numRRDetected = numRRDetected + 1;
+        }
+        alreadyPeaked = true;
+    }
+
+    if (ecgReading < lowerThreshold) {
+      alreadyPeaked = false;
+    }  
+
+    beatsPerMinute = (1.0/rrInterval) * 60.0 * 1000;
+
+    if (!hrvStarted && numRRDetected >= 2) {
+      hrvStarted = true;
+      hrvStartTime = millis();
+    }
+
+
+    if (hrvUpdate && hrvStarted) {
+
+      if(rrInterval > 500 && rrInterval <1300 &&rrIntervalPrevious > 500 && rrIntervalPrevious <1300){
+        rrDiff = float(rrInterval) - float(rrIntervalPrevious);
+        rrDiffSquaredTotal = rrDiffSquaredTotal + sq(rrDiff);
+        diffCount = diffCount + 1.0;
+        hrvUpdate = false;
+        }
+    }
+    
+    if (millis() - hrvStartTime >= 60000*2 && !hrvComplete) {
+      rmssd = sqrt(rrDiffSquaredTotal/diffCount);
+      hrvComplete = true;
+    } 
+
+    Serial.println(ecgReading);
+  /* Serial.println(rrInterval);
+    if (beatsPerMinute >= 60 && beatsPerMinute <= 140){
+        float weight = 0.1;                               
+        LPF_beat = (1.0 - weight) * LPF_beat + weight * beatsPerMinute;
+        Serial.println(LPF_beat);    
+    }*/
+    delay(10);
   }
 
-  if (ecgReading > upperThreshold && alreadyPeaked == false) { 
-
-      if (firstPeakTime == 0) {
-        firstPeakTime = millis();
-      }
-      else {
-        secondPeakTime = millis();
-        rrIntervalPrevious = rrInterval;
-        rrInterval = secondPeakTime - firstPeakTime;
-        firstPeakTime = secondPeakTime;
-        hrvUpdate = true;
-        numRRDetected = numRRDetected + 1;
-      }
-      alreadyPeaked = true;
-  }
-
-  if (ecgReading < lowerThreshold) {
-    alreadyPeaked = false;
-  }  
-
-  beatsPerMinute = (1.0/rrInterval) * 60.0 * 1000;
-
-  if (!hrvStarted && numRRDetected >= 2) {
-    hrvStarted = true;
-    hrvStartTime = millis();
-  }
-
-
-  if (hrvUpdate && hrvStarted) {
-
-    if(rrInterval > 500 && rrInterval <1300 &&rrIntervalPrevious > 500 && rrIntervalPrevious <1300){
-      rrDiff = float(rrInterval) - float(rrIntervalPrevious);
-      rrDiffSquaredTotal = rrDiffSquaredTotal + sq(rrDiff);
-      diffCount = diffCount + 1.0;
-      hrvUpdate = false;
-      }
-  }
+  rmssd = sqrt(rrDiffSquaredTotal/diffCount);
+  hrvComplete = true;
   
-  if (millis() - hrvStartTime >= 60000 && !hrvComplete) {
-    rmssd = sqrt(rrDiffSquaredTotal/diffCount);
-    hrvComplete = true;
-  } 
-
-  Serial.println(ecgReading);
-  Serial.println(rrInterval);
-  if (beatsPerMinute >= 60 && beatsPerMinute <= 140){
-      float weight = 0.1;                               
-      LPF_beat = (1.0 - weight) * LPF_beat + weight * beatsPerMinute;
-      Serial.println(LPF_beat);    
-  }
-  
-  if (hrvComplete == true && rmssd < 100) {
+  if (hrvComplete == true && rmssd < 100 && rmssd > 0) {
     Serial.print("Your HRV reading is: ");
     Serial.println(rmssd);
     static_cast<Text*>((*(face.menu.screen("emotion", "feedback")))["hrvLabel"])->setContent(String(rmssd, 2));
@@ -317,5 +325,4 @@ void stressCheckUp() {
     haveAnim = false;
     face.menu.navigateTo("emotion", "feedback");
   }
-  delay(10);
 }
