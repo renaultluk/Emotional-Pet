@@ -115,6 +115,9 @@ int stackNum = 0;
 enum str_conditions { STRESSED , RELAXED };
 int menuChoice = 0;
 
+int anxietyLevel;
+int depLevel;
+
 // Audio
 String replyTarget;
 String audioTarget;

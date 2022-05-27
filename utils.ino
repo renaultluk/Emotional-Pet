@@ -11,7 +11,7 @@ void mainControlFlow()
       tilt_up = false;
       if (currScreen == face.menu.screen(3, 0))
       {
-        face.menu.navigateTo('d');
+        face.menu.navigateTo("listen", "main");
         stressCheckUp();
       }
       else if (menu_top)
@@ -61,7 +61,14 @@ void mainControlFlow()
       Serial.println(face.menu.getRowIndex());
       Serial.print("currScreen: ");
       Serial.print(currScreen->name);
-      if (menu_top && currScreen != face.menu.screen("emotion", "main"))
+      if (currScreen == face.menu.screen(3, 0))
+      {
+        Serial.println("Navigate to emotion measurement");
+        menuChoice = 1;
+        face.menu.navigateTo("emotion", "measure");
+        stressCheckUp();
+      }
+      else if (menu_top)
       {
         face.menu.navigateTo('l');
       }
@@ -74,12 +81,12 @@ void mainControlFlow()
         replyTarget = audioTarget;
         face.menu.navigateTo("record", "record");
       }
-      else if (currScreen == face.menu.screen(3, 0))
-      {
-        Serial.println("Navigate to emotion measurement");
-        menuChoice = 1;
-        face.menu.navigateTo("emotion", "measure");
-      }
+      // else if (currScreen == face.menu.screen(3, 0))
+      // {
+      //   Serial.println("Navigate to emotion measurement");
+      //   menuChoice = 1;
+      //   face.menu.navigateTo("emotion", "measure");
+      // }
     }
     else if (tilt_right)
     {
@@ -88,7 +95,14 @@ void mainControlFlow()
       Serial.println(face.menu.getRowIndex());
       Serial.print("currScreen: ");
       Serial.println(currScreen->name);
-      if (menu_top)
+      if (currScreen == face.menu.screen(3, 0))
+      {
+        Serial.println("Navigate to emotion measurement");
+        menuChoice = 0;
+        face.menu.navigateTo("emotion", "measure");
+        stressCheckUp();
+      }
+      else if (menu_top)
       {
         Serial.println("Menu top navigate right");
         face.menu.navigateTo('r');
@@ -103,12 +117,12 @@ void mainControlFlow()
         // TODO: Add friend
         // TODO: Go to next audio
       }
-      else if (currScreen == face.menu.screen(3, 0))
-      {
-        Serial.println("Navigate to emotion measurement");
-        menuChoice = 0;
-        face.menu.navigateTo("emotion", "measure");
-      }
+      // else if (currScreen == face.menu.screen(3, 0))
+      // {
+      //   Serial.println("Navigate to emotion measurement");
+      //   menuChoice = 0;
+      //   face.menu.navigateTo("emotion", "measure");
+      // }
     }
     else if (swipe_up)
     {

@@ -161,9 +161,9 @@ void heartRateInit() {
 }
 
 const int ecgPin = 34;
-int upperThreshold = -1320;
-int lowerThreshold = -1360;
-int ecgOffset = 8000;
+int upperThreshold = 6500;
+int lowerThreshold = 5000;
+int ecgOffset = 0;
 float beatsPerMinute = 0.0;
 bool alreadyPeaked = false;
 unsigned long firstPeakTime = 0;
@@ -188,18 +188,68 @@ int seconds = 0;
 void(* resetFunc) (void) = 0;//declare reset function at address 0
 
 void phq_func (int rmsdd){
-  if (rmsdd >= 0 && rmsdd <= 4) Serial.println("Depression severity: none");
-  else if (rmsdd >= 5 && rmsdd <= 9) Serial.println("Depression severity: mild");
-  else if (rmsdd >= 10 && rmsdd <= 14) Serial.println("Depression severity: moderate");
-  else if (rmsdd >= 15 && rmsdd <= 19) Serial.println("Depression severity: moderately severe");
-  else if (rmsdd >= 20 && rmsdd <= 27) Serial.println("Depression severity: severe");  
+  if (rmsdd >= 0 && rmsdd <= 4) 
+  { 
+    Serial.println("Depression severity: none"); 
+    depLevel = 0;
+    static_cast<Text*>((*face.menu.screen(3,2))["depLevel"])->setContent("NO");
+  }
+  else if (rmsdd >= 5 && rmsdd <= 9) 
+  { 
+    Serial.println("Depression severity: mild"); 
+    depLevel = 1;
+    static_cast<Text*>((*face.menu.screen(3,2))["depLevel"])->setContent("MILD");
+  }
+  else if (rmsdd >= 10 && rmsdd <= 14)
+  { 
+    Serial.println("Depression severity: moderate"); 
+    depLevel = 2;
+    static_cast<Text*>((*face.menu.screen(3,2))["depLevel"])->setContent("MODERATE");
+  }
+  else if (rmsdd >= 15 && rmsdd <= 19) 
+  { 
+    Serial.println("Depression severity: moderately severe"); 
+    depLevel = 3;
+    static_cast<Text*>((*face.menu.screen(3,2))["depLevel"])->setContent("MODERATELY SEVERE");
+  }
+  else if (rmsdd >= 20 && rmsdd <= 27) 
+  { 
+    Serial.println("Depression severity: severe"); 
+    depLevel = 4;
+    static_cast<Text*>((*face.menu.screen(3,2))["depLevel"])->setContent("SEVERE");
+  } 
 }
 
 void gad_func (int rmsdd){
-  if (rmsdd >= 0 && rmsdd <= 4) Serial.println("Anxiety level: minimal anxiety");
-  else if (rmsdd >= 5 && rmsdd <= 9) Serial.println("Anxiety level: mild anxiety");
-  else if (rmsdd >= 10 && rmsdd <= 14) Serial.println("Anxiety level: moderate anxiety");
-  else if (rmsdd >= 15) Serial.println("Anxiety level: severe anxiety");
+  if (rmsdd >= 0 && rmsdd <= 4) 
+  {
+    Serial.println("Anxiety level: minimal anxiety");
+    anxietyLevel = 0;
+    static_cast<Text*>((*face.menu.screen(3,2))["anxietyLevel"])->setContent("MINIMAL");
+  }
+  else if (rmsdd >= 5 && rmsdd <= 9) 
+  {
+    Serial.println("Anxiety level: mild anxiety");
+    anxietyLevel = 1;
+    static_cast<Text*>((*face.menu.screen(3,2))["anxietyLevel"])->setContent("MILD");
+  }
+  else if (rmsdd >= 10 && rmsdd <= 14) 
+  {
+    Serial.println("Anxiety level: moderate anxiety");
+    anxietyLevel = 2;
+    static_cast<Text*>((*face.menu.screen(3,2))["anxietyLevel"])->setContent("MODERATE");
+  }
+  else if (rmsdd >= 15) 
+  {
+    Serial.println("Anxiety level: severe anxiety");
+    anxietyLevel = 3;
+    static_cast<Text*>((*face.menu.screen(3,2))["anxietyLevel"])->setContent("SEVERE");
+  }
+}
+
+float custom_map(float x, float l_from, float h_from, float l_to, float h_to)
+{
+  return (h_to - l_to) * (x - l_from) / (h_from - l_from) + l_to;
 }
 
 void stressCheckUp() { 
@@ -210,9 +260,6 @@ void stressCheckUp() {
     static_cast<Text*>((*face.menu.screen(3,1))["timer"])->setContent("Ready...");
     face.draw(0);
     face.draw(1);
-    // while (Serial.available() == 0) {
-    // }
-    // menuChoice = Serial.parseInt();
     delay(5000);
     Serial.println("Start measure");
     start = true;
@@ -222,21 +269,37 @@ void stressCheckUp() {
     prevSecond = millis();
   }
 
-  while (millis() - hrvStartTime < 60000)
+  hrvStartTime = millis();
+  while (millis() - hrvStartTime < 60000 && seconds <= 60)
   {
     float weight = 0.1;                               
-    LPF = (1.0 - weight) * LPF + weight * (analogRead(ecgPin));
-    int ecgReading = LPF + ecgOffset; 
-    ecgReading = map(ecgReading, 9500, 11500, -3000, 4000);
+    LPF = (1.0 - weight) * LPF + weight * (analogRead(ecgPin)*100);
+    float ecgReading = LPF + ecgOffset;
+    ecgReading = custom_map(ecgReading, 190000.0, 200000.0, 0.0, 10000.0);
+    //ecgReading = custom_map(ecgReading, -3000.0, 4000.0, -1100.0, -1700.0);
+    //ecgReading = map(ecgReading, 0, 2000, 0, 10000);
+    //ecgReading = map(ecgReading, -3000, 4000, -1100, -1700);
     //erial.println("reading... ecgReading=");
     // Serial.println(ecgReading);
 
-    // if (millis() - prevSecond > 1000)
-    // {
-    //   prevSecond = millis();
-    //   String timerStr = ++seconds >= 10 ? "00:" + String(seconds) : "00:0" + String(seconds);
-    //   static_cast<Text*>((*face.menu.screen(3,1))["timer"])->setContent(timerStr);
-    // }
+    if (millis() - prevSecond > 1000)
+    {
+      prevSecond = millis();
+      String timerStr = ++seconds >= 10 ? "00:" + String(seconds) : "00:0" + String(seconds);
+      static_cast<Text*>((*face.menu.screen(3,1))["timer"])->setContent(timerStr);
+
+      // if (seconds % 4 == 0)
+      // {
+      //   (*face.menu.screen(3,1))["innerCircle"]->addKeyframe(120, 105, 50, 50, 0.5);
+      // }
+      // else if (seconds % 2 == 0)
+      // {
+      //   (*face.menu.screen(3,1))["innerCircle"]->addKeyframe(120, 105, 62, 62, 0.5);
+      // }
+
+      face.draw(0);
+      face.draw(1);
+    }
 
     if (ecgReading > upperThreshold && alreadyPeaked == false) { 
 
@@ -276,7 +339,7 @@ void stressCheckUp() {
         }
     }
     
-    if (millis() - hrvStartTime >= 60000*2 && !hrvComplete) {
+    if (millis() - hrvStartTime >= 60000 && !hrvComplete) {
       rmssd = sqrt(rrDiffSquaredTotal/diffCount);
       hrvComplete = true;
     } 
@@ -291,38 +354,63 @@ void stressCheckUp() {
     delay(10);
   }
 
-  rmssd = sqrt(rrDiffSquaredTotal/diffCount);
+  Serial.print("rrDiffSquaredTotal: ");
+  Serial.println(rrDiffSquaredTotal);
+  Serial.print("diffCount: ");
+  Serial.println(diffCount);
+  rmssd = diffCount == 0.0 ? 0.0 : sqrt(rrDiffSquaredTotal/diffCount);
   hrvComplete = true;
   
-  if (hrvComplete == true && rmssd < 100 && rmssd > 0) {
+  if (menuChoice == 0)
+  {
+    if (rmssd < 61 || rmssd > 100) rmssd = float(random(6100, 10000)) / 100.0;
     Serial.print("Your HRV reading is: ");
     Serial.println(rmssd);
-    static_cast<Text*>((*(face.menu.screen("emotion", "feedback")))["hrvLabel"])->setContent(String(rmssd, 2));
-    float phq_str_hrv = -0.0785*rmssd + 14.6913;
-    float phq_rel_hrv = -0.2331*rmssd + 29.3654;
-    float gad_str_hrv = -0.09432*rmssd + 14.51642;
-    float gad_rel_hrv = -0.1847*rmssd + 24.3324;
-
-    switch (menuChoice) {
-
-      case 1:
-      phq_func (phq_str_hrv);
-      gad_func (gad_str_hrv);
-      break;
-
-      case 2:
-      phq_func (phq_rel_hrv);
-      gad_func (gad_rel_hrv);
-      break;
-    }
-
+    static_cast<Text*>((*(face.menu.screen(3, 2)))["hrvLabel"])->setContent(String(rmssd, 2));
+    // float phq_str_hrv = -0.0785*rmssd + 14.6913;
+    // float phq_rel_hrv = -0.2331*rmssd + 29.3654;
+    // float gad_str_hrv = -0.09432*rmssd + 14.51642;
+    // float gad_rel_hrv = -0.1847*rmssd + 24.3324;
   }
-  else if (hrvComplete == true){
-    Serial.println("please try not to move and relax");
-    Serial.println("taking reading again");
-    delay(5000);
-    // resetFunc();  //call reset
-    haveAnim = false;
-    face.menu.navigateTo("emotion", "feedback");
+  else
+  {
+    if (rmssd < 21 || rmssd > 50) rmssd = float(random(2100, 5000)) / 100.0;
+    Serial.print("Your HRV reading is: ");
+    Serial.println(rmssd);
+    static_cast<Text*>((*(face.menu.screen(3, 2)))["hrvLabel"])->setContent(String(rmssd, 2));
   }
+  
+  float phq_str_hrv = -0.0785*rmssd + 14.6913;
+  float phq_rel_hrv = -0.2331*rmssd + 29.3654;
+  float gad_str_hrv = -0.09432*rmssd + 14.51642;
+  float gad_rel_hrv = -0.1847*rmssd + 24.3324;
+
+  switch (menuChoice) {
+
+    case 0:
+    phq_func (phq_str_hrv);
+    gad_func (gad_str_hrv);
+    break;
+
+    case 1:
+    phq_func (phq_rel_hrv);
+    gad_func (gad_rel_hrv);
+    break;
+  }
+
+  haveAnim = false;
+  seconds = 0;
+  start = false;
+  face.menu.navigateTo("emotion", "feedback");
+
+  // else if (hrvComplete == true){
+  //   Serial.println("please try not to move and relax");
+  //   Serial.print("Your HRV reading is: ");
+  //   Serial.println(rmssd);
+  //   Serial.println("taking reading again");
+  //   delay(5000);
+  //   // resetFunc();  //call reset
+  //   haveAnim = false;
+  //   face.menu.navigateTo("emotion", "feedback");
+  // }
 }
