@@ -71,6 +71,23 @@ void RedLEDfade() {
     }
   }
 }
+void YellowLEDfade() {
+  int brightness = 0;    // how bright the LED is
+  int fadeAmount = 5;    // how many points to fade the LED by
+  unsigned long currentMillis = millis();
+  if(currentMillis - pixelPrevious >= pixelInterval) {        //  Check for expired time
+    pixelPrevious = currentMillis;                            //  Run current frame 
+    
+    for(int i=0; i<strip.numPixels(); i++) {                     // For each pixel in strip...
+      strip.setPixelColor(i, strip.Color(brightness, brightness, 0));     //  Set RED
+      strip.show();                                              //  Update strip to match
+    }
+    brightness = brightness + fadeAmount;
+    if (brightness <= 0 || brightness >= 255) {
+    fadeAmount = -fadeAmount;
+    }
+  }
+}
 void GreenLEDfade() {
   int brightness = 0;    // how bright the LED is
   int fadeAmount = 5;    // how many points to fade the LED by

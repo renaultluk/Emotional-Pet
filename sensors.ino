@@ -153,11 +153,11 @@ void checkTouch() {
 }
 
 void heartRateInit() {
-  if (!heartRateSensor.begin()) {
-    Serial.println("Heart Rate Sensor failed to init");
-    while (1);
-  }
-  heartRateSensor.setup();
+//  if (!heartRateSensor.begin()) {
+//    Serial.println("Heart Rate Sensor failed to init");
+//    while (1);
+//  }
+//  heartRateSensor.setup();
 }
 
 const int ecgPin = 34;

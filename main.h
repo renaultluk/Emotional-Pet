@@ -8,8 +8,6 @@
 #include <SPI.h>
 #include <FS.h>
 #include "SD.h"
-#include <JPEGDecoder.h>
-#include <MAX30105.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
@@ -134,7 +132,7 @@ TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite spr[2] = {TFT_eSprite(&tft), TFT_eSprite(&tft)};
 uint16_t* sprPtr[2];
 SPIClass spiSD(HSPI);
-MAX30105 heartRateSensor;
+//MAX30105 heartRateSensor;
 Adafruit_MPU6050 mpu;
 Adafruit_DRV2605 drv;
 Face face;
