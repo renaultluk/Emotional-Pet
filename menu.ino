@@ -342,16 +342,16 @@ void Image::draw(bool sel)
     Serial.println("===========================");
 
     // Use one of the following methods to initialise the decoder:
-    bool decoded = JpegDec.decodeSdFile(jpegFile);  // Pass the SD file handle to the decoder,
+//    bool decoded = JpegDec.decodeSdFile(jpegFile);  // Pass the SD file handle to the decoder,
     //bool decoded = JpegDec.decodeSdFile(filename);  // or pass the filename (String or character array)
 
-    if (decoded) {
+/*    if (decoded) {
       // render the image onto the screen at given coordinates
       jpegRender(x, y, sel);
     }
     else {
       Serial.println("Jpeg file format not supported!");
-    }
+    }*/
   }
 }
 
@@ -741,4 +741,3 @@ void ScreenRow::draw(bool sel)
 {
   if (visible) elements[rowIndex]->draw(sel);
 }
-

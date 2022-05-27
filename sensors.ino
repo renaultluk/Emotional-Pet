@@ -153,11 +153,11 @@ void checkTouch() {
 }
 
 void heartRateInit() {
-  if (!heartRateSensor.begin()) {
-    Serial.println("Heart Rate Sensor failed to init");
-    while (1);
-  }
-  heartRateSensor.setup();
+//  if (!heartRateSensor.begin()) {
+//    Serial.println("Heart Rate Sensor failed to init");
+//    while (1);
+//  }
+//  heartRateSensor.setup();
 }
 
 const int ecgPin = 34;
@@ -276,7 +276,7 @@ void stressCheckUp() {
         }
     }
     
-    if (millis() - hrvStartTime >= 60000*2 && !hrvComplete) {
+    if (millis() - hrvStartTime >= 60000 && !hrvComplete) {
       rmssd = sqrt(rrDiffSquaredTotal/diffCount);
       hrvComplete = true;
     } 
