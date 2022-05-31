@@ -1,11 +1,9 @@
 #include "main.h"
 
 void MPUInit() {
-  if (!mpu.begin()) {
+  while (!mpu.begin()) {
     Serial.println("Failed to find MPU6050 chip");
-    while (1) {
-      delay(10);
-    }
+    delay(500);
   }
 
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
@@ -402,6 +400,25 @@ void stressCheckUp() {
   seconds = 0;
   start = false;
   face.menu.navigateTo("emotion", "feedback");
+
+  delay(10000);
+  face.menu.setVisible(false);
+  if (anxietyLevel >= 2 || depLevel >= 3)
+  {
+    for(int i=0; i<strip.numPixels(); i++) {               // For each pixel in strip...
+      strip.setPixelColor(i, strip.Color(0,   0,   255));  //  Set pixel's color (in RAM)
+      strip.show();                                        //  Update strip to match
+    }
+    face.changeFaceState(SAD);
+  }
+  else
+  {
+    for(int i=0; i<strip.numPixels(); i++) {               // For each pixel in strip...
+      strip.setPixelColor(i, strip.Color(255,   255,   0));  //  Set pixel's color (in RAM)
+      strip.show();                                        //  Update strip to match
+    }
+    face.changeFaceState(HAPPY);
+  }
 
   // else if (hrvComplete == true){
   //   Serial.println("please try not to move and relax");

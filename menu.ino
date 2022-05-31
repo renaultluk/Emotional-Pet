@@ -1,5 +1,4 @@
 #include "menu.h"
-#include "SDcard.h"
 
 float linear(int t, int i)
 {
@@ -330,16 +329,16 @@ void Image::draw(bool sel)
 {
   if (visible) {
     // Open the named file (the Jpeg decoder library will close it)
-    File jpegFile = SD.open( src, FILE_READ);  // or, file handle reference for SD library
+    // File jpegFile = SD.open( src, FILE_READ);  // or, file handle reference for SD library
   
-    if ( !jpegFile ) {
-      Serial.print("ERROR: File \""); Serial.print(src); Serial.println ("\" not found!");
-      return;
-    }
+    // if ( !jpegFile ) {
+    //   Serial.print("ERROR: File \""); Serial.print(src); Serial.println ("\" not found!");
+    //   return;
+    // }
 
-    Serial.println("===========================");
-    Serial.print("Drawing file: "); Serial.println(src);
-    Serial.println("===========================");
+    // Serial.println("===========================");
+    // Serial.print("Drawing file: "); Serial.println(src);
+    // Serial.println("===========================");
 
     // Use one of the following methods to initialise the decoder:
 //    bool decoded = JpegDec.decodeSdFile(jpegFile);  // Pass the SD file handle to the decoder,
@@ -479,13 +478,13 @@ void ListItem::draw(bool sel)
     {
       spr[sel].fillRect(x, y, w, h, TFT_BLUE);
       spr[sel].setTextColor(PRIMARY_COLOR);
-      spr[sel].drawString(title, x + 15, y + 15, GFXFF);
+      spr[sel].drawString(title, x + 40, y + 15, GFXFF);
       spr[sel].drawString(subtitle, x + 98, y + 15, GFXFF);
     }
     else
     {
       spr[sel].setTextColor(SECONDARY_COLOR);
-      spr[sel].drawString(title, x + 15, y + 15, GFXFF);
+      spr[sel].drawString(title, x + 40, y + 15, GFXFF);
       spr[sel].setTextColor(GREY_COLOR);
       spr[sel].drawString(subtitle, x + 98, y + 15, GFXFF);
     }
@@ -494,73 +493,117 @@ void ListItem::draw(bool sel)
   }
 }
 
+// void scrollList(bool up)
+// {
+//   int currItem = currFriend % 4;
+
+//   if (currItem == 0)
+//   {
+//     if (up && currFriend != 0)
+//     {
+//       friendHead -= 4;
+//       friendHead = friendHead < 0 ? 0 : friendHead;
+//       updateList();
+//     }
+//     else if (!up)
+//     {
+//       static_cast<ListItem*>((*currScreen)["frd0"])->setSelected(false);
+//       static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(true);
+//     }
+//   }
+//   else if (currItem == 1)
+//   {
+//     static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(false);
+//     if (up)
+//     {
+//       static_cast<ListItem*>((*currScreen)["frd0"])->setSelected(true);
+//     }
+//     else
+//     {
+//       static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(true);
+//     }
+//   }
+//   else if (currItem == 2)
+//   {
+//     static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(false);
+//     if (up)
+//     {
+//       static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(true);
+//     }
+//     else
+//     {
+//       static_cast<ListItem*>((*currScreen)["frd3"])->setSelected(true);
+//     }
+//   }
+//   else
+//   {
+//     if (up)
+//     {
+//       static_cast<ListItem*>((*currScreen)["frd3"])->setSelected(false);
+//       static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(true);
+//     }
+//     else if (!up && currFriend < numFriends)
+//     {
+//       friendHead += 4;
+//       updateList();
+//     }
+//   }
+
+//   if (up)
+//   {
+//     currFriend--;
+//     currFriend = currFriend < 0 ? 0 : currFriend;
+//   }
+//   else
+//   {
+//     currFriend++;
+//     currFriend = currFriend >= numFriends ? numFriends - 1 : currFriend;
+//   }
+
+// }
+
 void scrollList(bool up)
 {
-  int currItem = currFriend % 4;
-
-  if (currItem == 0)
-  {
-    if (up && currFriend != 0)
-    {
-      friendHead -= 4;
-      friendHead = friendHead < 0 ? 0 : friendHead;
-      updateList();
-    }
-    else if (!up)
-    {
-      static_cast<ListItem*>((*currScreen)["frd0"])->setSelected(false);
-      static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(true);
-    }
-  }
-  else if (currItem == 1)
-  {
-    static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(false);
-    if (up)
-    {
-      static_cast<ListItem*>((*currScreen)["frd0"])->setSelected(true);
-    }
-    else
-    {
-      static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(true);
-    }
-  }
-  else if (currItem == 2)
-  {
-    static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(false);
-    if (up)
-    {
-      static_cast<ListItem*>((*currScreen)["frd1"])->setSelected(true);
-    }
-    else
-    {
-      static_cast<ListItem*>((*currScreen)["frd3"])->setSelected(true);
-    }
-  }
-  else
-  {
-    if (up)
-    {
-      static_cast<ListItem*>((*currScreen)["frd3"])->setSelected(false);
-      static_cast<ListItem*>((*currScreen)["frd2"])->setSelected(true);
-    }
-    else if (!up && currFriend < numFriends)
-    {
-      friendHead += 4;
-      updateList();
-    }
-  }
-
   if (up)
   {
-    currFriend--;
-    currFriend = currFriend < 0 ? 0 : currFriend;
+    if (currFriend == 0)
+    {
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd0"])->setSelected(false);
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd1"])->setSelected(true);
+    }
+    else if (currFriend == 1)
+    {
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd1"])->setSelected(false);
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd2"])->setSelected(true);
+    }
+    else if (currFriend == 2)
+    {
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd2"])->setSelected(false);
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd0"])->setSelected(true);
+    }
+    currFriend = (currFriend + 1) % 3;
   }
   else
   {
-    currFriend++;
-    currFriend = currFriend >= numFriends ? numFriends - 1 : currFriend;
+    if (currFriend == 0)
+    {
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd0"])->setSelected(false);
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd2"])->setSelected(true);
+    }
+    else if (currFriend == 1)
+    {
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd1"])->setSelected(false);
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd0"])->setSelected(true);
+    }
+    else if (currFriend == 2)
+    {
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd2"])->setSelected(false);
+      static_cast<ListItem*>((*face.menu.screen(0,3))["frd1"])->setSelected(true);
+    }
+    currFriend = currFriend == 0 ? 2 : currFriend - 1;
   }
-
+  face.draw(0);
+  face.draw(1);
 }
 
 void updateList()
@@ -582,6 +625,13 @@ void updateList()
   static_cast<ListItem*>((*currScreen)["frd0"])->setSelected(true);
 }
 
+void selectFriend()
+{
+  if (currFriend == 0) audioTarget = "/rickastley.wav";
+  else if (currFriend == 1) audioTarget = "/dreamkid.wav";
+  else if (currFriend == 2) audioTarget = "/insideout.wav";
+}
+
 ScreenCol::ScreenCol() : UIElGroup()
 {
   colIndex = 0;
@@ -599,7 +649,7 @@ void ScreenCol::navigateTo(int i)
   currScreen = static_cast<UIElGroup*>(elements[i]);
   Serial.print("Curr Screen: ");
   Serial.println(currScreen->name);
-  listDir(SD, "/", 0);
+  listDir("/");
   playAudio("/test.wav");
   PlayHaptic(1); //PlayHaptic(effect number)
   face.draw(0);
@@ -642,7 +692,7 @@ void ScreenRow::navigateTo(int i)
   Serial.println(currCol->name);
   Serial.print("Curr Screen: ");
   Serial.println(currScreen->name);
-  listDir(SD, "/", 0);
+  listDir("/");
   playAudio("/test.wav");
   PlayHaptic(1); //PlayHaptic(effect number)
   face.draw(0);

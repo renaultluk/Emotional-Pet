@@ -8,12 +8,11 @@ void setup() {
   Wire.begin();
   Serial.begin(115200);
 
-  // spiSD.begin(14, 12, 13, 5);
-  // while (!SD.begin(5, spiSD))
-  // {
-  //   Serial.println("SD not begun");
-  //   delay(1000);
-  // }
+  while (!SPIFFS.begin(true)) {
+    Serial.println("An Error has occurred while mounting SPIFFS");
+    delay(1000);
+  }
+  LED_setup();
   MPUInit();
   hapticsInit();
   
@@ -41,12 +40,22 @@ void setup() {
   anim_iterator = 0;
   anim_time = 0;
 
+  numFriends = 3;
+  friendsList[0] = {"0", "Yeltsa Kcir", "", "/rickastley.wav"};
+  friendsList[1] = {"1", "Dream Kid", "", "/dreamkid.wav"};
+  friendsList[2] = {"2", "Inside Out", "", "/insideout.wav"};
+
   currScreen = face.menu.screen(0,0);
   Serial.print("currRow: ");
   Serial.println(face.menu.getRowIndex());
   Serial.print("currScreen: ");
   Serial.print(currScreen->name);
   prev_control = millis();
+
+  for(int i=0; i<strip.numPixels(); i++) {               // For each pixel in strip...
+    strip.setPixelColor(i, strip.Color(0,   255,   0));  //  Set pixel's color (in RAM)
+    strip.show();                                        //  Update strip to match
+  }
 
   tft.fillScreen(TFT_WHITE);
   face.draw(0);
@@ -68,4 +77,5 @@ void loop() {
   {
     checkMPU();
   }
+  // BlueLEDfade();
 }

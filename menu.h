@@ -50,6 +50,7 @@ void jpegRender(int16_t xpos, int16_t ypos);
 
 void scrollList();
 void updateList();
+void selectFriend();
 
 class UIElement {
   public:

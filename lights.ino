@@ -1,19 +1,12 @@
 #include "main.h"
 
-// Which pin on the Arduino is connected to the NeoPixels?
-#define LED_PIN    6
 
-// How many NeoPixels are attached to the Arduino?
-#define LED_COUNT 8
-
-// Declare our NeoPixel strip object:
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 unsigned long pixelPrevious = 0;        // Previous Pixel Millis
 unsigned long patternPrevious = 0;      // Previous Pattern Millis
 int           patternCurrent = 0;       // Current Pattern Number
 int           patternInterval = 5000;   // Pattern Interval (ms)
-int           pixelInterval = 50;       // Pixel Interval (ms)
+int           pixelInterval = 100;       // Pixel Interval (ms)
 int           pixelQueue = 0;           // Pattern Pixel Queue
 int           pixelCycle = 0;           // Pattern Pixel Cycle
 uint16_t      pixelCurrent = 0;         // Pattern Current Pixel Number
@@ -108,9 +101,9 @@ void GreenLEDfade() {
 void BlueLEDfade() {
   int brightness = 0;    // how bright the LED is
   int fadeAmount = 5;    // how many points to fade the LED by
-  unsigned long currentMillis = millis();
-  if(currentMillis - pixelPrevious >= pixelInterval) {        //  Check for expired time
-    pixelPrevious = currentMillis;                            //  Run current frame 
+  // unsigned long currentMillis = millis();
+  if(millis() - pixelPrevious >= pixelInterval) {        //  Check for expired time
+    pixelPrevious = millis();                            //  Run current frame 
     
     for(int i=0; i<strip.numPixels(); i++) {                     // For each pixel in strip...
       strip.setPixelColor(i, strip.Color(0, 0, brightness));     //  Set RED

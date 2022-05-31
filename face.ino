@@ -90,9 +90,9 @@ Face::Face() : forehead(43, 0, 156, 69), leftEyelid(42, 20, 50, 50, false), righ
   curr = static_cast<UIElGroup*>((*curr)["friends"]);
   curr->add(new Text(82, 51, "Friends", true));
   curr->add(new Rounded(44, 70, 157, 116, true));
-  curr->add(new ListItem(55, 70, "Test", "00:00", "frd0"));
-  curr->add(new ListItem(55, 98, "", "", "frd1"));
-  curr->add(new ListItem(55, 128, "", "", "frd2"));
+  curr->add(new ListItem(55, 70, "Yeltsa Kcir", "", "frd0"));
+  curr->add(new ListItem(55, 98, "Dream Kid", "", "frd1"));
+  curr->add(new ListItem(55, 128, "Inside Out", "", "frd2"));
   curr->add(new ListItem(55, 158, "", "", "frd3"));
   static_cast<ListItem*>((*curr)["frd0"])->setSelected(true);
 

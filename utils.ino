@@ -2,6 +2,7 @@
 
 void mainControlFlow()
 {
+  // BlueLEDfade();
   if (face.getFaceState() == MENU)
   {
     ScreenCol* temp = static_cast<ScreenCol*>(face.menu[face.menu.getRowIndex()]);
@@ -12,7 +13,7 @@ void mainControlFlow()
       if (currScreen == face.menu.screen(3, 0))
       {
         face.menu.navigateTo("listen", "main");
-        stressCheckUp();
+        // stressCheckUp();
       }
       else if (menu_top)
       {
@@ -31,11 +32,22 @@ void mainControlFlow()
       {
         face.menu.navigateTo("emotion", "main");
       }
+      else if (currScreen == face.menu.screen(0,3))
+      {
+        selectFriend();
+        face.menu.navigateTo("listen", "audio");
+        playAudio(audioTarget.c_str());
+      }
+
+      if (currScreen == face.menu.screen(1,1))
+      {
+        record("/new.wav", 20);
+      }
     }
     else if (tilt_down)
     {
       tilt_down = false;
-      if (menu_top || (currScreen == face.menu.screen("emotion", "feedback")))
+      if (menu_top)
       {
         face.menu.setVisible(false);
         face.changeFaceState(NEUTRAL);
@@ -75,8 +87,9 @@ void mainControlFlow()
       else if (currScreen == face.menu.screen(0, 1))
       {
         face.menu.navigateTo("listen", "friends");
+        // updateList();
       }
-      else if (currScreen == face.menu.screen("listen", "audio"))
+      else if (currScreen == face.menu.screen(0, 2))
       {
         replyTarget = audioTarget;
         face.menu.navigateTo("record", "record");
@@ -87,6 +100,10 @@ void mainControlFlow()
       //   menuChoice = 1;
       //   face.menu.navigateTo("emotion", "measure");
       // }
+      else if (currScreen == face.menu.screen(0,3))
+      {
+        scrollList(0);
+      }
     }
     else if (tilt_right)
     {
@@ -123,6 +140,10 @@ void mainControlFlow()
       //   menuChoice = 0;
       //   face.menu.navigateTo("emotion", "measure");
       // }
+      else if (currScreen == face.menu.screen(0,3))
+      {
+        scrollList(1);
+      }
     }
     else if (swipe_up)
     {
@@ -200,11 +221,12 @@ void mainControlFlow()
       face.changeFaceState(MENU);
       // currScreen = face.menu.screen("listen", "main");
     }
-    else if (swipe_up || swipe_down)
+    else if (tilt_down)
     {
-      swipe_up = false;
-      swipe_down = false;
+      tilt_down = false;
+      playAudio("/meow.wav");
       face.changeFaceState(HAPPY);
+      face.changeFaceState(NEUTRAL);
     }
   }
 }

@@ -19,7 +19,6 @@
 #endif
 
 #include "face.h"
-#include "userFile.h"
 #include "audio.h"
 
 using namespace std::__cxx11;
@@ -72,6 +71,12 @@ typedef struct OthersAudio_t {
 #define FRAME_RATE      24
 
 #define CONTROL_FREQ    2
+
+// Which pin on the Arduino is conected to the NeoPixels?
+#define LED_PIN    32
+
+// How many NeoPixels are attached to the Arduino?
+#define LED_COUNT 8
 
 // ******* Global Variables ******* //
  int prev_control;
@@ -136,6 +141,9 @@ SPIClass spiSD(HSPI);
 Adafruit_MPU6050 mpu;
 Adafruit_DRV2605 drv;
 Face face;
+
+// Declare our NeoPixel strip object:
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // ******* Functions ******* //
 
